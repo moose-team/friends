@@ -10,6 +10,7 @@ Channels.prototype.render = function (channels) {
   channels = channels.map(function (channel) {
     return h('li', [
       h('a', {
+        href: '#',
         onclick: function () {
           window.alert('select channel! ' + channel.id) // eslint-disable-line
         }
