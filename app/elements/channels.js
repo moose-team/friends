@@ -17,5 +17,10 @@ Channels.prototype.render = function (channels) {
       }, '#' + channel.name)
     ])
   })
-  return h('ul', this, channels)
+  return [
+    h('.heading', 'Channels'),
+    h('ul', [
+      channels
+    ])
+  ]
 }
