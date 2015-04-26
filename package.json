@@ -1,0 +1,30 @@
+{
+  "name": "friends",
+  "description": "",
+  "version": "0.0.0",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/feross/friends/issues"
+  },
+  "dependencies": {
+    "electron-prebuilt": "^0.25.1"
+  },
+  "devDependencies": {
+    "atom-shell-packager": "^2.1.1",
+    "standard": "^3.2.1"
+  },
+  "homepage": "https://github.com/feross/friends",
+  "keywords": [
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feross/friends.git"
+  },
+  "scripts": {
+    "build": "atom-shell-packager . Friends --ignore=node_modules/electron-prebuilt --icon=Icon.icns",
+    "start": "electron .",
+    "test": "standard"
+  }
+}
