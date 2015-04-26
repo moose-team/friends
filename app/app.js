@@ -62,14 +62,11 @@ App.prototype.render = function () {
   var self = this
   var views = self.views
   var data = self.data
-  return h('div', {
-    className: 'layout'
-  }, [
-    h('div', {
-      className: 'sidebar'
-    }, views.channels.render(data.channels)),
-    h('div', {
-      className: 'content'
-    }, views.messages.render(data.messages))
+  return h('div.layout', [
+    h('.sidebar', views.channels.render(data.channels)),
+    h('.content', [
+      views.messages.render(data.messages),
+      h('input.text')
+    ])
   ])
 }
