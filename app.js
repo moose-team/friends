@@ -1,5 +1,3 @@
-var inherits = require('inherits')
-var xtend = require('xtend')
 var h = require('virtual-dom/h')
 var diff = require('virtual-dom/diff')
 var patch = require('virtual-dom/patch')
@@ -9,7 +7,7 @@ var raf = require('raf')
 var Channels = require('./elements/channels')
 var Messages = require('./elements/messages')
 
-function App(el) {
+function App (el) {
   if (!(this instanceof App)) return new App(el)
   var self = this
 
@@ -22,18 +20,18 @@ function App(el) {
       { id: 3, name: 'feross' },
       { id: 4, name: 'nate' },
       { id: 5, name: 'chris' },
-      { id: 6, name: 'kyle' },
+      { id: 6, name: 'kyle' }
     ],
     messages: [
       { user_id: 0, message: 'this is a message' },
-      { user_id: 0, message: 'this is another message' },
+      { user_id: 0, message: 'this is another message' }
     ]
   }
 
   // View instances used in our App
   this.views = {
     channels: new Channels(),
-    messages: new Messages(),
+    messages: new Messages()
   }
 
   // Initial DOM tree render
@@ -42,7 +40,7 @@ function App(el) {
   el.appendChild(rootNode)
 
   // Main render loop
-  raf(function tick() {
+  raf(function tick () {
     var newTree = self.render()
     var patches = diff(tree, newTree)
     rootNode = patch(rootNode, patches)
@@ -52,7 +50,7 @@ function App(el) {
 }
 window.App = module.exports = App
 
-App.prototype.render = function() {
+App.prototype.render = function () {
   var views = this.views
   var data = this.data
   return h('div', {
@@ -63,6 +61,6 @@ App.prototype.render = function() {
     }, views.channels.render(data.channels)),
     h('div', {
       className: 'content'
-    }, views.messages.render(data.messages)),
+    }, views.messages.render(data.messages))
   ])
 }
