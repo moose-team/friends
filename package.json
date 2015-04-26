@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "electron-prebuilt": "^0.25.1",
-    "inherits": "^2.0.1",
     "raf": "^2.0.4",
     "virtual-dom": "^2.0.1",
     "xtend": "^4.0.0"
@@ -16,20 +15,25 @@
   "devDependencies": {
     "atom-shell-packager": "^2.1.1",
     "budo": "^4.0.0",
-    "standard": "^3.2.1"
+    "nib": "^1.1.0",
+    "standard": "^3.2.1",
+    "stylus": "^0.51.0"
   },
   "homepage": "https://github.com/feross/friends",
   "keywords": [],
-  "license": "MIT",
+  "license": "Public Domain",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/feross/friends.git"
   },
   "scripts": {
-    "build": "atom-shell-packager . Friends --ignore=node_modules/electron-prebuilt --icon=Icon.icns",
-    "start": "electron .",
-    "live": "budo app.js --live",
-    "test": "standard"
+    "build-css": "stylus -u nib css/app.styl -o app/static/ -c",
+    "live": "budo app --live",
+    "package": "npm run build-css && atom-shell-packager app Friends --icon=app/static/Icon.icns",
+    "start": "npm run build-css && electron app",
+    "test": "standard",
+    "watch": "npm run build-css && (npm run watch-css & electron app)",
+    "watch-css": "stylus -u nib css/app.styl -o app/static/ -w"
   }
 }

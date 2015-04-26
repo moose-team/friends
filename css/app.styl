@@ -1,0 +1,121 @@
+@import 'nib'
+
+WHITE = rgb(255, 255, 255)
+GRAY_LIGHT = rgb(210, 210, 210)
+GRAY = rgb(100, 100, 100)
+
+BURNT_SUN = rgb(255, 100, 77) // red
+CLASH = rgb(255, 181, 166) // pink
+AW_SHIT_A_BABY = rgb(199, 164, 159) // gray
+LOW_FREQ_OSC = rgb(94, 77, 102) // purple
+DARK_MOON = rgb(37, 18, 82) // dark purple
+
+SIDEBAR_WIDTH = 180px
+AVATAR_SIZE = 35px
+
+BORDER_RADIUS = 5px
+
+FONT_SIZE = 15px
+FONT_SIZE_SMALL = 12px
+
+SPACING_SIZE = 10px
+
+ellipsis()
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.clearfix:before, .clearfix:after
+  content: ''
+  display: table
+
+.clearfix:after
+  clear: both
+
+*, *:after, *:before
+  box-sizing: border-box
+
+html, body
+  margin: 0
+  padding: 0
+  height: 100%
+
+body
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: FONT_SIZE
+
+.sidebar
+  position: absolute
+  left: 0
+  top: 0
+  bottom: 0
+  width: SIDEBAR_WIDTH
+  background-color: LOW_FREQ_OSC
+  color: GRAY_LIGHT
+
+  .heading
+    margin: SPACING_SIZE 0 0 SPACING_SIZE
+    text-transform: uppercase
+    font-weight: bold
+
+  a
+    color: GRAY_LIGHT
+    text-decoration: none
+
+  ul
+    list-style: none
+    padding: 0
+    margin: SPACING_SIZE 0
+    // margin-left: 2 * SPACING_SIZE
+
+  li
+    padding: (SPACING_SIZE / 3) (SPACING_SIZE * 2)
+    margin: 0
+
+    &.active
+      background-color: BURNT_SUN
+      font-weight: bold
+      a
+        color: WHITE
+
+.content
+  position: absolute
+  right: 0
+  top: 0
+  bottom: 0
+  left: SIDEBAR_WIDTH
+
+.message
+  margin: SPACING_SIZE
+  .avatar
+    float: left
+    background-color: BURNT_SUN
+    border-radius: BORDER_RADIUS
+    width: AVATAR_SIZE
+    height: AVATAR_SIZE
+    vertical-align: middle
+    margin-right: SPACING_SIZE
+    margin-bottom: SPACING_SIZE
+  .username, .timestamp
+    display: inline-block
+    line-height: 1
+  .username
+    font-weight: bold
+  .timestamp
+    color: GRAY_LIGHT
+    font-size: FONT_SIZE_SMALL
+  .text
+    margin-left: AVATAR_SIZE + SPACING_SIZE
+    margin-top: 2px
+
+input
+  font-size: FONT_SIZE
+  position: absolute
+  outline: 0
+  border: 0
+  bottom: 0
+  width: calc(100% - 20px)
+  padding: SPACING_SIZE
+  margin: SPACING_SIZE
+  border: solid 3px GRAY_LIGHT
+  border-radius: BORDER_RADIUS

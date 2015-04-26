@@ -1,3 +1,5 @@
+module.exports = window.App = App
+
 var h = require('virtual-dom/h')
 var diff = require('virtual-dom/diff')
 var patch = require('virtual-dom/patch')
@@ -8,34 +10,41 @@ var Channels = require('./elements/channels')
 var Messages = require('./elements/messages')
 
 function App (el) {
-  if (!(this instanceof App)) return new App(el)
   var self = this
+  if (!(self instanceof App)) return new App(el)
 
   // The mock data model
-  this.data = {
+  self.data = {
     channels: [
-      { id: 0, name: 'max' },
-      { id: 1, name: 'jessica' },
-      { id: 2, name: 'mathias' },
-      { id: 3, name: 'feross' },
-      { id: 4, name: 'nate' },
-      { id: 5, name: 'chris' },
-      { id: 6, name: 'kyle' }
+      { id: 0, name: 'stackvm' },
+      { id: 1, name: 'nerdtracker' },
+      { id: 2, name: 'dat' },
+      { id: 3, name: 'webtorrent' }
     ],
     messages: [
-      { user_id: 0, message: 'this is a message' },
-      { user_id: 0, message: 'this is another message' }
+      {
+        username: 'maxogden',
+        text: 'I\'m a cat!',
+        timestamp: '1:30 AM',
+        avatar: 'static/Icon.png'
+      },
+      {
+        username: 'feross',
+        text: 'I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat!',
+        timestamp: '1:30 AM',
+        avatar: 'static/Icon.png'
+      }
     ]
   }
 
   // View instances used in our App
-  this.views = {
+  self.views = {
     channels: new Channels(),
     messages: new Messages()
   }
 
   // Initial DOM tree render
-  var tree = this.render()
+  var tree = self.render()
   var rootNode = createElement(tree)
   el.appendChild(rootNode)
 
@@ -48,11 +57,11 @@ function App (el) {
     raf(tick)
   })
 }
-window.App = module.exports = App
 
 App.prototype.render = function () {
-  var views = this.views
-  var data = this.data
+  var self = this
+  var views = self.views
+  var data = self.data
   return h('div', {
     className: 'layout'
   }, [

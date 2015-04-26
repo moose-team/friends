@@ -1,0 +1,9 @@
+{
+  "name": "friends",
+  "version": "0.0.0",
+  "dependencies": {
+  },
+  "main": "index.js",
+  "scripts": {
+  }
+}
