@@ -22,7 +22,7 @@
   "homepage": "https://github.com/feross/friends",
   "keywords": [],
   "license": "Public Domain",
-  "main": "index.js",
+  "main": "app/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/feross/friends.git"
