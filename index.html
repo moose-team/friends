@@ -1,8 +1,22 @@
 <html>
 <head>
-<title>Friends</title>
+  <title>Friends</title>
+  <link rel="stylesheet" href="style.css" charset="utf-8">
 </head>
 <body>
-  hello world
+  <script>
+  if (typeof require !== 'function') {
+    // If we're not in the electron env
+    var script = document.createElement('script')
+    script.src = 'app.js'
+    script.onload = function() {
+      new window.App(document.body)
+    }
+    document.currentScript.parentNode.insertBefore(script, document.currentScript)
+  } else {
+    // If we are in the electron env
+    require('./app.js')(document.body)
+  }
+  </script>
 </body>
 </html>

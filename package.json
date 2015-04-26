@@ -7,15 +7,19 @@
     "url": "https://github.com/feross/friends/issues"
   },
   "dependencies": {
-    "electron-prebuilt": "^0.25.1"
+    "electron-prebuilt": "^0.25.1",
+    "inherits": "^2.0.1",
+    "raf": "^2.0.4",
+    "virtual-dom": "^2.0.1",
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "atom-shell-packager": "^2.1.1",
+    "budo": "^4.0.0",
     "standard": "^3.2.1"
   },
   "homepage": "https://github.com/feross/friends",
-  "keywords": [
-  ],
+  "keywords": [],
   "license": "MIT",
   "main": "index.js",
   "repository": {
@@ -25,6 +29,7 @@
   "scripts": {
     "build": "atom-shell-packager . Friends --ignore=node_modules/electron-prebuilt --icon=Icon.icns",
     "start": "electron .",
+    "live": "budo app.js --live",
     "test": "standard"
   }
 }
