@@ -12,6 +12,7 @@ var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
 
+var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
 
 var Channels = require('./elements/channels')
@@ -46,10 +47,15 @@ function App (el) {
 
     logStream.on('data', function (entry) {
       var message = JSON.parse(entry.value)
-      var anon = /Anonymous/i.test(message.username)
 
-      message.avatar = anon ? 'static/Icon.png' : 'https://github.com/' + message.username + '.png'
+      var anon = /Anonymous/i.test(message.username)
+      message.avatar = anon
+        ? 'static/Icon.png'
+        : 'https://github.com/' + message.username + '.png'
       message.timeago = moment(message.timestamp).fromNow()
+
+      // message.text = richMessage(message.text)
+
       self.data.messages.push(message)
 
       if (!anon && !usersFound[message.username]) {
