@@ -8,6 +8,7 @@ var raf = require('raf')
 
 var Channels = require('./elements/channels')
 var Messages = require('./elements/messages')
+var Users = require('./elements/users')
 
 function App (el) {
   var self = this
@@ -34,13 +35,23 @@ function App (el) {
         timestamp: '1:30 AM',
         avatar: 'static/Icon.png'
       }
+    ],
+    users: [
+      { name: 'feross', avatar: 'static/Icon.png' },
+      { name: 'maxogden', avatar: 'static/Icon.png' },
+      { name: 'mafintosh', avatar: 'static/Icon.png' },
+      { name: 'ngoldman', avatar: 'static/Icon.png' },
+      { name: 'shama', avatar: 'static/Icon.png' },
+      { name: 'jlord', avatar: 'static/Icon.png' },
+      { name: 'chrisdickinson', avatar: 'static/Icon.png' }
     ]
   }
 
   // View instances used in our App
   self.views = {
     channels: new Channels(),
-    messages: new Messages()
+    messages: new Messages(),
+    users: new Users()
   }
 
   // Initial DOM tree render
@@ -63,7 +74,10 @@ App.prototype.render = function () {
   var views = self.views
   var data = self.data
   return h('div.layout', [
-    h('.sidebar', views.channels.render(data.channels)),
+    h('.sidebar', [
+      views.channels.render(data.channels),
+      views.users.render(data.users)
+    ]),
     h('.content', [
       views.messages.render(data.messages),
       h('input.text')

@@ -8,9 +8,8 @@ function Channels (params) {
 
 Channels.prototype.render = function (channels) {
   channels = channels.map(function (channel) {
-    return h('li', {
-      className: channel.active ? 'active' : ''
-    }, [
+    var className = channel.active ? 'active' : ''
+    return h('li', { className: className }, [
       h('a', {
         href: '#',
         onclick: function () {

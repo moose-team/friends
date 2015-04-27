@@ -12,6 +12,7 @@ DARK_MOON = rgb(37, 18, 82) // dark purple
 
 SIDEBAR_WIDTH = 180px
 AVATAR_SIZE = 35px
+AVATAR_SIZE_SMALL = 18px
 
 BORDER_RADIUS = 5px
 
@@ -68,7 +69,6 @@ body
     list-style: none
     padding: 0
     margin: SPACING_SIZE 0
-    // margin-left: 2 * SPACING_SIZE
 
   li
     margin: 0
@@ -79,6 +79,16 @@ body
       font-weight: bold
       a
         color: WHITE
+
+  .avatar
+    float: left
+    background-color: BURNT_SUN
+    border-radius: (BORDER_RADIUS / 2)
+    width: AVATAR_SIZE_SMALL
+    height: AVATAR_SIZE_SMALL
+    margin-right: (SPACING_SIZE / 2)
+    margin-left: (SPACING_SIZE / -2)
+    opacity: 0.7
 
 .content
   position: absolute
@@ -95,14 +105,12 @@ body
     border-radius: BORDER_RADIUS
     width: AVATAR_SIZE
     height: AVATAR_SIZE
-    vertical-align: middle
-    margin-right: SPACING_SIZE
-    margin-bottom: SPACING_SIZE
   .username, .timestamp
     display: inline-block
     line-height: 1
   .username
     font-weight: bold
+    margin-left: SPACING_SIZE
   .timestamp
     color: GRAY_LIGHT
     font-size: FONT_SIZE_SMALL
