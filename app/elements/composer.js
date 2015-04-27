@@ -4,7 +4,6 @@ var h = require('virtual-dom/h')
 
 function Composer (app) {
   this.app = app
-  this.className = 'Composer'
 }
 
 Composer.prototype.render = function () {

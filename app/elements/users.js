@@ -4,7 +4,6 @@ var h = require('virtual-dom/h')
 
 function Users (app) {
   this.app = app
-  this.className = 'users'
 }
 
 Users.prototype.render = function (users) {

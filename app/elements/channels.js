@@ -4,7 +4,6 @@ var h = require('virtual-dom/h')
 
 function Channels (app) {
   this.app = app
-  this.className = 'channels'
 }
 
 Channels.prototype.render = function (channels) {
