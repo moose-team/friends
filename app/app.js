@@ -14,12 +14,12 @@ var eos = require('end-of-stream')
 var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
-var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
 var through = require('through2').obj
+var util = require('./util')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -117,7 +117,7 @@ function App (el) {
       message.avatar = anon
         ? 'static/Icon.png'
         : 'https://github.com/' + message.username + '.png'
-      message.timeago = moment(message.timestamp).fromNow()
+      message.timeago = util.timeago(message.timestamp)
 
       if (self.data.username && !currentWindow.isFocused()) {
         console.log(message.rawText)
@@ -227,7 +227,7 @@ function App (el) {
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
     self.data.messages.forEach(function (message) {
-      message.timeago = moment(message.timestamp).fromNow()
+      message.timeago = util.timeago(message.timestamp)
     })
   }, 60 * 1000)
 }

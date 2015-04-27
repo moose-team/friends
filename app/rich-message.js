@@ -5,7 +5,7 @@ var emojiNamedCharacters = require('emoji-named-characters')
 var escapeHTML = require('escape-html')
 var ghlink = require('ghlink')
 var htmlToVDom = require('html-to-vdom')
-var moment = require('moment')
+var util = require('./util')
 
 var EMOJI_REGEX = /(\s|>|^)?:([A-z0-9_+]+):(\s|<|$)/g
 
@@ -22,7 +22,7 @@ function makeRichMessage (message) {
   message.avatar = message.anon
     ? 'static/Icon.png'
     : 'https://github.com/' + message.username + '.png'
-  message.timeago = moment(message.timestamp).fromNow()
+  message.timeago = util.timeago(message.timestamp)
   message.rawText = message.text
   message.text = escapeHTML(message.text)
 
