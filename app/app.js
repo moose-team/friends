@@ -16,7 +16,7 @@ function App (el) {
   // The mock data model
   self.data = {
     channels: [
-      { id: 0, name: 'stackvm' },
+      { id: 0, name: 'stackvm', active: true },
       { id: 1, name: 'nerdtracker' },
       { id: 2, name: 'dat' },
       { id: 3, name: 'webtorrent' }
