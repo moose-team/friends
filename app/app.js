@@ -34,7 +34,6 @@ function App (el) {
   })
 
   var swarm = window.swarm = Swarm()
-
   swarm.log.ready(function () {
     var logStream = swarm.log.createReadStream({
       live: true,
@@ -45,6 +44,7 @@ function App (el) {
       var val = JSON.parse(entry.value)
       val.avatar = /Anonymous/i.test(val.username) ? 'static/Icon.png' : 'https://github.com/' + val.username + '.png'
       self.data.messages.push(val)
+      scrollMessagesToBottom()
     })
   })
 
@@ -123,4 +123,11 @@ App.prototype.render = function () {
       views.composer.render()
     ])
   ])
+}
+
+function scrollMessagesToBottom () {
+  setTimeout(function () {
+    var messagesDiv = document.querySelector('.messages')
+    messagesDiv.scrollTop = messagesDiv.scrollHeight      
+  }, 100)
 }
