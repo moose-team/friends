@@ -16,6 +16,8 @@ When you launch the app it should "just work" now if you have git setup correctl
 
 ## Building
 
+You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
+
 * `git clone git@github.com:moose-team/friends`
 * `cd friends`
 * `npm install`
