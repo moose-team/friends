@@ -84,8 +84,7 @@ function App (el) {
       var basicMessage = JSON.parse(entry.value)
       var userVerify = verifiers[basicMessage.username]
 
-      if (!userVerify) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
-
+      if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
       if (userVerify && basicMessage.sig) {
         var msg = Buffer.concat([
           new Buffer(basicMessage.username),
