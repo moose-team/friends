@@ -2,6 +2,8 @@
 
 Contributions welcome!
 
+**Before spending lots of time on something, ask for feedback on your idea first!**
+
 Please search issues and pull requests before adding something new to avoid duplicating efforts and conversations.
 
 In addition to improving the project by refactoring code and and implementing relevant features, this project welcomes the following types of contributions:
