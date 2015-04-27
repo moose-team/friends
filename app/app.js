@@ -25,7 +25,7 @@ function App (el) {
   if (!(self instanceof App)) return new App(el)
 
   user.verify(function (err, verified, username) {
-    if (err) return alert(err.message || err)
+    if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
     } else {
