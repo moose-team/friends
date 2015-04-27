@@ -9,7 +9,7 @@ function Channels (app) {
 
   self.addChannelPrompt = new InputPrompt({
     className: 'addChannel',
-    prompt: '+ Add Channel',
+    prompt: '+ Join Channel',
     placeholder: 'Channel name',
     onsubmit: function (channelName) {
       self.app.emit('addChannel', channelName)
