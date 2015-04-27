@@ -23,7 +23,7 @@ function makeRichMessage (message) {
     ? 'static/Icon.png'
     : 'https://github.com/' + message.username + '.png'
   message.timeago = moment(message.timestamp).fromNow()
-
+  message.rawText = message.text
   message.text = htmlParser.sanitize(message.text, {
     elements: function (name) {
       return true

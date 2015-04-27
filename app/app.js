@@ -1,6 +1,7 @@
 module.exports = window.App = App
 
 var shell = require('shell')
+var remote = require('remote')
 
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
@@ -25,6 +26,8 @@ var Messages = require('./elements/messages')
 var Status = require('./elements/status')
 var Users = require('./elements/users')
 var Peers = require('./elements/peers')
+
+var currentWindow = remote.getCurrentWindow()
 
 delegate.on(document.body, 'a', 'click', function (ev) {
   ev.preventDefault()
@@ -89,6 +92,13 @@ function App (el) {
         : 'https://github.com/' + message.username + '.png'
       message.timeago = moment(message.timestamp).fromNow()
 
+      if (self.data.username && !currentWindow.isFocused()) {
+        console.log(message.rawText)
+        if (message.rawText.indexOf(self.data.username) > -1) new Notification("Mention", {
+          body: message.username + ': ' + message.rawText.slice(0, 10)
+        })
+      }
+      
       channel.messages.push(message)
 
       if (!message.anon && !usersFound[message.username]) {
