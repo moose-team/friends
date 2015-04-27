@@ -128,6 +128,6 @@ App.prototype.render = function () {
 function scrollMessagesToBottom () {
   setTimeout(function () {
     var messagesDiv = document.querySelector('.messages')
-    messagesDiv.scrollTop = messagesDiv.scrollHeight      
+    messagesDiv.scrollTop = messagesDiv.scrollHeight
   }, 100)
 }
