@@ -17,6 +17,7 @@
   "dependencies": {
     "electron-prebuilt": "^0.25.1",
     "ghsign": "^1.1.0",
+    "request": "^2.55.0",
     "through2": "^0.6.5"
   },
   "devDependencies": {
