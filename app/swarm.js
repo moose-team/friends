@@ -18,7 +18,7 @@ function createSwarm (app) {
   emitter.logs = logs
   emitter.db = db
 
-  var sign;
+  var sign
   var processor
 
   var startProcessor = function (log) {
@@ -92,6 +92,7 @@ function createSwarm (app) {
         new Buffer(message.timestamp.toString())
       ])
       sign(msg, function (err, sig) {
+        if (err) return cb(err)
         if (sig) {
           message.sig = sig.toString('base64')
         }

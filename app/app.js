@@ -18,7 +18,6 @@ var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
-var through = require('through2').obj
 var util = require('./util')
 var fs = require('fs')
 var request = require('request')
@@ -37,6 +36,7 @@ var currentWindow = remote.getCurrentWindow()
 
 ghsign = ghsign(function (username, cb) {
   fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (err, keys) {
+    if (err) return cb(err)
     if (keys) return cb(null, keys)
     request('https://github.com/' + username + '.keys', function (err, response) {
       if (err) return cb(err)
@@ -75,13 +75,12 @@ function App (el) {
   }
 
   var swarm = window.swarm = Swarm()
-  var verify
   user.verify(function (err, verified, username) {
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
       swarm.username = username
-      verify = ghsign.verifier(username)
+      ghsign.verifier(username)
     } else {
       self.data.username = 'Anonymous (' + catNames.random() + ')'
     }
@@ -149,7 +148,7 @@ function App (el) {
     if (userVerify && basicMessage.sig) {
       var msg = Buffer.concat([
         new Buffer(basicMessage.username),
-        new Buffer(basicMessage.channel ? basicMessage.channel: ''),
+        new Buffer(basicMessage.channel ? basicMessage.channel : ''),
         new Buffer(basicMessage.text),
         new Buffer(basicMessage.timestamp.toString())
       ])

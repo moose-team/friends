@@ -11,7 +11,7 @@ function Messages () {
 
   // Whether we should auto scroll
   self.shouldAutoScroll = true
-  self.on('scroll', function(node) {
+  self.on('scroll', function (node) {
     if (node.scrollHeight <= node.clientHeight + node.scrollTop) self.shouldAutoScroll = true
     else self.shouldAutoScroll = false
   })
