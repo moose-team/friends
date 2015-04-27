@@ -1,6 +1,5 @@
-node_modules/
-app/static/app.css
 .DS_Store
+dist/
 friendsdb/
-app/build/
+node_modules/
 public-keys/

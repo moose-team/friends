@@ -57,12 +57,12 @@
     "url": "https://github.com/moose-team/friends.git"
   },
   "scripts": {
-    "build-css": "stylus -u nib css/app.styl -o static/ -c",
+    "build-css": "mkdir -p dist && stylus -u nib css/app.styl -o dist/ -c",
     "package": "npm run build-css && atom-shell-packager . Friends --icon=static/Icon.icns",
     "start": "npm run build-css && electron index.js",
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron index.js)",
-    "watch-css": "stylus -u nib css/app.styl -o static/ -w",
+    "watch-css": "mkdir -p dist && stylus -u nib css/app.styl -o dist/ -w",
     "rebuild-leveldb": "cd node_modules/leveldown && HOME=~/.electron-gyp node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
   }
 }
