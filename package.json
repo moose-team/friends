@@ -18,6 +18,7 @@
     "electron-prebuilt": "^0.25.1",
     "inherits": "^2.0.1",
     "raf": "^2.0.4",
+    "subleveldown": "^2.0.0",
     "virtual-dom": "^2.0.1",
     "webrtc-swarm": "^1.0.0",
     "xtend": "^4.0.0"
