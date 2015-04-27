@@ -76,7 +76,6 @@ body
 
     &.active
       background-color: BURNT_SUN
-      font-weight: bold
       a
         color: WHITE
 
@@ -97,8 +96,11 @@ body
   bottom: 0
   left: SIDEBAR_WIDTH
 
-.message
+.messages
   margin: SPACING_SIZE
+
+.message
+  margin: SPACING_SIZE 0
   .avatar
     float: left
     background-color: BURNT_SUN
@@ -118,6 +120,10 @@ body
   .text
     margin-left: AVATAR_SIZE + SPACING_SIZE
     margin-top: 2px
+
+.starterMessage
+  color: GRAY
+  font-style: italic
 
 input
   font-size: FONT_SIZE

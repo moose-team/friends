@@ -49,20 +49,7 @@ function App (el) {
       { id: 2, name: 'dat' },
       { id: 3, name: 'webtorrent' }
     ],
-    messages: [
-      {
-        username: 'maxogden',
-        text: 'I\'m a cat!',
-        timestamp: '1:30 AM',
-        avatar: 'static/Icon.png'
-      },
-      {
-        username: 'feross',
-        text: 'I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat! I\'m a cat!',
-        timestamp: '1:30 AM',
-        avatar: 'static/Icon.png'
-      }
-    ],
+    messages: [],
     users: [
       { name: 'feross', avatar: 'static/Icon.png' },
       { name: 'maxogden', avatar: 'static/Icon.png' },
