@@ -1,15 +1,16 @@
 module.exports = window.App = App
 
+var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
 var diff = require('virtual-dom/diff')
 var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
+var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
-var catNames = require('cat-names')
 
 var Swarm = require('./swarm.js')
 
@@ -41,9 +42,10 @@ function App (el) {
     })
 
     logStream.on('data', function (entry) {
-      var val = JSON.parse(entry.value)
-      val.avatar = /Anonymous/i.test(val.username) ? 'static/Icon.png' : 'https://github.com/' + val.username + '.png'
-      self.data.messages.push(val)
+      var message = JSON.parse(entry.value)
+      message.avatar = /Anonymous/i.test(message.username) ? 'static/Icon.png' : 'https://github.com/' + message.username + '.png'
+      message.timeago = moment(message.timestamp).fromNow()
+      self.data.messages.push(message)
       scrollMessagesToBottom()
     })
   })
@@ -104,6 +106,13 @@ function App (el) {
       timestamp: Date.now()
     })
   })
+
+  // Update friendly "timeago" time string (once per minute)
+  setInterval(function () {
+    self.data.messages.forEach(function (message) {
+      message.timeago = moment(message.timestamp).fromNow()
+    })
+  }, 60 * 1000)
 }
 
 App.prototype.render = function () {

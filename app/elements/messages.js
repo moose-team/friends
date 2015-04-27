@@ -1,7 +1,6 @@
 module.exports = Messages
 
 var h = require('virtual-dom/h')
-var moment = require('moment')
 var ViewList = require('view-list')
 
 function Messages (app) {
@@ -28,7 +27,7 @@ function Messages (app) {
         h('img.avatar', { src: msg.avatar }),
         h('.username', msg.username),
         verified ? h('.verified') : null,
-        h('.timestamp', moment(msg.timestamp).fromNow()),
+        h('.timestamp', msg.timeago),
         h('.text', msg.text)
       ])
     }
