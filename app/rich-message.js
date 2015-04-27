@@ -5,6 +5,7 @@ var emojiNamedCharacters = require('emoji-named-characters')
 var htmlParser = require('html-parser')
 var htmlToVDom = require('html-to-vdom')
 var moment = require('moment')
+var ghlink = require('ghlink')
 
 var EMOJI_REGEX = /(\s|>|^)?:([A-z0-9_+]+):(\s|<|$)/g
 
@@ -39,6 +40,7 @@ function makeRichMessage (message) {
   })
 
   var messageHtml = autolinker.link(message.text)
+  messageHtml = ghlink(messageHtml, {format: 'html'})
   message.text = convertHTML('<span>' + messageHtml + '</span>')
 
   return message
