@@ -19,6 +19,7 @@ var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
+var through = require('through2').obj
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -78,7 +79,22 @@ function App (el) {
       live: true,
       since: Math.max(swarm.log.changes - 500, 0)
     })
-    function onMessage (basicMessage) {
+    logStream.pipe(through(function (entry, _, next) {
+      var basicMessage = JSON.parse(entry.value)
+      if (verify && basicMessage.sig) {
+        var msg = Buffer.concat([
+          new Buffer(basicMessage.username),
+          new Buffer(basicMessage.channel ? basicMessage.channel: ''),
+          new Buffer(basicMessage.text),
+          new Buffer(basicMessage.timestamp.toString())
+        ])
+        return verify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
+          basicMessage.valid = valid;
+          next(null, basicMessage);
+        });
+      }
+      next(null, basicMessage);
+    })).pipe(through(function (basicMessage, _, next) {
       var message = richMessage(basicMessage)
       var channelName = message.channel || 'friends'
       var channel = channelsFound[channelName]
@@ -122,24 +138,8 @@ function App (el) {
       }
 
       self.views.messages.scrollToBottom()
-    }
-    logStream.on('data', function (entry) {
-      var basicMessage = JSON.parse(entry.value)
-      if (verify && basicMessage.sig) {
-        var msg = Buffer.concat([
-          new Buffer(basicMessage.username),
-          new Buffer(basicMessage.channel ? basicMessage.channel: ''),
-          new Buffer(basicMessage.text),
-          new Buffer(basicMessage.timestamp.toString())
-        ])
-        console.log()
-        return verify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
-          basicMessage.valid = valid;
-          onMessage(basicMessage);
-        });
-      }
-      onMessage(basicMessage);
-    })
+      next();
+    }))
   })
 
   swarm.on('peer', function (p) {

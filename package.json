@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "electron-prebuilt": "^0.25.1",
-    "ghsign": "^1.1.0"
+    "ghsign": "^1.1.0",
+    "through2": "^0.6.5"
   },
   "devDependencies": {
     "atom-shell-packager": "^2.1.1",
