@@ -167,6 +167,7 @@ function App (el) {
       channel.active = (selectedChannel === channel)
       if (channel.active) self.data.messages = channel.messages
     })
+    self.views.messages.scrollToBottom()
   })
 
   self.on('sendMessage', function (text) {
