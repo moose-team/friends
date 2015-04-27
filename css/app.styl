@@ -115,12 +115,19 @@ body
     border-radius: BORDER_RADIUS
     width: AVATAR_SIZE
     height: AVATAR_SIZE
-  .username, .timestamp
+  .username, .verified, .timestamp
     display: inline-block
     line-height: 1
   .username
     font-weight: bold
     margin-left: SPACING_SIZE
+  .verified
+    background-image: url('verified.svg')
+    background-size: 10px
+    width: 10px
+    height: 10px
+    margin-left: (SPACING_SIZE / 2)
+    opacity: 0.8
   .timestamp
     color: GRAY_LIGHT
     font-size: FONT_SIZE_SMALL

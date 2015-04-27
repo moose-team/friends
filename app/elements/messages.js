@@ -20,10 +20,14 @@ function Messages (app) {
   this.viewList = new ViewList({
     className: 'messages',
     onload: new Onload(),
-    eachrow: function(msg) {
+    eachrow: function (msg) {
+      // TODO: this is insecure. Need to only show this when public key is verified
+      var verified = !/Anonymous/i.test(msg.username)
+
       return h('li.message.clearfix', [
         h('img.avatar', { src: msg.avatar }),
         h('.username', msg.username),
+        verified ? h('.verified') : null,
         h('.timestamp', moment(msg.timestamp).fromNow()),
         h('.text', msg.text)
       ])
