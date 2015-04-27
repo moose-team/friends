@@ -17,6 +17,7 @@ var Swarm = require('./swarm.js')
 var Channels = require('./elements/channels')
 var Composer = require('./elements/composer')
 var Messages = require('./elements/messages')
+var Status = require('./elements/status')
 var Users = require('./elements/users')
 
 inherits(App, EventEmitter)
@@ -76,7 +77,8 @@ function App (el) {
     channels: new Channels(self),
     composer: new Composer(self),
     messages: new Messages(self),
-    users: new Users(self)
+    users: new Users(self),
+    status: new Status(self)
   }
 
   // Initial DOM tree render
@@ -124,8 +126,7 @@ App.prototype.render = function () {
     h('.sidebar', [
       views.channels.render(data.channels),
       views.users.render(data.users),
-      h('.heading', 'Your username'),
-      data.username
+      views.status.render(data)
     ]),
     h('.content', [
       views.messages.render(data.messages),

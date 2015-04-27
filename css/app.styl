@@ -3,6 +3,7 @@
 WHITE = rgb(255, 255, 255)
 GRAY_LIGHT = rgb(210, 210, 210)
 GRAY = rgb(100, 100, 100)
+BLACK = rgb(0, 0, 0)
 
 BLUE_DARK = rgb(1, 82, 99)
 BLUE = rgb(0, 158, 179)
@@ -11,7 +12,7 @@ BLUE_LIGHT = rgb(208, 255, 255)
 RED_LIGHT = rgb(232, 74, 62)
 RED = rgb(180, 35, 8)
 
-SIDEBAR_WIDTH = 180px
+SIDEBAR_WIDTH = 190px
 AVATAR_SIZE = 35px
 AVATAR_SIZE_SMALL = 18px
 
@@ -53,11 +54,10 @@ body
   top: 0
   bottom: 0
   width: SIDEBAR_WIDTH
+  color: GRAY_LIGHT
   background: BLUE_DARK top left url('logo.jpg') no-repeat
   background-size: SIDEBAR_WIDTH
-  padding-top: 70px
-
-  color: GRAY_LIGHT
+  padding-top: 75px
 
   .heading
     margin: SPACING_SIZE 0 0 SPACING_SIZE
@@ -93,6 +93,17 @@ body
     margin-right: (SPACING_SIZE / 2)
     margin-left: (SPACING_SIZE / -2)
     opacity: 0.8
+
+  .status
+    ellipsis()
+    background-color: rgba(BLACK, 0.2)
+    font-size: 25px
+    text-align: center
+    position: absolute
+    padding: SPACING_SIZE 0
+    bottom: 0
+    left: 0
+    right: 0
 
 .content
   position: absolute
