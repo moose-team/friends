@@ -37,6 +37,7 @@ function App (el) {
   var logStream = swarm.log.createReadStream({live: true})
   logStream.on('data', function (entry) {
     var val = JSON.parse(entry.value)
+    val.avatar = /Anonymous/i.test(val.username) ? 'static/Icon.png' : 'https://github.com/' + val.username + '.png'
     self.data.messages.push(val)
   })
 
@@ -93,8 +94,7 @@ function App (el) {
     swarm.send({
       username: self.data.username,
       text: message,
-      timestamp: Date.now(),
-      avatar: 'static/Icon.png'
+      timestamp: Date.now()
     })
   })
 }
