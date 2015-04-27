@@ -2,6 +2,9 @@
 
 module.exports = window.App = App
 
+var fs = require('fs')
+var EventEmitter = require('events').EventEmitter
+
 var shell = require('shell')
 var remote = require('remote')
 var app = remote.require('app')
@@ -11,26 +14,24 @@ var createElement = require('virtual-dom/create-element')
 var delegate = require('delegate-dom')
 var diff = require('virtual-dom/diff')
 var eos = require('end-of-stream')
-var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
-var util = require('./util')
-var fs = require('fs')
 var request = require('request')
 
-var richMessage = require('./rich-message')
-var Swarm = require('./swarm.js')
+var richMessage = require('./lib/rich-message.js')
+var Swarm = require('./lib/swarm.js')
+var util = require('./lib/util.js')
 
-var Channels = require('./elements/channels')
-var Composer = require('./elements/composer')
-var Messages = require('./elements/messages')
-var Status = require('./elements/status')
-var Users = require('./elements/users')
-var Peers = require('./elements/peers')
+var Channels = require('./lib/elements/channels.js')
+var Composer = require('./lib/elements/composer.js')
+var Messages = require('./lib/elements/messages.js')
+var Status = require('./lib/elements/status.js')
+var Users = require('./lib/elements/users.js')
+var Peers = require('./lib/elements/peers.js')
 
 var currentWindow = remote.getCurrentWindow()
 

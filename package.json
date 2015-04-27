@@ -15,13 +15,35 @@
     "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
-    "electron-prebuilt": "^0.25.1",
     "ghsign": "^1.1.0",
     "request": "^2.55.0",
-    "through2": "^0.6.5"
+    "through2": "^0.6.5",
+    "autolinker": "^0.17.1",
+    "cat-names": "^1.0.2",
+    "delegate-dom": "0.0.1",
+    "emoji-named-characters": "^1.0.2",
+    "end-of-stream": "^1.1.0",
+    "escape-html": "^1.0.1",
+    "ghlink": "^0.1.2",
+    "github-current-user": "^2.0.0",
+    "html-parser": "^0.8.0",
+    "html-to-vdom": "^0.5.5",
+    "hyperlog": "^3.3.1",
+    "inherits": "^2.0.1",
+    "leveldown": "maxogden/leveldown#newnan",
+    "levelup": "^0.19.0",
+    "moment": "^2.10.2",
+    "raf": "^2.0.4",
+    "signalhub": "^3.3.0",
+    "subleveldown": "^2.0.0",
+    "view-list": "^1.3.0",
+    "virtual-dom": "^2.0.1",
+    "webrtc-swarm": "^1.1.1"
   },
   "devDependencies": {
-    "atom-shell-packager": "^2.1.1",
+    "node-gyp": "^1.0.3",
+    "electron-prebuilt": "^0.25.1",
+    "electron-packager": "^3.1.0",
     "nib": "^1.1.0",
     "standard": "^3.2.1",
     "stylus": "^0.51.0"
@@ -29,23 +51,18 @@
   "homepage": "https://github.com/moose-team/friends",
   "keywords": [],
   "license": "Public Domain",
-  "main": "app/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/moose-team/friends.git"
   },
   "scripts": {
-    "build-css": "stylus -u nib css/app.styl -o app/static/ -c",
-    "package": "npm run build-css && atom-shell-packager app Friends --icon=app/static/Icon.icns",
-    "start": "npm run build-css && electron app",
-    "install": "cd app && npm install",
+    "build-css": "stylus -u nib css/app.styl -o static/ -c",
+    "package": "npm run build-css && atom-shell-packager . Friends --icon=static/Icon.icns",
+    "start": "npm run build-css && electron index.js",
     "test": "standard",
-    "watch": "npm run build-css && (npm run watch-css & electron app)",
-    "watch-css": "stylus -u nib css/app.styl -o app/static/ -w"
-  },
-  "standard": {
-    "ignore": [
-      "app/node_modules/**"
-    ]
+    "watch": "npm run build-css && (npm run watch-css & electron index.js)",
+    "watch-css": "stylus -u nib css/app.styl -o static/ -w",
+    "rebuild-leveldb": "cd node_modules/leveldown && HOME=~/.electron-gyp node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
   }
 }

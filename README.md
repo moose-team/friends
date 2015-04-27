@@ -20,11 +20,8 @@ When you launch the app it should "just work" now if you have git setup correctl
 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 
-* `git clone git@github.com:moose-team/friends`
-* `cd friends`
 * `npm install`
-* `cd app && npm run rebuild` to compile leveldown for electron
-* `cd ..` to go back to the root folder
+* `npm run rebuild-leveldb` to compile leveldown for electron. you will have to modify the command in package.json if you are non a non 64 bit architecture
 * `npm start` to run in electron
 * `npm run package` to build distributable.
 
