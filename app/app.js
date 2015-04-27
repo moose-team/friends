@@ -65,6 +65,15 @@ function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
+  // The mock data model
+  self.data = {
+    peers: 0,
+    username: 'Anonymous (' + catNames.random() + ')',
+    channels: [],
+    messages: [],
+    users: []
+  }
+
   var swarm = window.swarm = Swarm()
   var verify
   user.verify(function (err, verified, username) {
@@ -79,43 +88,14 @@ function App (el) {
   })
 
   var channelsFound = {}
-  swarm.log.ready(function () {
-    var usersFound = {}
-    var verifiers = {}
+  var usersFound = {}
+  var verifiers = {}
 
-    channelsFound.friends = {
-      id: 0,
-      name: 'friends',
-      active: true,
-      messages: []
-    }
-    self.data.channels.push(channelsFound.friends)
-    self.data.messages = channelsFound.friends.messages
+  swarm.process(function (entry, cb) {
+    var basicMessage = JSON.parse(entry.value)
+    var userVerify = verifiers[basicMessage.username]
 
-    var logStream = swarm.log.createReadStream({
-      live: true,
-      since: Math.max(swarm.log.changes - 500, 0)
-    })
-    logStream.pipe(through(function (entry, _, next) {
-      var basicMessage = JSON.parse(entry.value)
-      var userVerify = verifiers[basicMessage.username]
-
-      if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
-      if (userVerify && basicMessage.sig) {
-        var msg = Buffer.concat([
-          new Buffer(basicMessage.username),
-          new Buffer(basicMessage.channel ? basicMessage.channel : ''),
-          new Buffer(basicMessage.text),
-          new Buffer(basicMessage.timestamp.toString())
-        ])
-        return userVerify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
-          if (err) basicMessage.valid = false
-          else basicMessage.valid = valid
-          next(null, basicMessage)
-        })
-      }
-      next(null, basicMessage)
-    })).pipe(through(function (basicMessage, _, next) {
+    var onverify = function () {
       var message = richMessage(basicMessage)
       var channelName = message.channel || 'friends'
       var channel = channelsFound[channelName]
@@ -162,8 +142,26 @@ function App (el) {
       }
 
       self.views.messages.scrollToBottom()
-      next()
-    }))
+      cb()
+    }
+
+    if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
+    if (userVerify && basicMessage.sig) {
+      var msg = Buffer.concat([
+        new Buffer(basicMessage.username),
+        new Buffer(basicMessage.channel ? basicMessage.channel: ''),
+        new Buffer(basicMessage.text),
+        new Buffer(basicMessage.timestamp.toString())
+      ])
+      userVerify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
+        if (err) basicMessage.valid = false
+        basicMessage.valid = valid
+        onverify()
+      })
+      return
+    }
+
+    onverify()
   })
 
   swarm.on('peer', function (p) {
@@ -173,14 +171,15 @@ function App (el) {
     })
   })
 
-  // The mock data model
-  self.data = {
-    peers: 0,
-    username: 'Anonymous (' + catNames.random() + ')',
-    channels: [],
-    messages: [],
-    users: []
+  channelsFound.friends = {
+    id: 0,
+    name: 'friends',
+    active: true,
+    messages: []
   }
+
+  self.data.channels.push(channelsFound.friends)
+  self.data.messages = channelsFound.friends.messages
 
   // View instances used in our App
   self.views = {
@@ -239,6 +238,7 @@ function App (el) {
         messages: []
       }
       self.data.channels.push(channel)
+      swarm.addChannel(channelName)
     }
   })
 
