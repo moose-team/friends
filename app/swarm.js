@@ -2,14 +2,14 @@ var events = require('events')
 var swarm = require('webrtc-swarm')
 var signalhub = require('signalhub')
 var levelup = require('levelup')
-var medeadown = require('medeadown')
+var leveldown = require('leveldown')
 var hyperlog = require('hyperlog')
  
 module.exports = createSwarm
 
 function createSwarm () {
   var emitter = new events.EventEmitter()
-  var db = levelup('./friendsdb', {db: medeadown})
+  var db = levelup('./friendsdb', {db: leveldown})
   var log = hyperlog(db)
  
   var hub = signalhub('http://dev.mathiasbuus.eu:8080', 'friends')
