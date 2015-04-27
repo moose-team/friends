@@ -1,3 +1,4 @@
 node_modules/
 app/static/app.css
 .DS_Store
+friendsdb/
