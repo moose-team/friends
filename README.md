@@ -5,6 +5,15 @@
 [travis-image]: https://img.shields.io/travis/feross/friends.svg?style=flat
 [travis-url]: https://travis-ci.org/feross/friends
 
+## Logging in
+
+You need a working git + github configuration
+
+- have a publicly listed github email (e.g. shows up on your github account)
+- if you dont wanna do that then do `git config --global user.username yourusername`
+
+When you launch the app it should "just work" now if you have git setup correctly :)
+
 ## Building
 
 * `git clone git@github.com:feross/friends`
