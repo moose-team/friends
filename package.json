@@ -2,7 +2,15 @@
   "name": "friends",
   "description": "",
   "version": "0.0.0",
-  "author": "",
+  "author": [
+    "feross",
+    "maxogden",
+    "mafintosh",
+    "ngoldman",
+    "shama",
+    "jlord",
+    "chrisdickinson"
+  ],
   "bugs": {
     "url": "https://github.com/feross/friends/issues"
   },
