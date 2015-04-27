@@ -10,7 +10,7 @@ function Messages (app) {
   this.viewList = new ViewList({
     className: 'messages',
     // TODO: Calculate this rowHeight automatically as well
-    rowHeight: 42,
+    rowHeight: 35,
     eachrow: function (msg) {
       // TODO: this is insecure. Need to only show this when public key is verified
       var verified = !/Anonymous/i.test(msg.username)
