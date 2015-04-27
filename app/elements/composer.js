@@ -9,15 +9,15 @@ function Composer (app) {
 Composer.prototype.render = function () {
   var self = this
 
-  var input = h('input.text', {
+  var input = h('input', {
     placeholder: 'Send a message...',
     autofocus: true
   })
 
-  return h('form', {
+  return h('form.composer', {
     onsubmit: function (e) {
       e.preventDefault()
-      var input = this.querySelector('input.text')
+      var input = this.querySelector('input')
       self.app.emit('sendMessage', input.value)
       input.value = ''
     }

@@ -62,8 +62,12 @@ body
   cursor: default
 
 
+  & > *
+    padding-left: SPACING_SIZE
+
   .heading
-    margin: SPACING_SIZE 0 0 SPACING_SIZE
+    margin-top: (SPACING_SIZE * 2)
+    margin-bottom: SPACING_SIZE
     text-transform: uppercase
     font-weight: bold
 
@@ -71,12 +75,13 @@ body
     color: GRAY_LIGHT
     text-decoration: none
     padding: (SPACING_SIZE / 3) (SPACING_SIZE * 2)
+    margin: 0
     display: block
 
   ul
     list-style: none
+    margin: 0
     padding: 0
-    margin: SPACING_SIZE 0
 
   li
     margin: 0
@@ -93,7 +98,7 @@ body
     width: AVATAR_SIZE_SMALL
     height: AVATAR_SIZE_SMALL
     margin-right: (SPACING_SIZE / 2)
-    margin-left: (SPACING_SIZE / -2)
+    margin-left: (-1 * SPACING_SIZE / 2)
     opacity: 0.8
 
   .peers
@@ -160,7 +165,7 @@ body
   color: GRAY
   font-style: italic
 
-input
+.composer input
   font-size: FONT_SIZE
   position: absolute
   bottom: 0

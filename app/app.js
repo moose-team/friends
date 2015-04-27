@@ -54,9 +54,9 @@ function App (el) {
 
   var swarm = window.swarm = Swarm()
 
+  var channelsFound = {}
   swarm.log.ready(function () {
     var usersFound = {}
-    var channelsFound = {}
 
     channelsFound.friends = {
       id: 0,
@@ -179,6 +179,18 @@ function App (el) {
       text: text,
       timestamp: Date.now()
     })
+  })
+
+  self.on('addChannel', function (channelName) {
+    if (!channelsFound[channelName]) {
+      var channel = channelsFound[channelName] = {
+        name: channelName,
+        id: self.data.channels.length,
+        active: false,
+        messages: []
+      }
+      self.data.channels.push(channel)
+    }
   })
 
   // Update friendly "timeago" time string (once per minute)
