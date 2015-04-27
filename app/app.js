@@ -1,33 +1,34 @@
 module.exports = window.App = App
 
-var Swarm = require('./swarm.js')
-
-var h = require('virtual-dom/h')
 var createElement = require('virtual-dom/create-element')
 var diff = require('virtual-dom/diff')
 var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
+var h = require('virtual-dom/h')
+var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
-var createElement = require('virtual-dom/create-element')
 var raf = require('raf')
 
+var Swarm = require('./swarm.js')
+
 var Channels = require('./elements/channels')
+var Composer = require('./elements/composer')
 var Messages = require('./elements/messages')
 var Users = require('./elements/users')
+
+inherits(App, EventEmitter)
 
 function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
-  var swarm = Swarm()
+  var swarm = window.swarm = Swarm()
   var logStream = swarm.log.createReadStream({live: true})
   logStream.on('data', function (entry) {
     var val = JSON.parse(entry.value)
     self.data.messages.push(val)
   })
-  
-  window.swarm = swarm
-  
+
   // The mock data model
   self.data = {
     channels: [
@@ -63,9 +64,10 @@ function App (el) {
 
   // View instances used in our App
   self.views = {
-    channels: new Channels(),
-    messages: new Messages(),
-    users: new Users()
+    channels: new Channels(self),
+    composer: new Composer(self),
+    messages: new Messages(self),
+    users: new Users(self)
   }
 
   // Initial DOM tree render
@@ -81,6 +83,21 @@ function App (el) {
     tree = newTree
     raf(tick)
   })
+
+  self.on('selectChannel', function (selectedChannel) {
+    self.data.channels.forEach(function (channel) {
+      channel.active = (selectedChannel === channel)
+    })
+  })
+
+  self.on('sendMessage', function (message) {
+    swarm.send({
+      username: '',
+      text: message,
+      timestamp: Date.now,
+      avatar: 'static/Icon.png'
+    })
+  })
 }
 
 App.prototype.render = function () {
@@ -94,7 +111,7 @@ App.prototype.render = function () {
     ]),
     h('.content', [
       views.messages.render(data.messages),
-      h('input.text')
+      views.composer.render()
     ])
   ])
 }
