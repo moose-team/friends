@@ -5,6 +5,7 @@
     "autolinker": "^0.17.1",
     "cat-names": "^1.0.2",
     "emoji-named-characters": "^1.0.2",
+    "end-of-stream": "^1.1.0",
     "github-current-user": "^2.0.0",
     "html-to-vdom": "^0.5.5",
     "hyperlog": "^3.3.1",

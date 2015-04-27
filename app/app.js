@@ -15,6 +15,7 @@ var autolinker = require('autolinker')
 var VNode = require('virtual-dom/vnode/vnode')
 var VText = require('virtual-dom/vnode/vtext')
 var htmlToVDom = require('html-to-vdom')
+var eos = require('end-of-stream')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
