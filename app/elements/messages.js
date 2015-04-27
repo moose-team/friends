@@ -43,3 +43,10 @@ Messages.prototype.render = function (messages) {
 
   return h('.messages-container', childViews)
 }
+
+Messages.prototype.scrollToBottom = function () {
+  setTimeout(function () {
+    var messagesDiv = document.querySelector('.messages')
+    if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight
+  }, 100)
+}

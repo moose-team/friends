@@ -99,7 +99,7 @@ function App (el) {
         })
       }
 
-      scrollMessagesToBottom()
+      self.views.messages.scrollToBottom()
     })
   })
 
@@ -191,11 +191,4 @@ App.prototype.render = function () {
       views.composer.render()
     ])
   ])
-}
-
-function scrollMessagesToBottom () {
-  setTimeout(function () {
-    var messagesDiv = document.querySelector('.messages')
-    messagesDiv.scrollTop = messagesDiv.scrollHeight
-  }, 100)
 }
