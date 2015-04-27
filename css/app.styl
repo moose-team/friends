@@ -99,12 +99,15 @@ body
   left: SIDEBAR_WIDTH
 
 .messages
+  margin: 0
+  padding: 0
+  li
+    list-style: none
+
+.message
   margin: SPACING_SIZE
   overflow-y: scroll
   height: calc(100% - 65px)
-
-.message
-  margin: SPACING_SIZE 0
   .avatar
     float: left
     background-color: RED_LIGHT
