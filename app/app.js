@@ -65,6 +65,7 @@ function App (el) {
   var channelsFound = {}
   swarm.log.ready(function () {
     var usersFound = {}
+    var verifiers = {}
 
     channelsFound.friends = {
       id: 0,
@@ -81,14 +82,18 @@ function App (el) {
     })
     logStream.pipe(through(function (entry, _, next) {
       var basicMessage = JSON.parse(entry.value)
-      if (verify && basicMessage.sig) {
+      var userVerify = verifiers[basicMessage.username]
+
+      if (!userVerify) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
+
+      if (userVerify && basicMessage.sig) {
         var msg = Buffer.concat([
           new Buffer(basicMessage.username),
           new Buffer(basicMessage.channel ? basicMessage.channel: ''),
           new Buffer(basicMessage.text),
           new Buffer(basicMessage.timestamp.toString())
         ])
-        return verify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
+        return userVerify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
           basicMessage.valid = valid;
           next(null, basicMessage);
         });
@@ -129,12 +134,15 @@ function App (el) {
 
       channel.messages.push(message)
 
-      if (!message.anon && !usersFound[message.username]) {
+      if (!message.anon && message.valid && !usersFound[message.username]) {
         usersFound[message.username] = true
         self.data.users.push({
           name: message.username,
           avatar: message.avatar
         })
+      }
+      if (!message.anon && !message.valid) {
+        message.username = 'Allegedly ' + message.username
       }
 
       self.views.messages.scrollToBottom()
