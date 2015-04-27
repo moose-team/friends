@@ -94,11 +94,14 @@ function App (el) {
 
       if (self.data.username && !currentWindow.isFocused()) {
         console.log(message.rawText)
-        if (message.rawText.indexOf(self.data.username) > -1) new Notification("Mention", {
-          body: message.username + ': ' + message.rawText.slice(0, 20)
-        })
+        if (message.rawText.indexOf(self.data.username) > -1) {
+          new Notification("Mention", {
+            body: message.username + ': ' + message.rawText.slice(0, 20)
+          })
+          self.addBadgeNotification()
+        }
       }
-      
+
       channel.messages.push(message)
 
       if (!message.anon && !usersFound[message.username]) {
@@ -201,4 +204,10 @@ App.prototype.render = function () {
       views.composer.render()
     ])
   ])
+}
+
+App.prototype.addBadgeNotification = function (num) {
+  if (!this._notifications) this._notifications = 0
+  this._notifications += num || 1
+  remote.require('app').dock.setBadge(this._notifications.toString())
 }
