@@ -51,6 +51,17 @@ function App (el) {
 
   swarm.log.ready(function () {
     var usersFound = {}
+    var channelsFound = {}
+
+    channelsFound.stackvm = {
+      id: 0,
+      name: 'stackvm',
+      active: true,
+      messages: []
+    }
+    self.data.channels.push(channelsFound.stackvm)
+    self.data.messages = channelsFound.stackvm.messages
+
     var logStream = swarm.log.createReadStream({
       live: true,
       since: Math.max(swarm.log.changes - 500, 0)
@@ -58,7 +69,27 @@ function App (el) {
 
     logStream.on('data', function (entry) {
       var message = richMessage(JSON.parse(entry.value))
-      self.data.messages.push(message)
+      var channelName = message.channel || 'stackvm'
+      var channel = channelsFound[channelName]
+
+      if (!channel) {
+        channel = channelsFound[channelName] = {
+          id: self.data.channels.length,
+          name: channelName,
+          active: false,
+          messages: []
+        }
+        self.data.channels.push(channel)
+      }
+
+      var anon = /Anonymous/i.test(message.username)
+
+      message.avatar = anon
+        ? 'static/Icon.png'
+        : 'https://github.com/' + message.username + '.png'
+      message.timeago = moment(message.timestamp).fromNow()
+
+      channel.messages.push(message)
 
       if (!message.anon && !usersFound[message.username]) {
         usersFound[message.username] = true
@@ -83,12 +114,7 @@ function App (el) {
   self.data = {
     peers: 0,
     username: 'Anonymous (' + catNames.random() + ')',
-    channels: [
-      { id: 0, name: 'stackvm', active: true },
-      { id: 1, name: 'nerdtracker' },
-      { id: 2, name: 'dat' },
-      { id: 3, name: 'webtorrent' }
-    ],
+    channels: [],
     messages: [],
     users: []
   }
@@ -120,6 +146,7 @@ function App (el) {
   self.on('selectChannel', function (selectedChannel) {
     self.data.channels.forEach(function (channel) {
       channel.active = (selectedChannel === channel)
+      if (channel.active) self.data.messages = channel.messages
     })
   })
 
