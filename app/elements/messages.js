@@ -13,7 +13,7 @@ function Messages (app) {
     rowHeight: 42,
     eachrow: function (msg) {
       // TODO: this is insecure. Need to only show this when public key is verified
-      var verified = !/Anonymous/i.test(msg.username)
+      var verified = !/Anonymous/i.test(msg.username) && msg.valid
       return h('li.message.clearfix', [
         h('img.avatar', { src: msg.avatar }),
         h('.username', msg.username),

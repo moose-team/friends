@@ -13,12 +13,12 @@ var diff = require('virtual-dom/diff')
 var eos = require('end-of-stream')
 var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
-var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
+var ghsign = require('ghsign')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -46,16 +46,20 @@ function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
+  var swarm = window.swarm = Swarm()
+  var verify
   user.verify(function (err, verified, username) {
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
+      swarm.username = username
+      verify = ghsign.verifier(username)
     } else {
       self.data.username = 'Anonymous (' + catNames.random() + ')'
     }
   })
 
-  var swarm = window.swarm = Swarm()
+
 
   var channelsFound = {}
   swarm.log.ready(function () {
@@ -74,9 +78,8 @@ function App (el) {
       live: true,
       since: Math.max(swarm.log.changes - 500, 0)
     })
-
-    logStream.on('data', function (entry) {
-      var message = richMessage(JSON.parse(entry.value))
+    function onMessage (basicMessage) {
+      var message = richMessage(basicMessage)
       var channelName = message.channel || 'friends'
       var channel = channelsFound[channelName]
 
@@ -119,6 +122,23 @@ function App (el) {
       }
 
       self.views.messages.scrollToBottom()
+    }
+    logStream.on('data', function (entry) {
+      var basicMessage = JSON.parse(entry.value)
+      if (verify && basicMessage.sig) {
+        var msg = Buffer.concat([
+          new Buffer(basicMessage.username),
+          new Buffer(basicMessage.channel ? basicMessage.channel: ''),
+          new Buffer(basicMessage.text),
+          new Buffer(basicMessage.timestamp.toString())
+        ])
+        console.log()
+        return verify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
+          basicMessage.valid = valid;
+          onMessage(basicMessage);
+        });
+      }
+      onMessage(basicMessage);
     })
   })
 
