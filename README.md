@@ -1,5 +1,7 @@
 # Friends
 
+p2p chat powered by the web. **alpha quality** you probably only want to use this if you like to send pull requests fixing things :)
+
 [![travis][travis-image]][travis-url]
 
 [travis-image]: https://img.shields.io/travis/moose-team/friends.svg?style=flat
