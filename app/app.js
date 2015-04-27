@@ -123,10 +123,12 @@ function App (el) {
     })
   })
 
-  self.on('sendMessage', function (message) {
+  self.on('sendMessage', function (text) {
+    text = text.trim()
+    if (text.length === 0) return
     swarm.send({
       username: self.data.username,
-      text: message,
+      text: text,
       timestamp: Date.now()
     })
   })
