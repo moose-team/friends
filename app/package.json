@@ -4,6 +4,7 @@
   "dependencies": {
     "cat-names": "^1.0.2",
     "emoji-named-characters": "^1.0.2",
+    "end-of-stream": "^1.1.0",
     "github-current-user": "^2.0.0",
     "hyperlog": "^3.3.1",
     "leveldown": "maxogden/leveldown#newnan",

@@ -11,6 +11,7 @@ var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
+var eos = require('end-of-stream')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
