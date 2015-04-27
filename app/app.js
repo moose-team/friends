@@ -20,6 +20,7 @@ var Composer = require('./elements/composer')
 var Messages = require('./elements/messages')
 var Status = require('./elements/status')
 var Users = require('./elements/users')
+var Peers = require('./elements/peers')
 
 inherits(App, EventEmitter)
 
@@ -70,8 +71,16 @@ function App (el) {
     })
   })
 
+  swarm.on('peer', function (p) {
+    self.data.peers++
+    eos(p, function () {
+      self.data.peers--
+    })
+  })
+
   // The mock data model
   self.data = {
+    peers: 0,
     username: 'Anonymous (' + catNames.random() + ')',
     channels: [
       { id: 0, name: 'stackvm', active: true },
@@ -89,6 +98,7 @@ function App (el) {
     composer: new Composer(self),
     messages: new Messages(self),
     users: new Users(self),
+    peers: new Peers(self),
     status: new Status(self)
   }
 
@@ -137,6 +147,7 @@ App.prototype.render = function () {
     h('.sidebar', [
       views.channels.render(data.channels),
       views.users.render(data.users),
+      views.peers.render(data),
       views.status.render(data)
     ]),
     h('.content', [

@@ -29,15 +29,17 @@ function createSwarm () {
   }
 
   sw.on('peer', function (p, id) {
-    console.log('peer', id)
     var stream = log.replicate({live: true})
+
     emitter.emit('peer', p, id, stream)
 
     stream.on('push', function () {
+      emitter.emit('push')
       console.log('pushing node')
     })
 
     stream.on('pull', function () {
+      emitter.emit('pull')
       console.log('pulling node')
     })
 
