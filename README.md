@@ -7,6 +7,8 @@
 
 ## Building
 
+* `git clone git@github.com:feross/friends`
+* `cd friends`
 * `npm install`
 * `cd app && npm run rebuild` to compile leveldown for electron
 * `cd ..` to go back to the root folder
