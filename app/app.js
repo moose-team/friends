@@ -20,6 +20,8 @@ var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
 var through = require('through2').obj
+var fs = require('fs')
+var request = require('request')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -32,6 +34,22 @@ var Users = require('./elements/users')
 var Peers = require('./elements/peers')
 
 var currentWindow = remote.getCurrentWindow()
+
+ghsign = ghsign(function (username, cb) {
+  fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (err, keys) {
+    if (keys) return cb(null, keys)
+    request('https://github.com/' + username + '.keys', function (err, response) {
+      if (err) return cb(err)
+      var keys = response.statusCode === 200 && response.body
+      if (!keys) return cb(new Error('Could not find public keys for ' + username))
+      fs.mkdir('./public-keys', function () {
+        fs.writeFile('./public-keys/' + username + '.keys', keys, function () {
+          cb(null, keys)
+        })
+      })
+    })
+  })
+})
 
 delegate.on(document.body, 'a', 'click', function (e) {
   var href = e.target.getAttribute('href')
