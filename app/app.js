@@ -34,11 +34,18 @@ function App (el) {
   })
 
   var swarm = window.swarm = Swarm()
-  var logStream = swarm.log.createReadStream({live: true})
-  logStream.on('data', function (entry) {
-    var val = JSON.parse(entry.value)
-    val.avatar = /Anonymous/i.test(val.username) ? 'static/Icon.png' : 'https://github.com/' + val.username + '.png'
-    self.data.messages.push(val)
+
+  swarm.log.ready(function () {
+    var logStream = swarm.log.createReadStream({
+      live: true,
+      since: Math.max(swarm.log.changes - 500, 0)
+    })
+
+    logStream.on('data', function (entry) {
+      var val = JSON.parse(entry.value)
+      val.avatar = /Anonymous/i.test(val.username) ? 'static/Icon.png' : 'https://github.com/' + val.username + '.png'
+      self.data.messages.push(val)
+    })
   })
 
   // The mock data model
