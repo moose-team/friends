@@ -2,7 +2,8 @@ module.exports = Messages
 
 var h = require('virtual-dom/h')
 
-function Messages (params) {
+function Messages (app) {
+  this.app = app
   this.className = 'messages'
 }
 

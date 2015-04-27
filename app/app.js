@@ -3,7 +3,10 @@ module.exports = window.App = App
 var Swarm = require('./swarm.js')
 
 var h = require('virtual-dom/h')
+var createElement = require('virtual-dom/create-element')
 var diff = require('virtual-dom/diff')
+var EventEmitter = require('events').EventEmitter
+var h = require('virtual-dom/h')
 var patch = require('virtual-dom/patch')
 var createElement = require('virtual-dom/create-element')
 var raf = require('raf')

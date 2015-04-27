@@ -2,7 +2,8 @@ module.exports = Users
 
 var h = require('virtual-dom/h')
 
-function Users (params) {
+function Users (app) {
+  this.app = app
   this.className = 'users'
 }
 
