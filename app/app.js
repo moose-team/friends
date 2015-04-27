@@ -98,7 +98,7 @@ function App (el) {
       if (self.data.username && !currentWindow.isFocused()) {
         console.log(message.rawText)
         if (message.rawText.indexOf(self.data.username) > -1) {
-          new Notification("Mention", {
+          new Notification('Mentioned in #' + channel.name, {
             body: message.username + ': ' + message.rawText.slice(0, 20)
           })
           self.setBadge()
