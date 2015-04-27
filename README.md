@@ -8,6 +8,8 @@
 ## Building
 
 * `npm install`
+* `cd app && npm run rebuild` to compile leveldown for electron
+* `cd ..` to go back to the root folder
 * `npm start` to run in electron
 * `npm run package` to build distributable.
 
