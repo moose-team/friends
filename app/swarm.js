@@ -16,7 +16,7 @@ function createSwarm () {
   var hub = signalhub('http://dev.mathiasbuus.eu:8080', 'friends')
   var sw = swarm(hub)
 
-  emitter.db = subleveldown(db)
+  emitter.db = db
   emitter.log = log
   emitter.hub = hub
   emitter.swarm = sw

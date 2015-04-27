@@ -36,7 +36,9 @@ function App (el) {
   })
 
   var swarm = window.swarm = Swarm()
+
   swarm.log.ready(function () {
+    var usersFound = {}
     var logStream = swarm.log.createReadStream({
       live: true,
       since: Math.max(swarm.log.changes - 500, 0)
@@ -44,9 +46,20 @@ function App (el) {
 
     logStream.on('data', function (entry) {
       var message = JSON.parse(entry.value)
-      message.avatar = /Anonymous/i.test(message.username) ? 'static/Icon.png' : 'https://github.com/' + message.username + '.png'
+      var anon = /Anonymous/i.test(message.username)
+
+      message.avatar = anon ? 'static/Icon.png' : 'https://github.com/' + message.username + '.png'
       message.timeago = moment(message.timestamp).fromNow()
       self.data.messages.push(message)
+
+      if (!anon && !usersFound[message.username]) {
+        usersFound[message.username] = true
+        self.data.users.push({
+          name: message.username,
+          avatar: message.avatar
+        })
+      }
+
       scrollMessagesToBottom()
     })
   })
@@ -61,15 +74,7 @@ function App (el) {
       { id: 3, name: 'webtorrent' }
     ],
     messages: [],
-    users: [
-      { name: 'feross', avatar: 'static/Icon.png' },
-      { name: 'maxogden', avatar: 'static/Icon.png' },
-      { name: 'mafintosh', avatar: 'static/Icon.png' },
-      { name: 'ngoldman', avatar: 'static/Icon.png' },
-      { name: 'shama', avatar: 'static/Icon.png' },
-      { name: 'jlord', avatar: 'static/Icon.png' },
-      { name: 'chrisdickinson', avatar: 'static/Icon.png' }
-    ]
+    users: []
   }
 
   // View instances used in our App
