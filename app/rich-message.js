@@ -2,10 +2,10 @@ module.exports = makeRichMessage
 
 var autolinker = require('autolinker')
 var emojiNamedCharacters = require('emoji-named-characters')
-var htmlParser = require('html-parser')
+var escapeHTML = require('escape-html')
+var ghlink = require('ghlink')
 var htmlToVDom = require('html-to-vdom')
 var moment = require('moment')
-var ghlink = require('ghlink')
 
 var EMOJI_REGEX = /(\s|>|^)?:([A-z0-9_+]+):(\s|<|$)/g
 
@@ -24,16 +24,7 @@ function makeRichMessage (message) {
     : 'https://github.com/' + message.username + '.png'
   message.timeago = moment(message.timestamp).fromNow()
   message.rawText = message.text
-  message.text = htmlParser.sanitize(message.text, {
-    elements: function (name) {
-      return true
-    },
-    attributes: function (name) {
-      return true
-    },
-    comments: true,
-    doctype: true
-  })
+  message.text = escapeHTML(message.text)
 
   message.text = message.text.replace(EMOJI_REGEX, function (full, $1, $2, $3) {
     return ($1 || '') + renderEmoji($2) + ($3 || '')
