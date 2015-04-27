@@ -2,12 +2,22 @@ module.exports = Messages
 
 var h = require('virtual-dom/h')
 var ViewList = require('view-list')
+var inherits = require('util').inherits
+var EE = require('events').EventEmitter
 
-function Messages (app) {
+function Messages () {
+  EE.call(this)
   var self = this
-  this.app = app
+
+  // Whether we should auto scroll
+  self.shouldAutoScroll = true
+  self.on('scroll', function(node) {
+    if (node.scrollHeight <= node.clientHeight + node.scrollTop) self.shouldAutoScroll = true
+    else self.shouldAutoScroll = false
+  })
 
   this.viewList = new ViewList({
+    target: self,
     className: 'messages',
     // TODO: Calculate this rowHeight automatically as well
     rowHeight: 35,
@@ -30,6 +40,7 @@ function Messages (app) {
     self.viewList.height = messages.offsetHeight
   }, false)
 }
+inherits(Messages, EE)
 
 Messages.prototype.render = function (messages) {
   var childViews
@@ -45,6 +56,7 @@ Messages.prototype.render = function (messages) {
 }
 
 Messages.prototype.scrollToBottom = function () {
+  if (!this.shouldAutoScroll) return
   setTimeout(function () {
     var messagesDiv = document.querySelector('.messages')
     if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight
