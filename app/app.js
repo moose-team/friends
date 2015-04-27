@@ -53,14 +53,14 @@ function App (el) {
     var usersFound = {}
     var channelsFound = {}
 
-    channelsFound.stackvm = {
+    channelsFound.friends = {
       id: 0,
-      name: 'stackvm',
+      name: 'friends',
       active: true,
       messages: []
     }
-    self.data.channels.push(channelsFound.stackvm)
-    self.data.messages = channelsFound.stackvm.messages
+    self.data.channels.push(channelsFound.friends)
+    self.data.messages = channelsFound.friends.messages
 
     var logStream = swarm.log.createReadStream({
       live: true,
@@ -69,7 +69,7 @@ function App (el) {
 
     logStream.on('data', function (entry) {
       var message = richMessage(JSON.parse(entry.value))
-      var channelName = message.channel || 'stackvm'
+      var channelName = message.channel || 'friends'
       var channel = channelsFound[channelName]
 
       if (!channel) {
@@ -153,8 +153,14 @@ function App (el) {
   self.on('sendMessage', function (text) {
     text = text.trim()
     if (text.length === 0) return
+
+    var activeChannel = self.data.channels.reduce(function (a, b) {
+      return a && a.active ? a : b
+    }, null)
+
     swarm.send({
       username: self.data.username,
+      channel: activeChannel && activeChannel.name,
       text: text,
       timestamp: Date.now()
     })
