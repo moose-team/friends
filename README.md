@@ -16,7 +16,7 @@ When you launch the app it should "just work" now if you have git setup correctl
 
 ## Building
 
-* `git clone git@github.com:feross/friends`
+* `git clone git@github.com:moose-team/friends`
 * `cd friends`
 * `npm install`
 * `cd app && npm run rebuild` to compile leveldown for electron
