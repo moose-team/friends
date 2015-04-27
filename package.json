@@ -45,5 +45,10 @@
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron app)",
     "watch-css": "stylus -u nib css/app.styl -o app/static/ -w"
+  },
+  "standard": {
+    "ignore": [
+      "app/node_modules/**"
+    ]
   }
 }
