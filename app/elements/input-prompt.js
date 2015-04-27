@@ -26,7 +26,10 @@ InputPrompt.prototype.render = function () {
     }, [
       h('input', {
         placeholder: self.params.placeholder,
-        onload: self
+        onload: self,
+        onblur: function (e) {
+          self.showInput = false
+        }
       })
     ])
 
