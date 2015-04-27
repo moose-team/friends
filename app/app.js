@@ -8,6 +8,8 @@ var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
+var user = require('github-current-user')
+var catNames = require('cat-names')
 
 var Swarm = require('./swarm.js')
 
@@ -22,6 +24,15 @@ function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
+  user.verify(function (err, verified, username) {
+    if (err) return alert(err.message || err)
+    if (verified) {
+      self.data.username = username
+    } else {
+      self.data.username = 'Anonymous (' + catNames.random() + ')'
+    }
+  })
+
   var swarm = window.swarm = Swarm()
   var logStream = swarm.log.createReadStream({live: true})
   logStream.on('data', function (entry) {
@@ -31,6 +42,7 @@ function App (el) {
 
   // The mock data model
   self.data = {
+    username: 'Anonymous (' + catNames.random() + ')',
     channels: [
       { id: 0, name: 'stackvm', active: true },
       { id: 1, name: 'nerdtracker' },
@@ -92,7 +104,7 @@ function App (el) {
 
   self.on('sendMessage', function (message) {
     swarm.send({
-      username: '',
+      username: self.data.username,
       text: message,
       timestamp: Date.now,
       avatar: 'static/Icon.png'
@@ -104,10 +116,13 @@ App.prototype.render = function () {
   var self = this
   var views = self.views
   var data = self.data
+
   return h('div.layout', [
     h('.sidebar', [
       views.channels.render(data.channels),
-      views.users.render(data.users)
+      views.users.render(data.users),
+      h('.heading', 'Your username'),
+      data.username
     ]),
     h('.content', [
       views.messages.render(data.messages),
