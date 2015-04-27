@@ -2,6 +2,7 @@ module.exports = window.App = App
 
 var shell = require('shell')
 var remote = require('remote')
+var app = remote.require('app')
 
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
@@ -100,7 +101,7 @@ function App (el) {
           new Notification("Mention", {
             body: message.username + ': ' + message.rawText.slice(0, 20)
           })
-          self.addBadgeNotification()
+          self.setBadge()
         }
       }
 
@@ -220,8 +221,16 @@ App.prototype.render = function () {
   ])
 }
 
-App.prototype.addBadgeNotification = function (num) {
-  if (!this._notifications) this._notifications = 0
-  this._notifications += num || 1
-  remote.require('app').dock.setBadge(this._notifications.toString())
+App.prototype.setBadge = function (num) {
+  if (typeof this._notifications === 'undefined' || this._notifications === null) {
+    this._notifications = 0
+  }
+  if (num === false) {
+    return app.dock.setBadge('')
+  } else if (typeof num === 'undefined' || num === null) {
+    this._notifications++
+  } else {
+    this._notifications = num
+  }
+  app.dock.setBadge(this._notifications.toString())
 }
