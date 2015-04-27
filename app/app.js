@@ -1,5 +1,7 @@
 module.exports = window.App = App
 
+var shell = require('shell')
+
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
 var diff = require('virtual-dom/diff')
@@ -16,6 +18,7 @@ var VNode = require('virtual-dom/vnode/vnode')
 var VText = require('virtual-dom/vnode/vtext')
 var htmlToVDom = require('html-to-vdom')
 var eos = require('end-of-stream')
+var delegate = require('delegate-dom')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -26,6 +29,12 @@ var Messages = require('./elements/messages')
 var Status = require('./elements/status')
 var Users = require('./elements/users')
 var Peers = require('./elements/peers')
+
+delegate.on(document.body, 'a', 'click', function (ev) {
+  ev.preventDefault()
+  var href = ev.target.getAttribute('href')
+  shell.openExternal(href)
+})
 
 var convertHTML = htmlToVDom({
   VNode: VNode,
