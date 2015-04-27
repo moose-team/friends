@@ -10,6 +10,8 @@ function Messages (app) {
   // Create an onlooad hook that starts the list at the bottom
   var Onload = function () {}
   Onload.prototype.hook = function (node, propertyName, previousValue) {
+    // TODO: Still need a better way to call a hook after inserted into the DOM
+    // TODO: See https://github.com/Matt-Esch/virtual-dom/issues/233
     setTimeout(function () {
       node.scrollTop = node.scrollHeight
     }, 0)
