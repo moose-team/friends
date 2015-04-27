@@ -47,7 +47,7 @@ Messages.prototype.render = function (messages) {
 
   if (messages.length === 0) {
     var starterMessage = 'This is new channel. Send a message to start things off!'
-    childViews = h('.messages.starterMessage', this, starterMessage)
+    childViews = h('.messages.starterMessage', starterMessage)
   } else {
     childViews = this.viewList.render(messages)
   }
