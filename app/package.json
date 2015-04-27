@@ -2,16 +2,22 @@
   "name": "friends",
   "version": "0.0.0",
   "dependencies": {
+    "autolinker": "^0.17.1",
     "cat-names": "^1.0.2",
     "emoji-named-characters": "^1.0.2",
     "github-current-user": "^2.0.0",
+    "html-to-vdom": "^0.5.5",
     "hyperlog": "^3.3.1",
     "leveldown": "maxogden/leveldown#newnan",
     "levelup": "^0.19.0",
     "moment": "^2.10.2",
     "signalhub": "^3.3.0",
     "view-list": "^1.2.0",
-    "webrtc-swarm": "^1.0.0"
+    "webrtc-swarm": "^1.0.0",
+    "inherits": "^2.0.1",
+    "raf": "^2.0.4",
+    "subleveldown": "^2.0.0",
+    "virtual-dom": "^2.0.1"
   },
   "devDependencies": {
     "node-gyp": "^1.0.3"

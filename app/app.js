@@ -11,6 +11,10 @@ var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
+var autolinker = require('autolinker')
+var VNode = require('virtual-dom/vnode/vnode')
+var VText = require('virtual-dom/vnode/vtext')
+var htmlToVDom = require('html-to-vdom')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -21,6 +25,11 @@ var Messages = require('./elements/messages')
 var Status = require('./elements/status')
 var Users = require('./elements/users')
 var Peers = require('./elements/peers')
+
+var convertHTML = htmlToVDom({
+  VNode: VNode,
+  VText: VText
+})
 
 inherits(App, EventEmitter)
 
@@ -55,8 +64,9 @@ function App (el) {
         : 'https://github.com/' + message.username + '.png'
       message.timeago = moment(message.timestamp).fromNow()
 
-      // message.text = richMessage(message.text)
-
+      message.text = richMessage(message.text)
+      var messageHtml = autolinker.link(message.text)
+      message.text = convertHTML('<span>' + messageHtml + '</span>')
       self.data.messages.push(message)
 
       if (!anon && !usersFound[message.username]) {
