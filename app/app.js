@@ -29,10 +29,12 @@ var Peers = require('./elements/peers')
 
 var currentWindow = remote.getCurrentWindow()
 
-delegate.on(document.body, 'a', 'click', function (ev) {
-  ev.preventDefault()
-  var href = ev.target.getAttribute('href')
-  shell.openExternal(href)
+delegate.on(document.body, 'a', 'click', function (e) {
+  var href = e.target.getAttribute('href')
+  if (/^https?:/.test(href)) {
+    e.preventDefault()
+    shell.openExternal(href)
+  }
 })
 
 inherits(App, EventEmitter)
