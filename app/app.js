@@ -1,3 +1,5 @@
+/* global Notification */
+
 module.exports = window.App = App
 
 var shell = require('shell')
@@ -98,9 +100,10 @@ function App (el) {
       if (self.data.username && !currentWindow.isFocused()) {
         console.log(message.rawText)
         if (message.rawText.indexOf(self.data.username) > -1) {
-          new Notification('Mentioned in #' + channel.name, {
+          new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
             body: message.username + ': ' + message.rawText.slice(0, 20)
           })
+
           self.setBadge()
         }
       }
