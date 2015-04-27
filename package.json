@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "atom-shell-packager": "^2.1.1",
-    "budo": "^4.0.0",
     "nib": "^1.1.0",
     "standard": "^3.2.1",
     "stylus": "^0.51.0"
@@ -29,7 +28,6 @@
   },
   "scripts": {
     "build-css": "stylus -u nib css/app.styl -o app/static/ -c",
-    "live": "budo app --live",
     "package": "npm run build-css && atom-shell-packager app Friends --icon=app/static/Icon.icns",
     "start": "npm run build-css && electron app",
     "test": "standard",

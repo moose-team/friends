@@ -9,7 +9,6 @@
 
 * `npm install`
 * `npm start` to run in electron
-* `npm run live` to run in a browser at [http://localhost:9966](http://localhost:9966)
 * `npm run package` to build distributable.
 
 ## License
