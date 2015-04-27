@@ -17,7 +17,7 @@ In addition to improving the project by refactoring code and and implementing re
 
 Fork and clone the repo, then `npm install` to install all dependencies.
 
-The `app` folder has the actual app, and it has it's own package.json. If you are adding a dependency to the app, add it to `app/package.json`. The top level package.json has the build devDependencies (like electron).
+The `app` folder has the actual app, and it has its own `package.json`. If you are adding a dependency to the app, add it to `app/package.json`. The top level `package.json` has the build `devDependencies` (like electron).
 
 ## Testing
 
