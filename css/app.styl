@@ -54,6 +54,7 @@ body
   top: 0
   bottom: 0
   width: SIDEBAR_WIDTH
+  height: 100%
   color: GRAY_LIGHT
   background: BLUE_DARK top left url('logo.jpg') no-repeat
   background-size: SIDEBAR_WIDTH
@@ -61,9 +62,10 @@ body
   user-select: none
   cursor: default
 
-
-  & > *
-    padding-left: SPACING_SIZE
+  .sidebar-scroll
+    overflow: auto
+    height: 100%
+    padding: 0 SPACING_SIZE 4em SPACING_SIZE
 
   .heading
     margin-top: (SPACING_SIZE * 2)
@@ -104,6 +106,9 @@ body
   .peers
     margin-top: 20px
     margin-left: 10px
+    font-style: italic
+    font-size: .8em
+    text-align: center
 
   .status
     ellipsis()

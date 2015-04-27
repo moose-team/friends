@@ -213,9 +213,11 @@ App.prototype.render = function () {
 
   return h('div.layout', [
     h('.sidebar', [
-      views.channels.render(data.channels),
-      views.users.render(data.users),
-      views.peers.render(data),
+      h('.sidebar-scroll', [
+        views.channels.render(data.channels),
+        views.users.render(data.users),
+        views.peers.render(data)
+      ]),
       views.status.render(data)
     ]),
     h('.content', [
