@@ -15,7 +15,8 @@
     "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
-    "electron-prebuilt": "^0.25.1"
+    "electron-prebuilt": "^0.25.1",
+    "ghsign": "^1.1.0"
   },
   "devDependencies": {
     "atom-shell-packager": "^2.1.1",
