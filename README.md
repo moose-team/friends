@@ -2,8 +2,8 @@
 
 [![travis][travis-image]][travis-url]
 
-[travis-image]: https://img.shields.io/travis/feross/friends.svg?style=flat
-[travis-url]: https://travis-ci.org/feross/friends
+[travis-image]: https://img.shields.io/travis/moose-team/friends.svg?style=flat
+[travis-url]: https://travis-ci.org/moose-team/friends
 
 ## Logging in
 

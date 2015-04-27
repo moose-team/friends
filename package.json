@@ -12,7 +12,7 @@
     "chrisdickinson"
   ],
   "bugs": {
-    "url": "https://github.com/feross/friends/issues"
+    "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
     "electron-prebuilt": "^0.25.1"
@@ -23,13 +23,13 @@
     "standard": "^3.2.1",
     "stylus": "^0.51.0"
   },
-  "homepage": "https://github.com/feross/friends",
+  "homepage": "https://github.com/moose-team/friends",
   "keywords": [],
   "license": "Public Domain",
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/feross/friends.git"
+    "url": "https://github.com/moose-team/friends.git"
   },
   "scripts": {
     "build-css": "stylus -u nib css/app.styl -o app/static/ -c",
