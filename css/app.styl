@@ -4,11 +4,12 @@ WHITE = rgb(255, 255, 255)
 GRAY_LIGHT = rgb(210, 210, 210)
 GRAY = rgb(100, 100, 100)
 
-BURNT_SUN = rgb(255, 100, 77) // red
-CLASH = rgb(255, 181, 166) // pink
-AW_SHIT_A_BABY = rgb(199, 164, 159) // gray
-LOW_FREQ_OSC = rgb(94, 77, 102) // purple
-DARK_MOON = rgb(37, 18, 82) // dark purple
+BLUE_DARK = rgb(1, 82, 99)
+BLUE = rgb(0, 158, 179)
+BLUE_LIGHT = rgb(208, 255, 255)
+
+RED_LIGHT = rgb(232, 74, 62)
+RED = rgb(180, 35, 8)
 
 SIDEBAR_WIDTH = 180px
 AVATAR_SIZE = 35px
@@ -51,7 +52,7 @@ body
   top: 0
   bottom: 0
   width: SIDEBAR_WIDTH
-  background-color: LOW_FREQ_OSC
+  background-color: BLUE_DARK
   color: GRAY_LIGHT
 
   .heading
@@ -75,13 +76,13 @@ body
     padding: 0
 
     &.active
-      background-color: BURNT_SUN
+      background-color: RED_LIGHT
       a
         color: WHITE
 
   .avatar
     float: left
-    background-color: BURNT_SUN
+    background-color: RED
     border-radius: (BORDER_RADIUS / 2)
     width: AVATAR_SIZE_SMALL
     height: AVATAR_SIZE_SMALL
@@ -103,7 +104,7 @@ body
   margin: SPACING_SIZE 0
   .avatar
     float: left
-    background-color: BURNT_SUN
+    background-color: RED
     border-radius: BORDER_RADIUS
     width: AVATAR_SIZE
     height: AVATAR_SIZE
