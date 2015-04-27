@@ -12,7 +12,7 @@ Messages.prototype.render = function (messages) {
     return h('.message.clearfix', [
       h('img.avatar', { src: msg.avatar }),
       h('.username', msg.username),
-      h('.timestamp', msg.timestamp),
+      h('.timestamp', String(msg.timestamp)),
       h('.text', msg.text)
     ])
   })

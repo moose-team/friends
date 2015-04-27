@@ -106,7 +106,7 @@ function App (el) {
     swarm.send({
       username: self.data.username,
       text: message,
-      timestamp: Date.now,
+      timestamp: Date.now(),
       avatar: 'static/Icon.png'
     })
   })
