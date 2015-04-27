@@ -9,7 +9,7 @@ function Status (app) {
 Status.prototype.render = function (data) {
   return h('.status', {
     onclick: function () {
-      alert('click')
+      window.alert('click')
     }
   }, data.username)
 }
