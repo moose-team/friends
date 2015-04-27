@@ -1,6 +1,7 @@
 module.exports = Messages
 
 var h = require('virtual-dom/h')
+var moment = require('moment')
 
 function Messages (app) {
   this.app = app
@@ -16,7 +17,7 @@ Messages.prototype.render = function (messages) {
     return h('.message.clearfix', [
       h('img.avatar', { src: msg.avatar }),
       h('.username', msg.username),
-      h('.timestamp', String(msg.timestamp)),
+      h('.timestamp', moment(msg.timestamp).fromNow()),
       h('.text', msg.text)
     ])
   })
