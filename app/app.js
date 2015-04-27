@@ -4,7 +4,9 @@ var shell = require('shell')
 
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
+var delegate = require('delegate-dom')
 var diff = require('virtual-dom/diff')
+var eos = require('end-of-stream')
 var EventEmitter = require('events').EventEmitter
 var h = require('virtual-dom/h')
 var h = require('virtual-dom/h')
@@ -13,12 +15,6 @@ var moment = require('moment')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
 var user = require('github-current-user')
-var autolinker = require('autolinker')
-var VNode = require('virtual-dom/vnode/vnode')
-var VText = require('virtual-dom/vnode/vtext')
-var htmlToVDom = require('html-to-vdom')
-var eos = require('end-of-stream')
-var delegate = require('delegate-dom')
 
 var richMessage = require('./rich-message')
 var Swarm = require('./swarm.js')
@@ -34,11 +30,6 @@ delegate.on(document.body, 'a', 'click', function (ev) {
   ev.preventDefault()
   var href = ev.target.getAttribute('href')
   shell.openExternal(href)
-})
-
-var convertHTML = htmlToVDom({
-  VNode: VNode,
-  VText: VText
 })
 
 inherits(App, EventEmitter)
@@ -66,20 +57,10 @@ function App (el) {
     })
 
     logStream.on('data', function (entry) {
-      var message = JSON.parse(entry.value)
-
-      var anon = /Anonymous/i.test(message.username)
-      message.avatar = anon
-        ? 'static/Icon.png'
-        : 'https://github.com/' + message.username + '.png'
-      message.timeago = moment(message.timestamp).fromNow()
-
-      message.text = richMessage(message.text)
-      var messageHtml = autolinker.link(message.text)
-      message.text = convertHTML('<span>' + messageHtml + '</span>')
+      var message = richMessage(JSON.parse(entry.value))
       self.data.messages.push(message)
 
-      if (!anon && !usersFound[message.username]) {
+      if (!message.anon && !usersFound[message.username]) {
         usersFound[message.username] = true
         self.data.users.push({
           name: message.username,
