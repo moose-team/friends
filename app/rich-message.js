@@ -12,7 +12,7 @@ function makeRichMessage (message) {
 
 function renderEmoji (emoji) {
   return emoji in emojiNamedCharacters ?
-      '<img src="/node_modules/emoji-named-characters/pngs/' + encodeURI(emoji) + '.png"'
+      '<img src="node_modules/emoji-named-characters/pngs/' + encodeURI(emoji) + '.png"'
       + ' alt=":' + escape(emoji) + ':"'
       + ' title=":' + escape(emoji) + ':"'
       + ' class="emoji" align="absmiddle" height="20" width="20">'
