@@ -3,3 +3,5 @@ app/static/app.css
 .DS_Store
 friendsdb/
 app/build/
+public-keys/
+npm-debug.log
