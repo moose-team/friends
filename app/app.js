@@ -1,5 +1,7 @@
 module.exports = window.App = App
 
+var Swarm = require('./swarm.js')
+
 var h = require('virtual-dom/h')
 var diff = require('virtual-dom/diff')
 var patch = require('virtual-dom/patch')
@@ -14,6 +16,15 @@ function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
+  var swarm = Swarm()
+  var logStream = swarm.log.createReadStream({live: true})
+  logStream.on('data', function (entry) {
+    var val = JSON.parse(entry.value)
+    self.data.messages.push(val)
+  })
+  
+  window.swarm = swarm
+  
   // The mock data model
   self.data = {
     channels: [

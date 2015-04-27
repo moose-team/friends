@@ -2,8 +2,13 @@
   "name": "friends",
   "version": "0.0.0",
   "dependencies": {
+    "hyperlog": "^3.3.1",
+    "level-js": "^2.1.6",
+    "levelup": "^0.19.0",
+    "memdown": "^1.0.0",
+    "signalhub": "^3.3.0",
+    "webrtc-swarm": "^1.0.0"
   },
   "main": "index.js",
-  "scripts": {
-  }
+  "scripts": {}
 }

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "electron-prebuilt": "^0.25.1",
+    "leveldown-prebuilt": "^1.0.3",
     "raf": "^2.0.4",
     "virtual-dom": "^2.0.1",
     "xtend": "^4.0.0"
