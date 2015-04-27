@@ -60,8 +60,6 @@ function App (el) {
     }
   })
 
-
-
   var channelsFound = {}
   swarm.log.ready(function () {
     var usersFound = {}
@@ -88,16 +86,17 @@ function App (el) {
       if (userVerify && basicMessage.sig) {
         var msg = Buffer.concat([
           new Buffer(basicMessage.username),
-          new Buffer(basicMessage.channel ? basicMessage.channel: ''),
+          new Buffer(basicMessage.channel ? basicMessage.channel : ''),
           new Buffer(basicMessage.text),
           new Buffer(basicMessage.timestamp.toString())
         ])
         return userVerify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
-          basicMessage.valid = valid;
-          next(null, basicMessage);
-        });
+          if (err) basicMessage.valid = false
+          else basicMessage.valid = valid
+          next(null, basicMessage)
+        })
       }
-      next(null, basicMessage);
+      next(null, basicMessage)
     })).pipe(through(function (basicMessage, _, next) {
       var message = richMessage(basicMessage)
       var channelName = message.channel || 'friends'
@@ -145,7 +144,7 @@ function App (el) {
       }
 
       self.views.messages.scrollToBottom()
-      next();
+      next()
     }))
   })
 
