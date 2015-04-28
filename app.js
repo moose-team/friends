@@ -22,7 +22,6 @@ var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
 var path = require('path')
 var subleveldown = require('subleveldown')
-var duplexify = require('duplexify')
 var through = require('through2')
 
 var richMessage = require('./lib/rich-message')
@@ -82,11 +81,9 @@ function App (el) {
       swarm.username = username
       render()
     }
-    messageStream.uncork()
   })
 
-  // through2 lacks cork() and uncork(), so wrap with duplexify
-  var messageStream = duplexify.obj(through.obj(function (basicMessage, encoding, cb) {
+  swarm.process(through.obj(function (basicMessage, encoding, cb) {
     var message = richMessage(basicMessage, self.data.username)
     var channelName = message.channel || 'friends'
     var channel = channelsFound[channelName]
@@ -142,10 +139,6 @@ function App (el) {
 
     cb()
   }))
-
-  messageStream.cork()
-
-  swarm.process(messageStream)
 
   swarm.on('peer', function (p, channel) {
     var ch = channelsFound[channel]
