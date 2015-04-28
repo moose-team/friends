@@ -253,6 +253,16 @@ function App (el) {
     }
   })
 
+  self.on('leaveChannel', function (channelName) {
+    if (channelName === 'friends') return // can't leave friends for now
+    db.channels.del(channelName, function () {
+      var channel = channelsFound[channelName]
+      if (!channel) return
+      var i = self.data.channels.indexOf(channel)
+      if (i > -1) self.data.channels.splice(i, 1)
+    })
+  })
+
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
     self.activeChannel.messages.forEach(function (message) {
