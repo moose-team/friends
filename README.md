@@ -43,13 +43,14 @@ We have included a message seeding utility (named "peerbot") that you can run yo
 
 it always seeds the `#friends` channel, pass `--channel=mychannel` to also seed another channel. you can specify as many channels as you want with multiple `--channel` flags
 
-If you running it on headless Ubuntu, you will need to use `Xvfb` to create a virtual display so that Chromium can run:
+If you running it on headless Ubuntu, you will need to use `xvfb-run` to create a virtual display so that Chromium can run:
 
 ```
 $ sudo apt-get install xvfb
-$ Xvfb :1 -screen 0 1024x768x16
-$ DISPLAY=:1.0 electron-spawn peerbot.js
+$ xvfb-run electron-spawn peerbot.js
 ```
+
+Also you [may need to `apt-get install libgconf-2-4`](https://github.com/atom/electron/issues/1518)
 
 ## License
 
