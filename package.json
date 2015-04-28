@@ -1,7 +1,7 @@
 {
   "name": "friends",
-  "description": "",
-  "version": "0.0.0",
+  "description": "p2p chat",
+  "version": "1.0.0",
   "author": [
     "feross",
     "maxogden",
@@ -11,6 +11,9 @@
     "jlord",
     "chrisdickinson"
   ],
+  "bin": {
+    "friends": "cli.js"
+  },
   "bugs": {
     "url": "https://github.com/moose-team/friends/issues"
   },
