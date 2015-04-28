@@ -34,6 +34,7 @@
     "inherits": "^2.0.1",
     "leveldown": "maxogden/leveldown#newnan",
     "levelup": "^0.19.0",
+    "markdown-it": "^4.2.0",
     "minimist": "^1.1.1",
     "moment": "^2.10.2",
     "protocol-buffers": "^3.0.0",
