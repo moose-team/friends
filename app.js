@@ -22,7 +22,6 @@ var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
 var path = require('path')
 var subleveldown = require('subleveldown')
-var through = require('through2')
 
 var richMessage = require('./lib/rich-message')
 var Swarm = require('./lib/swarm')
@@ -81,74 +80,74 @@ function App (el) {
       swarm.username = username
       render()
     }
-  })
 
-  swarm.process(through.obj(function (basicMessage, encoding, cb) {
-    var message = richMessage(basicMessage, self.data.username)
-    var channelName = message.channel || 'friends'
-    var channel = channelsFound[channelName]
+    swarm.process(function (basicMessage, cb) {
+      var message = richMessage(basicMessage, self.data.username)
+      var channelName = message.channel || 'friends'
+      var channel = channelsFound[channelName]
 
-    if (!channel) {
-      channel = channelsFound[channelName] = {
-        id: self.data.channels.length,
-        name: channelName,
-        active: false,
-        peers: 0,
-        messages: []
+      if (!channel) {
+        channel = channelsFound[channelName] = {
+          id: self.data.channels.length,
+          name: channelName,
+          active: false,
+          peers: 0,
+          messages: []
+        }
+        self.data.channels.push(channel)
+        self.data.activeChannel = channel
       }
-      self.data.channels.push(channel)
-      self.data.activeChannel = channel
-    }
 
-    if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
+      if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
 
-    if (self.data.username && !currentWindow.isFocused()) {
-      if (message.text.indexOf(self.data.username) > -1) {
-        new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
-          body: message.username + ': ' + message.text.slice(0, 20)
-        })
-        self.setBadge()
+      if (self.data.username && !currentWindow.isFocused()) {
+        if (message.text.indexOf(self.data.username) > -1) {
+          new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
+            body: message.username + ': ' + message.text.slice(0, 20)
+          })
+          self.setBadge()
+        }
       }
-    }
 
-    var lastMessage = channel.messages[channel.messages.length - 1]
-    if (lastMessage && lastMessage.username === message.username) {
-      // Last message came from same user, so merge into the last message
-      message = richMessage.mergeMessages(lastMessage, message)
-    } else {
-      channel.messages.push(message)
-    }
-
-    if (!message.anon && message.valid && !usersFound[message.username]) {
-      usersFound[message.username] = true
-      self.data.users[message.username] = {
-        avatar: message.avatar,
-        blocked: false
+      var lastMessage = channel.messages[channel.messages.length - 1]
+      if (lastMessage && lastMessage.username === message.username) {
+        // Last message came from same user, so merge into the last message
+        message = richMessage.mergeMessages(lastMessage, message)
+      } else {
+        channel.messages.push(message)
       }
-      // Add user names to available autocompletes
-      self.views.composer.autocompletes.push(message.username)
-    }
-    if (!message.anon && !message.valid) {
-      message.username = 'Allegedly ' + message.username
-    }
 
-    if (changesOffsets[channel.name] <= basicMessage.change) {
+      if (!message.anon && message.valid && !usersFound[message.username]) {
+        usersFound[message.username] = true
+        self.data.users[message.username] = {
+          avatar: message.avatar,
+          blocked: false
+        }
+        // Add user names to available autocompletes
+        self.views.composer.autocompletes.push(message.username)
+      }
+      if (!message.anon && !message.valid) {
+        message.username = 'Allegedly ' + message.username
+      }
+
+      if (changesOffsets[channel.name] <= basicMessage.change) {
+        render()
+        self.views.messages.scrollToBottom()
+      }
+
+      cb()
+    })
+
+    swarm.on('peer', function (p, channel) {
+      var ch = channelsFound[channel]
+      if (ch) ch.peers++
+      self.data.peers++
       render()
-      self.views.messages.scrollToBottom()
-    }
-
-    cb()
-  }))
-
-  swarm.on('peer', function (p, channel) {
-    var ch = channelsFound[channel]
-    if (ch) ch.peers++
-    self.data.peers++
-    render()
-    eos(p, function () {
-      if (ch) ch.peers--
-      self.data.peers--
-      render()
+      eos(p, function () {
+        if (ch) ch.peers--
+        self.data.peers--
+        render()
+      })
     })
   })
 
