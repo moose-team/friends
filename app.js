@@ -251,6 +251,7 @@ function App (el) {
     var user = self.data.users[username]
     if (user) user.blocked = !user.blocked
     render()
+    self.views.messages.scrollToBottom(true)
   })
 
   // Update friendly "timeago" time string (once per minute)
