@@ -25,6 +25,8 @@ $ DEBUG=* github-current-user
 
 Note: DSA keys are not supported. You should switch to RSA anyway for security reasons.
 
+If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show up when you run `ssh-add -l`.
+
 ## Building
 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
