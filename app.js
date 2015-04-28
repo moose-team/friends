@@ -68,7 +68,7 @@ function App (el) {
     activeChannel: null
   }
 
-  var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'))
+  var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'), {maxPeers: 20})
   githubCurrentUser.verify(function (err, verified, username) {
     if (err || !verified) self.showGitHelp()
     if (err) return console.error(err.message || err)
