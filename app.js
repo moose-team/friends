@@ -52,6 +52,8 @@ function App (el) {
     if (/^https?:/.test(href)) {
       e.preventDefault()
       shell.openExternal(href)
+    } else if (/^#/.test(href)) {
+      self.emit('addChannel', href)
     }
   })
 
@@ -191,16 +193,6 @@ function App (el) {
   }
 
   self.on('render', render)
-
-  window.onhashchange = function (e) {
-    e.preventDefault()
-    var channelName = window.location.toString().split('#')[1]
-    if (!channelName) return
-    self.emit('addChannel', channelName)
-    self.data.channels.forEach(function (ch) {
-      if (ch.name === channelName) self.emit('selectChannel', ch)
-    })
-  }
 
   self.on('selectChannel', function (channelName) {
     self.data.channels.forEach(function (channel) {
