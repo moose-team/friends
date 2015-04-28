@@ -3,7 +3,7 @@
 
 WHITE = rgb(255, 255, 255)
 
-GRAY_LIGHTEST = rgb(238, 238, 238)
+GRAY_LIGHTEST = rgb(220, 220, 220)
 GRAY_LIGHT = rgb(200, 200, 200)
 GRAY = rgb(100, 100, 100)
 BLACK = rgb(30, 30, 30)
@@ -62,12 +62,13 @@ body
   bottom: 0
   width: SIDEBAR_WIDTH
   height: 100%
-  color: GRAY_LIGHT
+  color: GRAY_LIGHTEST
   background: BLUE_DARK top left url('../static/logo.png') no-repeat
   background-size: SIDEBAR_WIDTH
   padding-top: 70px
   user-select: none
   cursor: default
+  text-shadow: 0 1px 2px rgba(BLACK, 0.6)
 
   .sidebar-scroll
     overflow: auto
@@ -75,6 +76,7 @@ body
     padding: 0 SPACING_SIZE 4em SPACING_SIZE
 
   .heading
+    font-size: FONT_SIZE_SMALL
     margin-top: (SPACING_SIZE * 2)
     margin-bottom: SPACING_SIZE
     text-transform: uppercase
@@ -83,7 +85,7 @@ body
 
   a
     ellipsis()
-    color: GRAY_LIGHT
+    color: GRAY_LIGHTEST
     text-decoration: none
     padding: (SPACING_SIZE / 3) SPACING_SIZE
     margin: 0
