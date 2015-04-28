@@ -247,6 +247,7 @@ function App (el) {
       var channel = channelsFound[channelName] = {
         name: channelName,
         id: self.data.channels.length,
+        peers: 0,
         active: false,
         messages: []
       }
