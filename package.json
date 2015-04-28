@@ -54,7 +54,21 @@
     "stylus": "^0.51.0"
   },
   "homepage": "https://github.com/moose-team/friends",
-  "keywords": [],
+  "keywords": [
+    "peer-to-peer",
+    "mad science",
+    "chat",
+    "friends",
+    "p2p",
+    "discussion",
+    "communication",
+    "team chat",
+    "replication",
+    "crypto",
+    "webrtc",
+    "irc",
+    "slack"
+  ],
   "license": "MIT",
   "main": "index.js",
   "repository": {
