@@ -260,6 +260,7 @@ function App (el) {
       var i = self.data.channels.indexOf(channel)
       if (i > -1) self.data.channels.splice(i, 1)
       delete channelsFound[channelName]
+      swarm.removeChannel(channelName)
       self.emit('selectChannel', channelsFound.friends)
     })
   })
