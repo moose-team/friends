@@ -78,6 +78,7 @@ function App (el) {
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
+      swarm.username = username
       render()
     }
 
