@@ -1,0 +1,88 @@
+<html>
+<head>
+  <title>Help with GitHub Authentication</title>
+  <link rel="stylesheet" href="../../dist/app.css" charset="utf-8">
+</head>
+<body>
+  <style>
+    html, body {
+      width: 600px;
+    }
+
+    body {
+      padding: 1em;
+    }
+
+    #error-wrapper {
+      display: none;
+    }
+
+    button {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16pt;
+      width: 100px;
+    }
+  </style>
+
+  <script>
+  if (typeof require !== 'function') {
+    // If we're not in the electron env
+    var script = document.createElement('script')
+    script.src = 'git-help.js'
+    script.onload = function() {
+      new window.AuthenticationHelp(document.body)
+    }
+    document.currentScript.parentNode.insertBefore(script, document.currentScript)
+  } else {
+    // If we are in the electron env
+    require('./git-help.js')(document.body)
+  }
+  </script>
+
+  <p>We couldn't automatically authenticate you with GitHub credentials!</p>
+
+  <p>Other authentication methods will be available but right now GitHub is
+    your only option for signed messages and verifying your username.</p>
+
+  <p>Here's what we were able to figure out about who you are:</p>
+
+  <ul>
+    <li>Username: <span id="username">loading...</span></li>
+    <li>Valid SSH key: <span id="valid-key">loading...</span></li>
+  </ul>
+
+  <div id="error-wrapper">
+    <p>We also saw this error:</p>
+
+    <p><code id="error"></code></p>
+  </div>
+
+  <p>Reasons this process can fail:</p>
+
+  <ul>
+    <li>No <code>user.username</code> or <code>user.email</code> specified in
+      <code>~/.gitconfig</code></li>
+
+    <li>You only have <code>user.email</code> in <code>~/.gitconfig</code> and
+      your email address is set to private on GitHub</li>
+
+    <li>You don't have any public keys linked to your GitHub account</li>
+
+    <li>You don't have a private key for the public keys linked to your
+      GitHub account</li>
+
+    <li>Your private key is encrypted but you're not running
+      <code>ssh-agent</code> or your key hasn't been added to the running
+      <code>ssh-agent</code> (try <code>ssh-agent add</code>)</li>
+
+    <li>Your private key is a DSA key. Please convert to an RSA key and try
+      again.</li>
+
+    <li>You found a new bug!</li>
+  </ul>
+
+  <button>Close</button>
+</body>
+</html>

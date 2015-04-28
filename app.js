@@ -9,6 +9,7 @@ var shell = require('shell')
 var remote = require('remote')
 var app = remote.require('app')
 
+var BrowserWindow = remote.require('browser-window')
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
 var delegate = require('delegate-dom')
@@ -17,6 +18,7 @@ var eos = require('end-of-stream')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
+var path = require('path')
 var githubCurrentUser = require('github-current-user')
 var ghsign = require('ghsign')
 var request = require('request')
@@ -82,6 +84,7 @@ function App (el) {
 
   var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'))
   githubCurrentUser.verify(function (err, verified, username) {
+    if (err || !verified) self.showGitHelp()
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
@@ -331,6 +334,26 @@ App.prototype.render = function () {
       views.composer.render()
     ])
   ])
+}
+
+App.prototype.showGitHelp = function () {
+  var GIT_HELP = 'file://' + path.join(__dirname, 'lib', 'windows', 'git-help.html')
+
+  var gitHelp = new BrowserWindow({
+    width: 600,
+    height: 525,
+    show: false,
+    center: true,
+    resizable: false
+  })
+
+  gitHelp.on('closed', function () {
+    gitHelp = null
+  })
+
+  gitHelp.loadUrl(GIT_HELP)
+
+  gitHelp.show()
 }
 
 App.prototype.setBadge = function (num) {
