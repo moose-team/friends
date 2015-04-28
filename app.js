@@ -115,6 +115,7 @@ function App (el) {
           messages: []
         }
         self.data.channels.push(channel)
+        self.data.activeChannel = channel
       }
 
       var anon = /Anonymous/i.test(message.username)
@@ -187,6 +188,7 @@ function App (el) {
 
   self.data.channels.push(channelsFound.friends)
   self.data.messages = channelsFound.friends.messages
+  self.data.activeChannel = channelsFound.friends
 
   // View instances used in our App
   self.views = {
@@ -217,6 +219,7 @@ function App (el) {
       channel.active = (selectedChannel === channel)
       if (channel.active) {
         self.data.messages = channel.messages
+        self.data.activeChannel = channel
         if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
       }
     })
@@ -227,13 +230,9 @@ function App (el) {
     text = text.trim()
     if (text.length === 0) return
 
-    var activeChannel = self.data.channels.reduce(function (a, b) {
-      return a && a.active ? a : b
-    }, null)
-
     swarm.send({
       username: self.data.username,
-      channel: activeChannel && activeChannel.name,
+      channel: self.data.activeChannel && self.data.activeChannel.name,
       text: text,
       timestamp: Date.now()
     })
@@ -256,7 +255,7 @@ function App (el) {
 
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
-    self.data.messages.forEach(function (message) {
+    self.activeChannel.messages.forEach(function (message) {
       message.timeago = util.timeago(message.timestamp)
     })
   }, 60 * 1000)
@@ -285,7 +284,7 @@ App.prototype.render = function () {
       views.status.render(data)
     ]),
     h('.content', [
-      views.messages.render(data.messages),
+      views.messages.render(data.activeChannel),
       views.composer.render()
     ])
   ])

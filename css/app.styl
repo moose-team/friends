@@ -1,6 +1,8 @@
 @import 'nib'
 
 WHITE = rgb(255, 255, 255)
+
+GRAY_LIGHTEST = rgb(238, 238, 238)
 GRAY_LIGHT = rgb(200, 200, 200)
 GRAY = rgb(100, 100, 100)
 BLACK = rgb(0, 0, 0)
@@ -143,6 +145,12 @@ body
   height: 100%
   padding-bottom: 53px
 
+.top-bar
+  padding: 0.3em
+  background-color: GRAY_LIGHTEST
+  box-shadow: 0 0 7px 0 darken(GRAY_LIGHT, 10%)
+  color: BLUE_DARKEST
+
 .messages
   height: 100%
   overflow-y: auto
@@ -150,6 +158,7 @@ body
   padding: 0
   li
     list-style: none
+
 .message
   margin: SPACING_SIZE
   .avatar
