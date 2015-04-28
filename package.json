@@ -11,9 +11,6 @@
     "jlord",
     "chrisdickinson"
   ],
-  "bin": {
-    "friends": "cli.js"
-  },
   "bugs": {
     "url": "https://github.com/moose-team/friends/issues"
   },

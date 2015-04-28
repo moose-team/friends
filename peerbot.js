@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-
-var wrtc = require('wrtc')
 var levelup = require('levelup')
 var leveldown = require('leveldown')
 var subleveldown = require('subleveldown')
@@ -10,7 +7,7 @@ var Swarm = require('./lib/swarm.js')
 
 var db = levelup('./friendsdb', {db: leveldown})
 db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
-var swarm = Swarm(subleveldown(db, 'swarm'), {wrtc: wrtc})
+var swarm = Swarm(subleveldown(db, 'swarm'))
 
 var args = require('minimist')(process.argv.slice(2))
 

@@ -35,14 +35,13 @@ You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 
 ## Running on a server
 
-We have included a message seeding utility that you can run yourself on a server to ensure that there will always be a peer available to connect to for a channel.
+We have included a message seeding utility (named "peerbot") that you can run yourself on a server to ensure that there will always be a peer available to connect to for a channel.
 
-- clone this repo, cd into this directory
-- `npm install`
-- `npm i wrtc`
-- `npm link`
+- first, follow the build instructions above
+- `npm i electron-spawn electron -g`
+- `electron-spawn peerbot.js`
 
-then run `friends` to seed just the `#friends` channel (default), or `friends --channel=mychannel` to also seed a custom channel. you can specify as many channels as you want with multiple `--channel` flags
+by default it seeds only the `#friends` channel, pass `--channel=mychannel` to also seed a custom channel. you can specify as many channels as you want with multiple `--channel` flags
 
 ## License
 
