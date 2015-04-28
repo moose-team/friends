@@ -22,6 +22,7 @@
     "ghlink": "^0.1.2",
     "ghsign": "^1.2.2",
     "github-current-user": "^2.0.0",
+    "highlight.js": "^8.5.0",
     "html-parser": "^0.8.0",
     "html-to-vdom": "^0.5.5",
     "hyperlog": "^3.3.1",
