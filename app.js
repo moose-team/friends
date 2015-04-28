@@ -18,7 +18,7 @@ var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var raf = require('raf')
-var user = require('github-current-user')
+var githubCurrentUser = require('github-current-user')
 var ghsign = require('ghsign')
 var request = require('request')
 var levelup = require('levelup')
@@ -55,14 +55,6 @@ ghsign = ghsign(function (username, cb) {
   })
 })
 
-delegate.on(document.body, 'a', 'click', function (e) {
-  var href = e.target.getAttribute('href')
-  if (/^https?:/.test(href)) {
-    e.preventDefault()
-    shell.openExternal(href)
-  }
-})
-
 inherits(App, EventEmitter)
 
 function App (el) {
@@ -72,6 +64,15 @@ function App (el) {
   var db = levelup('./friendsdb', {db: leveldown})
 
   db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
+
+  // Open links in user's default browser
+  delegate.on(el, 'a', 'click', function (e) {
+    var href = e.target.getAttribute('href')
+    if (/^https?:/.test(href)) {
+      e.preventDefault()
+      shell.openExternal(href)
+    }
+  })
 
   // The mock data model
   self.data = {
@@ -83,14 +84,12 @@ function App (el) {
   }
 
   var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'))
-  user.verify(function (err, verified, username) {
+  githubCurrentUser.verify(function (err, verified, username) {
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
       swarm.username = username
       ghsign.verifier(username)
-    } else {
-      self.data.username = 'Anonymous (' + catNames.random() + ')'
     }
   })
 
