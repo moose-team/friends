@@ -18,13 +18,11 @@
     "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
-    "autolinker": "^0.17.1",
     "cat-names": "^1.0.2",
     "ctype": "^0.5.4",
     "delegate-dom": "0.0.1",
     "emoji-named-characters": "^1.0.2",
     "end-of-stream": "^1.1.0",
-    "escape-html": "^1.0.1",
     "ghlink": "^0.1.2",
     "ghsign": "^1.2.2",
     "github-current-user": "^2.0.0",
@@ -34,6 +32,7 @@
     "inherits": "^2.0.1",
     "leveldown": "maxogden/leveldown#newnan",
     "levelup": "^0.19.0",
+    "markdown-it": "^4.2.0",
     "minimist": "^1.1.1",
     "moment": "^2.10.2",
     "protocol-buffers": "^3.0.0",
