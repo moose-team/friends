@@ -94,6 +94,7 @@ function App (el) {
   var channelsFound = {}
   var usersFound = {}
   var verifiers = {}
+  var changesOffsets = {}
 
   swarm.process(function (entry, cb) {
     var basicMessage = JSON.parse(entry.value)
@@ -115,6 +116,8 @@ function App (el) {
         self.data.channels.push(channel)
         self.data.activeChannel = channel
       }
+
+      if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
 
       var anon = /Anonymous/i.test(message.username)
 
@@ -149,8 +152,10 @@ function App (el) {
         message.username = 'Allegedly ' + message.username
       }
 
-      render()
-      self.views.messages.scrollToBottom()
+      if (changesOffsets[channel.name] <= entry.change) {
+        render()
+        self.views.messages.scrollToBottom()
+      }
       cb()
     }
     if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
