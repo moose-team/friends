@@ -127,17 +127,21 @@ function App (el) {
       message.timeago = util.timeago(message.timestamp)
 
       if (self.data.username && !currentWindow.isFocused()) {
-        console.log(message.rawText)
-        if (message.rawText.indexOf(self.data.username) > -1) {
+        if (message.text.indexOf(self.data.username) > -1) {
           new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
-            body: message.username + ': ' + message.rawText.slice(0, 20)
+            body: message.username + ': ' + message.text.slice(0, 20)
           })
-
           self.setBadge()
         }
       }
 
-      channel.messages.push(message)
+      var lastMessage = channel.messages[channel.messages.length - 1]
+      if (lastMessage && lastMessage.username === message.username) {
+        // Last message came from same user, so merge into the last message
+        message = richMessage.mergeMessages(lastMessage, message)
+      } else {
+        channel.messages.push(message)
+      }
 
       if (!message.anon && message.valid && !usersFound[message.username]) {
         usersFound[message.username] = true
