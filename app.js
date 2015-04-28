@@ -196,6 +196,7 @@ function App (el) {
       }
     })
     render()
+    self.views.composer.focus()
     self.views.messages.scrollToBottom()
   })
 
