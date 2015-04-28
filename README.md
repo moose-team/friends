@@ -16,6 +16,15 @@ You need a working git + github configuration
 
 When you launch the app it should "just work" now if you have git setup correctly :)
 
+If it doesnt work, do this to get debug information:
+
+```
+$ npm i github-current-user -g
+$ DEBUG=* github-current-user
+```
+
+Note: DSA keys are not supported. You should switch to RSA anyway for security reasons.
+
 ## Building
 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
