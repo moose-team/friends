@@ -2,6 +2,8 @@
 
 p2p chat powered by the web. **alpha quality** you probably only want to use this if you like to send pull requests fixing things :)
 
+![screenshot](static/screenshot.png)
+
 ## Logging in
 
 You need a working git + github configuration
