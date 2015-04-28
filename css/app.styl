@@ -82,6 +82,13 @@ body
     margin: 0
     display: block
 
+  .addChannel
+    input
+      padding: (SPACING_SIZE / 3) SPACING_SIZE
+      font-size: FONT_SIZE
+      width: 100%
+      z-index: 10000
+
   ul
     list-style: none
     margin: 0
@@ -178,11 +185,13 @@ body
   text-align: center
   margin: (SPACING_SIZE * 3) SPACING_SIZE SPACING_SIZE SPACING_SIZE
 
+input
+  outline: 0
+
 .composer input
   font-size: FONT_SIZE
   position: absolute
   bottom: 0
-  outline: 0
   width: calc(100% - 20px)
   padding: SPACING_SIZE
   margin: SPACING_SIZE
