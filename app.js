@@ -226,9 +226,12 @@ function App (el) {
       }
       self.data.channels.push(channel)
       swarm.addChannel(channelName)
-      db.channels.put(channelName, {name: channelName, id: self.data.channels.length})
-      render()
+      db.channels.put(channelName, {
+        name: channelName,
+        id: self.data.channels.length
+      })
     }
+    self.emit('selectChannel', channelName)
   })
 
   self.on('leaveChannel', function (channelName) {
@@ -240,7 +243,7 @@ function App (el) {
       if (i > -1) self.data.channels.splice(i, 1)
       delete channelsFound[channelName]
       swarm.removeChannel(channelName)
-      self.emit('selectChannel', channelsFound.friends)
+      self.emit('selectChannel', 'friends')
       render()
     })
   })
