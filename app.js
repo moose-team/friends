@@ -63,7 +63,8 @@ function App (el) {
     username: 'Anonymous (' + catNames.random() + ')',
     channels: [],
     messages: [],
-    users: []
+    users: [],
+    activeChannel: null
   }
 
   var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'))
