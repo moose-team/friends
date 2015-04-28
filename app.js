@@ -203,9 +203,9 @@ function App (el) {
     })
   }
 
-  self.on('selectChannel', function (selectedChannel) {
+  self.on('selectChannel', function (channelName) {
     self.data.channels.forEach(function (channel) {
-      channel.active = (selectedChannel === channel)
+      channel.active = (channelName === channel.name)
       if (channel.active) {
         self.data.messages = channel.messages
         self.data.activeChannel = channel
