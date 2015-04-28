@@ -260,6 +260,7 @@ function App (el) {
       if (!channel) return
       var i = self.data.channels.indexOf(channel)
       if (i > -1) self.data.channels.splice(i, 1)
+      self.emit('selectChannel', channelsFound.friends)
     })
   })
 
