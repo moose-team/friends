@@ -15,7 +15,7 @@
     "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
-    "ghsign": "^1.1.0",
+    "ghsign": "^1.2.1",
     "request": "^2.55.0",
     "through2": "^0.6.5",
     "autolinker": "^0.17.1",
