@@ -227,6 +227,15 @@ function App (el) {
     tree = newTree
   }
 
+  window.onhashchange = function (e) {
+    e.preventDefault()
+    var channelName = window.location.toString().split('#')[1] || 'friends'
+    self.emit('addChannel', channelName)
+    self.data.channels.forEach(function (ch) {
+      if (ch.name === channelName) self.emit('selectChannel', ch)
+    })
+  }
+
   self.on('selectChannel', function (selectedChannel) {
     self.data.channels.forEach(function (channel) {
       channel.active = (selectedChannel === channel)
