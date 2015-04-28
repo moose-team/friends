@@ -144,6 +144,8 @@ function App (el) {
           name: message.username,
           avatar: message.avatar
         })
+        // Add user names to available autocompletes
+        self.views.composer.autocompletes.push(message.username)
       }
       if (!message.anon && !message.valid) {
         message.username = 'Allegedly ' + message.username
