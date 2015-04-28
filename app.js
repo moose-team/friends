@@ -220,12 +220,12 @@ function App (el) {
         self.data.messages = channel.messages
         self.data.activeChannel = channel
         if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
-        return;
+        return
       }
       if (channel.active && !channel.joined) {
-        channel.joined = true;
+        channel.joined = true
       }
-      channel.active = false;
+      channel.active = false
     })
     render()
     self.views.messages.scrollToBottom()
