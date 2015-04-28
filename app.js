@@ -19,7 +19,6 @@ var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var path = require('path')
-var raf = require('raf')
 var githubCurrentUser = require('github-current-user')
 var ghsign = require('ghsign')
 var request = require('request')
@@ -41,11 +40,9 @@ var Peers = require('./lib/elements/peers.js')
 var currentWindow = remote.getCurrentWindow()
 
 ghsign = ghsign(function (username, cb) {
-  fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (err, keys) {
-    if (err) {/* pass */}
+  fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (_, keys) {
     if (keys) return cb(null, keys)
-    request('https://github.com/' + username + '.keys', function (err, response) {
-      if (err) {/* pass */}
+    request('https://github.com/' + username + '.keys', function (_, response) {
       var keys = response.statusCode === 200 && response.body
       if (!keys) return cb(new Error('Could not find public keys for ' + username))
       fs.mkdir('./public-keys', function () {
@@ -93,12 +90,14 @@ function App (el) {
       self.data.username = username
       swarm.username = username
       ghsign.verifier(username)
+      render()
     }
   })
 
   var channelsFound = {}
   var usersFound = {}
   var verifiers = {}
+  var changesOffsets = {}
 
   swarm.process(function (entry, cb) {
     var basicMessage = JSON.parse(entry.value)
@@ -121,6 +120,8 @@ function App (el) {
         self.data.activeChannel = channel
       }
 
+      if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
+
       var anon = /Anonymous/i.test(message.username)
 
       message.avatar = anon
@@ -129,17 +130,21 @@ function App (el) {
       message.timeago = util.timeago(message.timestamp)
 
       if (self.data.username && !currentWindow.isFocused()) {
-        console.log(message.rawText)
-        if (message.rawText.indexOf(self.data.username) > -1) {
+        if (message.text.indexOf(self.data.username) > -1) {
           new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
-            body: message.username + ': ' + message.rawText.slice(0, 20)
+            body: message.username + ': ' + message.text.slice(0, 20)
           })
-
           self.setBadge()
         }
       }
 
-      channel.messages.push(message)
+      var lastMessage = channel.messages[channel.messages.length - 1]
+      if (lastMessage && lastMessage.username === message.username) {
+        // Last message came from same user, so merge into the last message
+        message = richMessage.mergeMessages(lastMessage, message)
+      } else {
+        channel.messages.push(message)
+      }
 
       if (!message.anon && message.valid && !usersFound[message.username]) {
         usersFound[message.username] = true
@@ -147,12 +152,17 @@ function App (el) {
           name: message.username,
           avatar: message.avatar
         })
+        // Add user names to available autocompletes
+        self.views.composer.autocompletes.push(message.username)
       }
       if (!message.anon && !message.valid) {
         message.username = 'Allegedly ' + message.username
       }
 
-      self.views.messages.scrollToBottom()
+      if (changesOffsets[channel.name] <= entry.change) {
+        render()
+        self.views.messages.scrollToBottom()
+      }
       cb()
     }
     if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
@@ -178,9 +188,11 @@ function App (el) {
     var ch = channelsFound[channel]
     if (ch) ch.peers++
     self.data.peers++
+    render()
     eos(p, function () {
       if (ch) ch.peers--
       self.data.peers--
+      render()
     })
   })
 
@@ -211,14 +223,12 @@ function App (el) {
   var rootNode = createElement(tree)
   el.appendChild(rootNode)
 
-  // Main render loop
-  raf(function tick () {
+  function render () {
     var newTree = self.render()
     var patches = diff(tree, newTree)
     rootNode = patch(rootNode, patches)
     tree = newTree
-    raf(tick)
-  })
+  }
 
   self.on('selectChannel', function (selectedChannel) {
     self.data.channels.forEach(function (channel) {
@@ -229,6 +239,7 @@ function App (el) {
         if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
       }
     })
+    render()
     self.views.messages.scrollToBottom()
   })
 
@@ -257,6 +268,7 @@ function App (el) {
       self.data.channels.push(channel)
       swarm.addChannel(channelName)
       db.channels.put(channelName, {name: channelName, id: self.data.channels.length})
+      render()
     }
   })
 
@@ -270,6 +282,7 @@ function App (el) {
       delete channelsFound[channelName]
       swarm.removeChannel(channelName)
       self.emit('selectChannel', channelsFound.friends)
+      render()
     })
   })
 
@@ -287,6 +300,9 @@ function App (el) {
       self.data.channels.push(data)
       channelsFound[data.name] = data
       swarm.addChannel(data.name)
+    })
+    .on('end', function () {
+      render()
     })
 }
 

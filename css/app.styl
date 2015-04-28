@@ -150,7 +150,7 @@ body
 
 .top-bar
   background-color: WHITE
-  box-shadow: 0 0 7px 0 darken(GRAY_LIGHT, 10%)
+  box-shadow: 0 0 7px 0 GRAY_LIGHT
   padding: SPACING_SIZE
   height: TOP_BAR_HEIGHT
 
@@ -167,9 +167,9 @@ body
 .messages
   overflow-y: auto
   margin: 0
-  height: 100%
+  height: calc(100% - 45px)
   padding: 0
-  padding-bottom: TOP_BAR_HEIGHT
+  margin-bottom: TOP_BAR_HEIGHT
 
   li
     list-style: none
@@ -200,7 +200,9 @@ body
     margin-left: (SPACING_SIZE * (2 / 3))
   .text
     margin-left: AVATAR_SIZE + SPACING_SIZE
-    margin-top: 2px
+    margin-top: 4px
+  p
+    margin: 4px 0
 
 .starterMessage
   color: GRAY
@@ -216,7 +218,7 @@ input
   font-size: FONT_SIZE
   position: absolute
   bottom: 0
-  width: calc(100% - 20px)
+  width: calc(100% - 25px)
   padding: SPACING_SIZE
   margin: SPACING_SIZE
   border: solid 3px GRAY_LIGHT
