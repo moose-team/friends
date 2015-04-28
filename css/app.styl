@@ -5,7 +5,7 @@ WHITE = rgb(255, 255, 255)
 GRAY_LIGHTEST = rgb(238, 238, 238)
 GRAY_LIGHT = rgb(200, 200, 200)
 GRAY = rgb(100, 100, 100)
-BLACK = rgb(0, 0, 0)
+BLACK = rgb(30, 30, 30)
 
 BLUE_DARKEST = rgb(17, 74, 86)
 BLUE_DARK = rgb(1, 82, 99)
@@ -21,8 +21,11 @@ AVATAR_SIZE_SMALL = 18px
 
 BORDER_RADIUS = 5px
 
+FONT_SIZE_BIG = 20px
 FONT_SIZE = 15px
 FONT_SIZE_SMALL = 12px
+
+TOP_BAR_HEIGHT = 45px
 
 SPACING_SIZE = 10px
 
@@ -120,13 +123,12 @@ body
     margin-top: 20px
     margin-left: 10px
     font-style: italic
-    font-size: .8em
+    font-size: FONT_SIZE_SMALL
     text-align: center
 
   .status
     ellipsis()
     background-color: BLUE_DARKEST
-    font-size: 18px
     text-align: center
     position: absolute
     padding: SPACING_SIZE 0
@@ -146,16 +148,21 @@ body
   padding-bottom: 53px
 
 .top-bar
-  padding: 0.3em
-  background-color: GRAY_LIGHTEST
+  background-color: WHITE
   box-shadow: 0 0 7px 0 darken(GRAY_LIGHT, 10%)
-  color: BLUE_DARKEST
+  color: BLACK
+  font-size: FONT_SIZE_BIG
+  font-weight: bold
+  padding: SPACING_SIZE
+  height: TOP_BAR_HEIGHT
 
 .messages
-  height: 100%
   overflow-y: auto
   margin: 0
+  height: 100%
   padding: 0
+  padding-bottom: TOP_BAR_HEIGHT
+
   li
     list-style: none
 
