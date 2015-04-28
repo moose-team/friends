@@ -111,6 +111,7 @@ function App (el) {
           id: self.data.channels.length,
           name: channelName,
           active: false,
+          peers: 0,
           messages: []
         }
         self.data.channels.push(channel)
@@ -170,9 +171,12 @@ function App (el) {
     onverify()
   })
 
-  swarm.on('peer', function (p) {
+  swarm.on('peer', function (p, channel) {
+    var ch = channelsFound[channel]
+    if (ch) ch.peers++
     self.data.peers++
     eos(p, function () {
+      if (ch) ch.peers--
       self.data.peers--
     })
   })
@@ -181,6 +185,7 @@ function App (el) {
     id: 0,
     name: 'friends',
     active: true,
+    peers: 0,
     messages: []
   }
 
@@ -274,6 +279,7 @@ function App (el) {
   db.channels.createValueStream()
     .on('data', function (data) {
       data.messages = []
+      data.peers = 0
       self.data.channels.push(data)
       channelsFound[data.name] = data
       swarm.addChannel(data.name)
