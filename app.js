@@ -84,7 +84,7 @@ function App (el) {
   var changesOffsets = {}
 
   swarm.process(function (basicMessage, cb) {
-    var message = richMessage(basicMessage)
+    var message = richMessage(basicMessage, self.data.username)
     var channelName = message.channel || 'friends'
     var channel = channelsFound[channelName]
 
