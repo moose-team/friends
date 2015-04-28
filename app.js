@@ -2,7 +2,6 @@
 
 module.exports = window.App = App
 
-var fs = require('fs')
 var EventEmitter = require('events').EventEmitter
 
 var shell = require('shell')
@@ -20,7 +19,6 @@ var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var path = require('path')
 var githubCurrentUser = require('github-current-user')
-var request = require('request')
 var levelup = require('levelup')
 var leveldown = require('leveldown')
 var subleveldown = require('subleveldown')
