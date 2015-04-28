@@ -4,7 +4,7 @@ var wrtc = require('wrtc')
 var levelup = require('levelup')
 var leveldown = require('leveldown')
 var subleveldown = require('subleveldown')
-var log = require('single-line-log')
+var log = require('single-line-log').stdout
 var eos = require('end-of-stream')
 var Swarm = require('./lib/swarm.js')
 
