@@ -150,7 +150,7 @@ body
 
 .top-bar
   background-color: WHITE
-  box-shadow: 0 0 7px 0 darken(GRAY_LIGHT, 10%)
+  box-shadow: 0 0 7px 0 GRAY_LIGHT
   padding: SPACING_SIZE
   height: TOP_BAR_HEIGHT
 
@@ -167,9 +167,9 @@ body
 .messages
   overflow-y: auto
   margin: 0
-  height: 100%
+  height: calc(100% - 45px)
   padding: 0
-  padding-bottom: TOP_BAR_HEIGHT
+  margin-bottom: TOP_BAR_HEIGHT
 
   li
     list-style: none
