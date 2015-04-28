@@ -214,6 +214,8 @@ function App (el) {
 
   self.on('addChannel', function (channelName) {
     if (channelName[0] === '#') channelName = channelName.substring(1)
+    if (channelName.length === 0) return
+
     if (!channelsFound[channelName]) {
       var channel = channelsFound[channelName] = {
         name: channelName,
