@@ -55,7 +55,7 @@
   },
   "homepage": "https://github.com/moose-team/friends",
   "keywords": [],
-  "license": "Public Domain",
+  "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",

@@ -44,4 +44,4 @@ then run `friends` to seed just the `#friends` channel (default), or `friends --
 
 ## License
 
-[CC-0](LICENSE.md)
+[MIT](LICENSE.md)
