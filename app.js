@@ -20,7 +20,6 @@ var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
 var path = require('path')
 var githubCurrentUser = require('github-current-user')
-var ghsign = require('ghsign')
 var request = require('request')
 var levelup = require('levelup')
 var leveldown = require('leveldown')
@@ -38,21 +37,6 @@ var Users = require('./lib/elements/users.js')
 var Peers = require('./lib/elements/peers.js')
 
 var currentWindow = remote.getCurrentWindow()
-
-ghsign = ghsign(function (username, cb) {
-  fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (_, keys) {
-    if (keys) return cb(null, keys)
-    request('https://github.com/' + username + '.keys', function (_, response) {
-      var keys = response.statusCode === 200 && response.body
-      if (!keys) return cb(new Error('Could not find public keys for ' + username))
-      fs.mkdir('./public-keys', function () {
-        fs.writeFile('./public-keys/' + username + '.keys', keys, function () {
-          cb(null, keys)
-        })
-      })
-    })
-  })
-})
 
 inherits(App, EventEmitter)
 
@@ -89,92 +73,76 @@ function App (el) {
     if (verified) {
       self.data.username = username
       swarm.username = username
-      ghsign.verifier(username)
       render()
     }
   })
 
   var channelsFound = {}
   var usersFound = {}
-  var verifiers = {}
   var changesOffsets = {}
 
-  swarm.process(function (entry, cb) {
-    var basicMessage = JSON.parse(entry.value)
-    var userVerify = verifiers[basicMessage.username]
+  swarm.process(function (basicMessage, cb) {
+    var message = richMessage(basicMessage)
+    var channelName = message.channel || 'friends'
+    var channel = channelsFound[channelName]
 
-    var onverify = function () {
-      var message = richMessage(basicMessage)
-      var channelName = message.channel || 'friends'
-      var channel = channelsFound[channelName]
-
-      if (!channel) {
-        channel = channelsFound[channelName] = {
-          id: self.data.channels.length,
-          name: channelName,
-          active: false,
-          peers: 0,
-          messages: []
-        }
-        self.data.channels.push(channel)
-        self.data.activeChannel = channel
+    if (!channel) {
+      channel = channelsFound[channelName] = {
+        id: self.data.channels.length,
+        name: channelName,
+        active: false,
+        peers: 0,
+        messages: []
       }
+      self.data.channels.push(channel)
+      self.data.activeChannel = channel
+    }
 
-      if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
+    if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
 
-      if (self.data.username && !currentWindow.isFocused()) {
-        if (message.text.indexOf(self.data.username) > -1) {
-          new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
-            body: message.username + ': ' + message.text.slice(0, 20)
-          })
-          self.setBadge()
-        }
-      }
+    var anon = /Anonymous/i.test(message.username)
 
-      var lastMessage = channel.messages[channel.messages.length - 1]
-      if (lastMessage && lastMessage.username === message.username) {
-        // Last message came from same user, so merge into the last message
-        message = richMessage.mergeMessages(lastMessage, message)
-      } else {
-        channel.messages.push(message)
-      }
+    message.avatar = anon
+      ? 'static/cat.png'
+      : 'https://github.com/' + message.username + '.png'
+    message.timeago = util.timeago(message.timestamp)
 
-      if (!message.anon && message.valid && !usersFound[message.username]) {
-        usersFound[message.username] = true
-        self.data.users.push({
-          name: message.username,
-          avatar: message.avatar
+    if (self.data.username && !currentWindow.isFocused()) {
+      if (message.text.indexOf(self.data.username) > -1) {
+        new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
+          body: message.username + ': ' + message.text.slice(0, 20)
         })
-        // Add user names to available autocompletes
-        self.views.composer.autocompletes.push(message.username)
+        self.setBadge()
       }
-      if (!message.anon && !message.valid) {
-        message.username = 'Allegedly ' + message.username
-      }
-
-      if (changesOffsets[channel.name] <= entry.change) {
-        render()
-        self.views.messages.scrollToBottom()
-      }
-      cb()
     }
-    if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
-    if (userVerify && basicMessage.sig) {
-      var msg = Buffer.concat([
-        new Buffer(basicMessage.username),
-        new Buffer(basicMessage.channel ? basicMessage.channel : ''),
-        new Buffer(basicMessage.text),
-        new Buffer(basicMessage.timestamp.toString())
-      ])
-      userVerify(msg, new Buffer(basicMessage.sig, 'base64'), function (err, valid) {
-        if (err) basicMessage.valid = false
-        basicMessage.valid = valid
-        onverify()
+
+    var lastMessage = channel.messages[channel.messages.length - 1]
+    if (lastMessage && lastMessage.username === message.username) {
+      // Last message came from same user, so merge into the last message
+      message = richMessage.mergeMessages(lastMessage, message)
+    } else {
+      channel.messages.push(message)
+    }
+
+    if (!message.anon && message.valid && !usersFound[message.username]) {
+      usersFound[message.username] = true
+      self.data.users.push({
+        name: message.username,
+        avatar: message.avatar
       })
-      return
+      // Add user names to available autocompletes
+      self.views.composer.autocompletes.push(message.username)
+    }
+    if (!message.anon && !message.valid) {
+      message.username = 'Allegedly ' + message.username
     }
 
-    onverify()
+    if (changesOffsets[channel.name] <= basicMessage.change) {
+      render()
+      self.views.messages.scrollToBottom()
+    }
+
+    cb()
   })
 
   swarm.on('peer', function (p, channel) {
