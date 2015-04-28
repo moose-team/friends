@@ -26,9 +26,9 @@ var peers = 0
 
 swarm.on('peer', function (p) {
   peers++
-  log("connected peers: " + peers)
+  log('connected peers: ' + peers)
   eos(p, function () {
     peers--
-    log("connected peers: " + peers)
+    log('connected peers: ' + peers)
   })
 })
