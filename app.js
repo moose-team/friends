@@ -127,10 +127,10 @@ function App (el) {
 
     if (!message.anon && message.valid && !usersFound[message.username]) {
       usersFound[message.username] = true
-      self.data.users.push({
-        name: message.username,
-        avatar: message.avatar
-      })
+      self.data.users[message.username] = {
+        avatar: message.avatar,
+        blocked: false
+      }
       // Add user names to available autocompletes
       self.views.composer.autocompletes.push(message.username)
     }
@@ -260,6 +260,12 @@ function App (el) {
     })
   })
 
+  self.on('toggleBlockUser', function (username) {
+    var user = self.data.users[username]
+    if (user) user.blocked = !user.blocked
+    render()
+  })
+
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
     self.data.activeChannel.messages.forEach(function (message) {
@@ -295,7 +301,7 @@ App.prototype.render = function () {
       views.status.render(data)
     ]),
     h('.content', [
-      views.messages.render(data.activeChannel),
+      views.messages.render(data.activeChannel, data.users),
       views.composer.render()
     ])
   ])
