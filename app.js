@@ -21,6 +21,9 @@ var raf = require('raf')
 var user = require('github-current-user')
 var ghsign = require('ghsign')
 var request = require('request')
+var levelup = require('levelup')
+var leveldown = require('leveldown')
+var subleveldown = require('subleveldown')
 
 var richMessage = require('./lib/rich-message.js')
 var Swarm = require('./lib/swarm.js')
@@ -66,6 +69,10 @@ function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
 
+  var db = levelup('./friendsdb', {db: leveldown})
+
+  db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
+
   // The mock data model
   self.data = {
     peers: 0,
@@ -75,7 +82,7 @@ function App (el) {
     users: []
   }
 
-  var swarm = window.swarm = Swarm()
+  var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'))
   user.verify(function (err, verified, username) {
     if (err) return console.error(err.message || err)
     if (verified) {
@@ -208,7 +215,10 @@ function App (el) {
   self.on('selectChannel', function (selectedChannel) {
     self.data.channels.forEach(function (channel) {
       channel.active = (selectedChannel === channel)
-      if (channel.active) self.data.messages = channel.messages
+      if (channel.active) {
+        self.data.messages = channel.messages
+        if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
+      }
     })
     self.views.messages.scrollToBottom()
   })
@@ -240,6 +250,7 @@ function App (el) {
       }
       self.data.channels.push(channel)
       swarm.addChannel(channelName)
+      db.channels.put(channelName, {name: channelName, id: self.data.channels.length})
     }
   })
 
@@ -249,6 +260,14 @@ function App (el) {
       message.timeago = util.timeago(message.timestamp)
     })
   }, 60 * 1000)
+
+  db.channels.createValueStream()
+    .on('data', function (data) {
+      data.messages = []
+      self.data.channels.push(data)
+      channelsFound[data.name] = data
+      swarm.addChannel(data.name)
+    })
 }
 
 App.prototype.render = function () {
