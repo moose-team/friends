@@ -40,10 +40,8 @@ var currentWindow = remote.getCurrentWindow()
 
 ghsign = ghsign(function (username, cb) {
   fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (err, keys) {
-    if (err) return cb(err)
     if (keys) return cb(null, keys)
     request('https://github.com/' + username + '.keys', function (err, response) {
-      if (err) return cb(err)
       var keys = response.statusCode === 200 && response.body
       if (!keys) return cb(new Error('Could not find public keys for ' + username))
       fs.mkdir('./public-keys', function () {
@@ -151,7 +149,6 @@ function App (el) {
       self.views.messages.scrollToBottom()
       cb()
     }
-
     if (!userVerify && basicMessage.sig) userVerify = verifiers[basicMessage.username] = ghsign.verifier(basicMessage.username)
     if (userVerify && basicMessage.sig) {
       var msg = Buffer.concat([
