@@ -232,7 +232,7 @@ function App (el) {
 
     swarm.send({
       username: self.data.username,
-      channel: data.activeChannel && data.activeChannel.name,
+      channel: self.data.activeChannel && self.data.activeChannel.name,
       text: text,
       timestamp: Date.now()
     })
@@ -256,7 +256,7 @@ function App (el) {
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
     self.activeChannel.messages.forEach(function (message) {
-      message.timeago = moment(message.timestamp).fromNow()
+      message.timeago = util.timeago(message.timestamp)
     })
   }, 60 * 1000)
 
