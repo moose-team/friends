@@ -85,7 +85,7 @@ function App (el) {
 
   swarm.process(function (basicMessage, cb) {
     if (basicMessage.channel === 'channels') {
-      if (!channelsFound[basicMessage.text]) {
+      if (!channelsFound[basicMessage.text] && basicMessage.valid) {
         channelsFound[basicMessage.text] = {
           id: self.data.channels.length,
           name: basicMessage.text,
@@ -114,8 +114,8 @@ function App (el) {
       self.data.activeChannel = channel
     } else if (channel.joined === false) {
       channel.joined = true
-      channel.peers = 0
-      channel.messages = []
+      channel.peers = channel.peers || 0
+      channel.messages = channel.messages || []
       self.data.activeChannel = channel
     }
 
@@ -313,6 +313,7 @@ function App (el) {
     .on('data', function (data) {
       data.messages = []
       data.peers = 0
+      data.joined = true
       self.data.channels.push(data)
       channelsFound[data.name] = data
       swarm.addChannel(data.name)
