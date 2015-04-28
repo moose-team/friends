@@ -125,7 +125,7 @@ function App (el) {
       var anon = /Anonymous/i.test(message.username)
 
       message.avatar = anon
-        ? 'static/Icon.png'
+        ? 'static/cat.png'
         : 'https://github.com/' + message.username + '.png'
       message.timeago = util.timeago(message.timestamp)
 
