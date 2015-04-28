@@ -62,7 +62,7 @@
   },
   "scripts": {
     "build-css": "mkdir -p dist && stylus -u nib css/app.styl -o dist/ -c",
-    "package": "npm run build-css && atom-shell-packager . Friends --icon=static/Icon.icns",
+    "package": "npm run build-css && electron-packager . Friends --icon=static/Icon.icns",
     "start": "npm run build-css && electron index.js",
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron index.js)",
