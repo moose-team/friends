@@ -85,8 +85,16 @@ function App (el) {
 
   swarm.process(function (basicMessage, cb) {
     if (basicMessage.channel === 'channels') {
-      basicMessage.channel = basicMessage.text
-      basicMessage.text = true
+      if (!channelsFound[basicMessage.text]) {
+        channelsFound[basicMessage.text] = {
+          id: self.data.channels.length,
+          name: basicMessage.text,
+          active: false,
+          joined: false
+        }
+        self.data.channels.push(channelsFound[basicMessage.text])
+      }
+      return cb()
     }
     var message = richMessage(basicMessage)
     var channelName = message.channel || 'friends'
@@ -98,10 +106,16 @@ function App (el) {
         id: self.data.channels.length,
         name: channelName,
         active: false,
+        joined: true,
         peers: 0,
         messages: []
       }
       self.data.channels.push(channel)
+      self.data.activeChannel = channel
+    } else if (channel.joined === false) {
+      channel.joined = true
+      channel.peers = 0
+      channel.messages = []
       self.data.activeChannel = channel
     }
 
@@ -195,12 +209,23 @@ function App (el) {
 
   self.on('selectChannel', function (channelName) {
     self.data.channels.forEach(function (channel) {
-      channel.active = (channelName === channel.name)
-      if (channel.active) {
+      if (channelName === channel.name) {
+        channel.active = true
+        channel.peers = channel.peers || 0
+        channel.messages = channel.messages || []
+        if (!channel.joined) {
+          channel.joined = true
+          swarm.addChannel(channelName)
+        }
         self.data.messages = channel.messages
         self.data.activeChannel = channel
         if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
+        return;
       }
+      if (channel.active && !channel.joined) {
+        channel.joined = true;
+      }
+      channel.active = false;
     })
     render()
     self.views.messages.scrollToBottom()
@@ -221,12 +246,13 @@ function App (el) {
   self.on('addChannel', function (channelName) {
     if (channelName[0] === '#') channelName = channelName.substring(1)
     if (channelName.length === 0) return
-
+    var channel
     if (!channelsFound[channelName]) {
-      var channel = channelsFound[channelName] = {
+      channel = channelsFound[channelName] = {
         name: channelName,
         id: self.data.channels.length,
         peers: 0,
+        joined: true,
         active: false,
         messages: []
       }
@@ -241,6 +267,16 @@ function App (el) {
         channel: 'channels',
         text: channelName,
         timestamp: Date.now()
+      })
+    } else if (channelsFound[channelName].joined === false) {
+      channel = channelsFound[channelName]
+      channel.joined = true
+      channel.peers = 0
+      channel.messages = []
+      swarm.addChannel(channelName)
+      db.channels.put(channelName, {
+        name: channelName,
+        id: self.data.channels.length
       })
     }
     self.emit('selectChannel', channelName)
