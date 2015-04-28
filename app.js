@@ -122,13 +122,6 @@ function App (el) {
 
       if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
 
-      var anon = /Anonymous/i.test(message.username)
-
-      message.avatar = anon
-        ? 'static/cat.png'
-        : 'https://github.com/' + message.username + '.png'
-      message.timeago = util.timeago(message.timestamp)
-
       if (self.data.username && !currentWindow.isFocused()) {
         if (message.text.indexOf(self.data.username) > -1) {
           new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
