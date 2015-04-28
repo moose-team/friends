@@ -17,7 +17,6 @@ var eos = require('end-of-stream')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var patch = require('virtual-dom/patch')
-var raf = require('raf')
 var githubCurrentUser = require('github-current-user')
 var ghsign = require('ghsign')
 var request = require('request')
@@ -90,6 +89,7 @@ function App (el) {
       self.data.username = username
       swarm.username = username
       ghsign.verifier(username)
+      render()
     }
   })
 
@@ -151,6 +151,7 @@ function App (el) {
         message.username = 'Allegedly ' + message.username
       }
 
+      render()
       self.views.messages.scrollToBottom()
       cb()
     }
@@ -177,9 +178,11 @@ function App (el) {
     var ch = channelsFound[channel]
     if (ch) ch.peers++
     self.data.peers++
+    render()
     eos(p, function () {
       if (ch) ch.peers--
       self.data.peers--
+      render()
     })
   })
 
@@ -210,14 +213,12 @@ function App (el) {
   var rootNode = createElement(tree)
   el.appendChild(rootNode)
 
-  // Main render loop
-  raf(function tick () {
+  function render () {
     var newTree = self.render()
     var patches = diff(tree, newTree)
     rootNode = patch(rootNode, patches)
     tree = newTree
-    raf(tick)
-  })
+  }
 
   self.on('selectChannel', function (selectedChannel) {
     self.data.channels.forEach(function (channel) {
@@ -228,6 +229,7 @@ function App (el) {
         if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
       }
     })
+    render()
     self.views.messages.scrollToBottom()
   })
 
@@ -256,6 +258,7 @@ function App (el) {
       self.data.channels.push(channel)
       swarm.addChannel(channelName)
       db.channels.put(channelName, {name: channelName, id: self.data.channels.length})
+      render()
     }
   })
 
@@ -269,6 +272,7 @@ function App (el) {
       delete channelsFound[channelName]
       swarm.removeChannel(channelName)
       self.emit('selectChannel', channelsFound.friends)
+      render()
     })
   })
 
@@ -286,6 +290,9 @@ function App (el) {
       self.data.channels.push(data)
       channelsFound[data.name] = data
       swarm.addChannel(data.name)
+    })
+    .on('end', function () {
+      render()
     })
 }
 
