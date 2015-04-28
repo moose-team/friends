@@ -330,7 +330,7 @@ App.prototype.render = function () {
       views.status.render(data)
     ]),
     h('.content', [
-      views.messages.render(data.activeChannel),
+      views.messages.render(data.activeChannel, data.username),
       views.composer.render()
     ])
   ])
