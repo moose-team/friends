@@ -249,14 +249,17 @@ body
 input, textarea
   outline: 0
 
-.composer textarea
-  font-size: FONT_SIZE
-  position: absolute
-  bottom: 0
-  width: calc(100% - 25px)
-  padding: SPACING_SIZE
-  margin: SPACING_SIZE
-  border: solid 3px GRAY_LIGHT
+textarea.composer
   border-radius: BORDER_RADIUS
+  border: solid 3px GRAY_LIGHT
+  bottom: 0
   box-shadow: 0 0 0 2px WHITE
-  height: 43px
+  box-sizing: padding-box
+  display: block
+  font-size: FONT_SIZE
+  margin: SPACING_SIZE
+  overflow: hidden
+  padding: SPACING_SIZE
+  position: absolute
+  width: calc(100% - 25px)
+
