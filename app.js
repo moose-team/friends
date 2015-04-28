@@ -40,8 +40,10 @@ var currentWindow = remote.getCurrentWindow()
 
 ghsign = ghsign(function (username, cb) {
   fs.readFile('./public-keys/' + username + '.keys', 'utf-8', function (err, keys) {
+    if (err) {/* pass */}
     if (keys) return cb(null, keys)
     request('https://github.com/' + username + '.keys', function (err, response) {
+      if (err) {/* pass */}
       var keys = response.statusCode === 200 && response.body
       if (!keys) return cb(new Error('Could not find public keys for ' + username))
       fs.mkdir('./public-keys', function () {
