@@ -84,8 +84,13 @@ function App (el) {
   var changesOffsets = {}
 
   swarm.process(function (basicMessage, cb) {
+    if (basicMessage.channel === 'channels') {
+      basicMessage.channel = basicMessage.text
+      basicMessage.text = true
+    }
     var message = richMessage(basicMessage)
     var channelName = message.channel || 'friends'
+
     var channel = channelsFound[channelName]
 
     if (!channel) {
@@ -230,6 +235,12 @@ function App (el) {
       db.channels.put(channelName, {
         name: channelName,
         id: self.data.channels.length
+      })
+      swarm.send({
+        username: self.data.username,
+        channel: 'channels',
+        text: channelName,
+        timestamp: Date.now()
       })
     }
     self.emit('selectChannel', channelName)
