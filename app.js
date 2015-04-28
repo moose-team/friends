@@ -41,6 +41,7 @@ inherits(App, EventEmitter)
 function App (el) {
   var self = this
   if (!(self instanceof App)) return new App(el)
+  self._notifications = 0
 
   var db = levelup('./friendsdb', {db: leveldown})
 
@@ -316,12 +317,9 @@ App.prototype.showGitHelp = function () {
 }
 
 App.prototype.setBadge = function (num) {
-  if (typeof this._notifications === 'undefined' || this._notifications === null) {
-    this._notifications = 0
-  }
   if (num === false) {
     return app.dock.setBadge('')
-  } else if (typeof num === 'undefined' || num === null) {
+  } else if (num == null) {
     this._notifications++
   } else {
     this._notifications = num
