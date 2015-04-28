@@ -14,25 +14,24 @@ var createElement = require('virtual-dom/create-element')
 var delegate = require('delegate-dom')
 var diff = require('virtual-dom/diff')
 var eos = require('end-of-stream')
+var githubCurrentUser = require('github-current-user')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
+var leveldown = require('leveldown')
+var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
 var path = require('path')
-var githubCurrentUser = require('github-current-user')
-var levelup = require('levelup')
-var leveldown = require('leveldown')
 var subleveldown = require('subleveldown')
 
-var richMessage = require('./lib/rich-message.js')
-var Swarm = require('./lib/swarm.js')
-var util = require('./lib/util.js')
+var richMessage = require('./lib/rich-message')
+var Swarm = require('./lib/swarm')
+var util = require('./lib/util')
 
-var Channels = require('./lib/elements/channels.js')
-var Composer = require('./lib/elements/composer.js')
-var Messages = require('./lib/elements/messages.js')
-var Status = require('./lib/elements/status.js')
-var Users = require('./lib/elements/users.js')
-var Peers = require('./lib/elements/peers.js')
+var Channels = require('./lib/elements/channels')
+var Composer = require('./lib/elements/composer')
+var Messages = require('./lib/elements/messages')
+var Status = require('./lib/elements/status')
+var Users = require('./lib/elements/users')
 
 var currentWindow = remote.getCurrentWindow()
 
@@ -169,9 +168,8 @@ function App (el) {
     channels: new Channels(self),
     composer: new Composer(self),
     messages: new Messages(self),
-    users: new Users(self),
-    peers: new Peers(self),
-    status: new Status(self)
+    status: new Status(self),
+    users: new Users(self)
   }
 
   // Initial DOM tree render
@@ -284,10 +282,9 @@ App.prototype.render = function () {
     h('.sidebar', [
       h('.sidebar-scroll', [
         views.channels.render(data.channels),
-        views.users.render(data.users),
-        views.peers.render(data)
+        views.users.render(data.users)
       ]),
-      views.status.render(data)
+      views.status.render(data.username, data.peers)
     ]),
     h('.content', [
       views.messages.render(data.activeChannel, data.users),
