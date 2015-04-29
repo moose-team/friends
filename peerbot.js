@@ -35,10 +35,12 @@ module.exports = function (args) {
   
   swarm.on('push', function () {
     counts.pushed++
+    log(JSON.stringify(counts))
   })
   
   swarm.on('pull', function () {
     counts.pulled++
+    log(JSON.stringify(counts))
   })
 
   swarm.on('peer', function (p) {
