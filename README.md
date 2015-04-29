@@ -1,8 +1,48 @@
 # Friends
 
-p2p chat powered by the web. **alpha quality** you probably only want to use this if you like to send pull requests fixing things :)
+### P2P chat powered by the Web
 
 ![screenshot](static/screenshot.png)
+
+**Alpha quality** you probably only want to use this if you like to send pull requests
+fixing things :)
+
+## How it works
+
+Like Slack, except P2P, secure, and authenticated with real crypto.
+
+If you use Github, you're already logged in when you open the app. It uses your .gitconfig
+to find your email and github username. When you send messages, they're signed with your
+ssh key. Other users verify that messages are really from you by checking your list of
+public keys on Github (example: here are one user's [public
+keys](https://api.github.com/users/feross/keys)).
+
+We connect to peers over WebRTC for reliable connectivity across NATs. We also want to
+build a browser client so it's easy for users to pop into a channel without installing
+anything :-) Using WebRTC means that web peers are just like desktop clients.
+
+What's if there's no Internet connection? We support multicast DNS, also known as Bonjour,
+to send messages to anyone on your local network.
+
+What if there's no Wi-Fi router? What if your friend's device isn't on the same network?
+We support BlueTooth LE, so you can just send messages / transfer files to anyone
+physically near you. (this is still a proof-of-concept, working on it)
+
+We connect over all transports and just use the best one.
+
+All the data for the channels/rooms you've joined is replicated using
+[hyperlog](https://www.npmjs.com/package/hyperlog), a merkle DAG that replicates based on
+scuttlebutt logs. It's a gossip protocol, so your messages can still reach people you're
+not connected to, as long as there's a path through the network to them. You don't need to
+be directly connected to someone to talk to them. Messages are "gossiped" around the
+network until everyone has received the message.
+
+If a few folks are physically near each other and go offline together, they can continue
+to chat over mDNS or BlueTooth LE and their messages will be merged back into the channel
+when they reconnect with the rest of the network.
+
+Work in progress, but give it a go if this sounds interesting! :-) Note: It requires a
+`git clone` and `npm install` at the moment. Downloadable binaries coming soon.
 
 ## Logging in
 
