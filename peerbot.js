@@ -11,9 +11,10 @@ module.exports = function (args) {
   db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
   var swarm = Swarm(subleveldown(db, 'swarm'))
 
-  var args = minimist(args)
+  // parse arg string into opts using minimist
+  var opts = minimist(args)
 
-  var chans = args.channel || []
+  var chans = opts.channel || []
   if (typeof chans === 'string') chans = [chans]
 
   console.log('joining #friends')
@@ -32,12 +33,12 @@ module.exports = function (args) {
     active: 0,
     maxPeers: 0
   }
-  
+
   swarm.on('push', function () {
     counts.pushed++
     log(JSON.stringify(counts))
   })
-  
+
   swarm.on('pull', function () {
     counts.pulled++
     log(JSON.stringify(counts))

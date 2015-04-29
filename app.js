@@ -71,7 +71,7 @@ function App (el) {
   var channelsFound = {}
   var usersFound = {}
   var changesOffsets = {}
-  
+
   // join default channel
   swarm.addChannel('friends')
 
@@ -91,10 +91,6 @@ function App (el) {
       render()
     }
   })
-
-  var channelsFound = {}
-  var usersFound = {}
-  var changesOffsets = {}
 
   swarm.process(function (basicMessage, cb) {
     var message = richMessage(basicMessage, self.data.username)
