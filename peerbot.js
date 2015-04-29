@@ -16,19 +16,40 @@ module.exports = function (args) {
   var chans = args.channel || []
   if (typeof chans === 'string') chans = [chans]
 
+  console.log('joining #friends')
+  swarm.addChannel('friends')
+
   chans.forEach(function (chan) {
-    console.error('joining channel', chan)
+    console.log('joining #' + chan)
     swarm.addChannel(chan)
   })
 
-  var peers = 0
+  var counts = {
+    connects: 0,
+    disconnects: 0,
+    pushed: 0,
+    pulled: 0,
+    active: 0,
+    maxPeers: 0
+  }
+  
+  swarm.on('push', function () {
+    counts.pushed++
+  })
+  
+  swarm.on('pull', function () {
+    counts.pulled++
+  })
 
   swarm.on('peer', function (p) {
-    peers++
-    log('connected peers: ' + peers)
+    counts.active++
+    counts.connects++
+    if (counts.active > counts.maxPeers) counts.maxPeers = counts.active
+    log(JSON.stringify(counts))
     eos(p, function () {
-      peers--
-      log('connected peers: ' + peers)
+      counts.active--
+      counts.disconnects++
+      log(JSON.stringify(counts))
     })
   })
 }

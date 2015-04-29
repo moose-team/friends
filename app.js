@@ -68,6 +68,12 @@ function App (el) {
   }
 
   var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'), {maxPeers: 20})
+  var channelsFound = {}
+  var usersFound = {}
+  var changesOffsets = {}
+  
+  // join default channel
+  swarm.addChannel('friends')
 
   githubCurrentUser.verify(function (err, verified, username) {
     if (err || !verified) self.showGitHelp()
