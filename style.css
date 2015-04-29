@@ -160,6 +160,11 @@ body {
     padding: 0 2rem;
 }
 
+.section p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .section--title {
     opacity: 0.9;
 }
@@ -197,7 +202,7 @@ body {
     white-space: nowrap;
 }
 
-.headline span:before, 
+.headline span:before,
 .headline span:after {
     background-image: -moz-linear-gradient(top, rgba(255,255,255,0) 50%, rgb(255,255,255) 0%, rgba(255,255,255,0) 51%);
     background-image: -o-linear-gradient(top, rgba(255,255,255,0) 50%, rgb(255,255,255) 0%, rgba(255,255,255,0) 51%);
@@ -209,11 +214,11 @@ body {
     width: 45%;
 }
 
-.headline span:before { 
+.headline span:before {
     border-right: 1rem solid #705c4f;
 }
 
-.headline span:after { 
+.headline span:after {
     border-left: 1rem solid #705c4f;
 }
 
