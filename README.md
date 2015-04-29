@@ -11,7 +11,7 @@ fixing things :)
 
 Like Slack, except P2P, secure, and authenticated with real crypto.
 
-If you use Github, you're already logged in when you open the app. It uses your .gitconfig
+If you use Github, you're already logged in when you open the app. It uses your `.gitconfig`
 to find your email and github username. When you send messages, they're signed with your
 ssh key. Other users verify that messages are really from you by checking your list of
 public keys on Github (example: here are one user's [public
@@ -21,14 +21,18 @@ We connect to peers over WebRTC for reliable connectivity across NATs. We also w
 build a browser client so it's easy for users to pop into a channel without installing
 anything :-) Using WebRTC means that web peers are just like desktop clients.
 
-What's if there's no Internet connection? We support multicast DNS, also known as Bonjour,
+### What if there's no Internet connection?
+
+We support multicast DNS, also known as Bonjour,
 to send messages to anyone on your local network.
 
-What if there's no Wi-Fi router? What if your friend's device isn't on the same network?
+### What if there's no Wi-Fi router?
+
+What if your friend's device isn't on the same network?
 We support BlueTooth LE, so you can just send messages / transfer files to anyone
 physically near you. (this is still a proof-of-concept, working on it)
 
-We connect over all transports and just use the best one.
+**We connect over all transports and just use the best one.**
 
 All the data for the channels/rooms you've joined is replicated using
 [hyperlog](https://www.npmjs.com/package/hyperlog), a merkle DAG that replicates based on
@@ -41,8 +45,10 @@ If a few folks are physically near each other and go offline together, they can 
 to chat over mDNS or BlueTooth LE and their messages will be merged back into the channel
 when they reconnect with the rest of the network.
 
-Work in progress, but give it a go if this sounds interesting! :-) Note: It requires a
-`git clone` and `npm install` at the moment. Downloadable binaries coming soon.
+Work in progress, but give it a go if this sounds interesting! :-)
+
+**Note:** requires a `git clone` and `npm install` at the moment.
+Downloadable binaries coming soon.
 
 ## Logging in
 
