@@ -21,7 +21,7 @@
     "end-of-stream": "^1.1.0",
     "ghlink": "^0.1.2",
     "ghsign": "^1.2.2",
-    "github-current-user": "^2.3.0",
+    "github-current-user": "^2.4.1",
     "highlight.js": "^8.5.0",
     "html-parser": "^0.8.0",
     "html-to-vdom": "^0.5.5",
