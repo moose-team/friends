@@ -39,6 +39,7 @@
     "single-line-log": "^0.4.1",
     "subleveldown": "^2.0.0",
     "through2": "^0.6.5",
+    "twemoji": "^1.4.1",
     "virtual-dom": "^2.0.1",
     "webrtc-swarm": "^1.2.0"
   },
