@@ -68,9 +68,6 @@ function App (el) {
   }
 
   var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'), {maxPeers: 20})
-  var channelsFound = {}
-  var usersFound = {}
-  var changesOffsets = {}
 
   githubCurrentUser.verify(function (err, verified, username) {
     if (err || !verified) self.showGitHelp()
@@ -81,13 +78,17 @@ function App (el) {
 
       // Re-create rich messages after we know our username, since we can now do
       // highlights correctly.
-      self.data.messages.map(function (message) {
+      self.data.messages = self.data.messages.map(function (message) {
         return richMessage(message, self.data.username)
       })
 
       render()
     }
   })
+
+  var channelsFound = {}
+  var usersFound = {}
+  var changesOffsets = {}
 
   swarm.process(function (basicMessage, cb) {
     var message = richMessage(basicMessage, self.data.username)
