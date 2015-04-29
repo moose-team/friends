@@ -36,6 +36,7 @@
     "protocol-buffers": "^3.0.0",
     "request": "^2.55.0",
     "signalhub": "^3.3.0",
+    "silence-chromium": "^1.1.0",
     "single-line-log": "^0.4.1",
     "subleveldown": "^2.0.0",
     "through2": "^0.6.5",
@@ -76,9 +77,9 @@
   "scripts": {
     "build-css": "mkdir -p dist && stylus -u nib css/app.styl -o dist/ -c",
     "package": "npm run build-css && electron-packager . Friends --icon=static/Icon.icns",
-    "start": "npm run build-css && electron index.js",
+    "start": "npm run build-css && electron index.js 2>&1 | silence-chromium",
     "test": "standard",
-    "watch": "npm run build-css && (npm run watch-css & electron index.js)",
+    "watch": "npm run build-css && (npm run watch-css & electron index.js 2>&1 | silence-chromium)",
     "watch-css": "mkdir -p dist && stylus -u nib css/app.styl -o dist/ -w",
     "rebuild-leveldb": "cd node_modules/leveldown && HOME=~/.electron-gyp node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
   }
