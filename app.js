@@ -23,7 +23,7 @@ var patch = require('virtual-dom/patch')
 var path = require('path')
 var subleveldown = require('subleveldown')
 
-var richMessage = require('./lib/rich-message')
+var richMessage = require('rich-message')
 var Swarm = require('./lib/swarm')
 var util = require('./lib/util')
 
