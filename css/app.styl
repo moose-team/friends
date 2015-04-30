@@ -74,6 +74,14 @@ body
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
   font-size: FONT_SIZE
 
+textarea, input, button
+  outline: none
+
+button
+  background: transparent
+  border: none
+  font-size: 1em
+
 .sidebar
   position: absolute
   left: 0
@@ -102,7 +110,7 @@ body
     font-weight: bold
     letter-spacing: 0.5px
 
-  a
+  button
     ellipsis()
     color: GRAY_LIGHTEST
     text-decoration: none
@@ -131,7 +139,7 @@ body
       background-color: RED_LIGHT
       margin: 0 (-1 * SPACING_SIZE)
       padding: 0 SPACING_SIZE
-      a
+      button
         color: WHITE
 
   .avatar
@@ -262,6 +270,7 @@ textarea.composer
   padding: SPACING_SIZE
   position: absolute
   width: calc(100% - 25px)
+  resize: none
 
 img.emoji
   height: 1.2em

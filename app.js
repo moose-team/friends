@@ -23,7 +23,7 @@ var patch = require('virtual-dom/patch')
 var path = require('path')
 var subleveldown = require('subleveldown')
 
-var richMessage = require('./lib/rich-message')
+var richMessage = require('rich-message')
 var Swarm = require('./lib/swarm')
 var util = require('./lib/util')
 
@@ -71,7 +71,7 @@ function App (el) {
   var channelsFound = {}
   var usersFound = {}
   var changesOffsets = {}
-  
+
   // join default channel
   swarm.addChannel('friends')
 
@@ -92,9 +92,10 @@ function App (el) {
     }
   })
 
-  var channelsFound = {}
-  var usersFound = {}
-  var changesOffsets = {}
+  // clear notifications on focus. TODO: only clear notifications in current channel when we have that
+  currentWindow.on('focus', function () {
+    self.setBadge(false)
+  })
 
   swarm.process(function (basicMessage, cb) {
     var message = richMessage(basicMessage, self.data.username)
@@ -304,7 +305,7 @@ App.prototype.render = function () {
     ]),
     h('.content', [
       views.messages.render(data.activeChannel, data.users),
-      views.composer.render()
+      views.composer.render(data)
     ])
   ])
 }
@@ -330,6 +331,8 @@ App.prototype.showGitHelp = function () {
 }
 
 App.prototype.setBadge = function (num) {
+  if (!app.dock) return
+
   if (num === false) {
     return app.dock.setBadge('')
   } else if (num == null) {
