@@ -331,6 +331,8 @@ App.prototype.showGitHelp = function () {
 }
 
 App.prototype.setBadge = function (num) {
+  if (!app.dock) return
+
   if (num === false) {
     return app.dock.setBadge('')
   } else if (num == null) {
