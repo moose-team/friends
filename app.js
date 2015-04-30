@@ -92,6 +92,11 @@ function App (el) {
     }
   })
 
+  // clear notifications on focus. TODO: only clear notifications in current channel when we have that
+  currentWindow.on('focus', function () {
+    self.setBadge(false)
+  })
+
   swarm.process(function (basicMessage, cb) {
     var message = richMessage(basicMessage, self.data.username)
     var channelName = message.channel || 'friends'
