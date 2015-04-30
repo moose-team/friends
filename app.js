@@ -270,6 +270,11 @@ function App (el) {
     self.views.messages.scrollToBottom(true)
   })
 
+  self.on('resizeComposer', function (height) {
+    self.views.messages.notifyComposerHeight(height)
+    render()
+  })
+
   // Update friendly "timeago" time string (once per minute)
   setInterval(function () {
     self.data.activeChannel.messages.forEach(function (message) {

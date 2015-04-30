@@ -18,7 +18,14 @@ RED = rgb(180, 35, 8)
 
 HIGHLIGHT = rgb(250, 250, 220)
 
+SCROLLBAR_TRACK = transparent
+SCROLLBAR_THUMB_DARKEN  = rgba(0,0,0,0.175)
+SCROLLBAR_THUMB_LIGHTEN = rgba(255,255,255,0.175)
+
 SIDEBAR_WIDTH = 190px
+FRIENDS_LOGO_HEIGHT = 70px
+SIDEBAR_BOTTOM_HEIGHT = 61px
+
 AVATAR_SIZE = 35px
 AVATAR_SIZE_SMALL = 18px
 
@@ -92,7 +99,8 @@ button
   color: GRAY_LIGHTEST
   background: BLUE_DARK top left url('../static/logo.png') no-repeat
   background-size: SIDEBAR_WIDTH
-  padding-top: 70px
+  padding-top: FRIENDS_LOGO_HEIGHT
+  padding-bottom: SIDEBAR_BOTTOM_HEIGHT
   user-select: none
   cursor: default
   text-shadow: 0 1px 2px rgba(BLACK, 0.6)
@@ -178,7 +186,6 @@ button
 
 .messages-container
   height: 100%
-  padding-bottom: 53px
 
 .top-bar
   background-color: WHITE
@@ -277,3 +284,19 @@ img.emoji
   width: 1.2em
   margin: 0 .05em 0 .1em
   vertical-align: -0.1em
+
+::-webkit-scrollbar
+  width: 10px
+
+::-webkit-scrollbar-track
+  background-color: SCROLLBAR_TRACK
+  border-radius: 8px
+
+::-webkit-scrollbar-thumb
+  background-color: SCROLLBAR_THUMB_DARKEN
+  border-radius: 8px
+
+.sidebar
+  ::-webkit-scrollbar-thumb
+    background-color: SCROLLBAR_THUMB_LIGHTEN
+    border-radius: 8px
