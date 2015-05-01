@@ -75,7 +75,7 @@
     "type": "git",
     "url": "https://github.com/moose-team/friends.git"
   },
-  "browserif": {
+  "browserify": {
     "transforms": ["brfs"]
   },
   "scripts": {
