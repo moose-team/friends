@@ -5,7 +5,7 @@ var App = require('./app.js')
 
 inherits(Web, App)
 
-function Web() {
+function Web () {
   if (!(this instanceof Web)) return new Web()
   App.call(this, document.body)
 
@@ -15,4 +15,4 @@ function Web() {
 }
 
 // Start onload
-new Web()
+Web()

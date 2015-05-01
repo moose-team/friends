@@ -3,6 +3,8 @@ module.exports = Desktop
 var inherits = require('util').inherits
 var App = require('./app.js')
 
+var path = require('path')
+
 var remote = require('remote')
 var app = remote.require('app')
 var shell = require('shell')
@@ -11,7 +13,7 @@ var currentWindow = remote.getCurrentWindow()
 
 inherits(Desktop, App)
 
-function Desktop() {
+function Desktop () {
   if (!(this instanceof Desktop)) return new Desktop()
   App.call(this, document.body, currentWindow)
   var self = this

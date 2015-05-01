@@ -15,7 +15,6 @@ var inherits = require('inherits')
 var leveldown = require('leveldown')
 var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
-var path = require('path')
 var subleveldown = require('subleveldown')
 
 var richMessage = require('rich-message')
