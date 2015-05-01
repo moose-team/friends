@@ -237,7 +237,7 @@ function App (el) {
         var channel = words.join(' ')
         self.emit('addChannel', channel)
         break
-      case 'wc':
+      case 'part':
         // Todo set current channel
         var currentChan
         if (!currentChan || currentChan.name === 'friends') return
