@@ -230,7 +230,6 @@ function App (el) {
   self.on('executeCommand', function (commandStr) {
     var words = commandStr.split(' ')
     var command = words[0].substring(1, words[0].length).toLowerCase()
-    var message
 
     switch (command) {
       case 'join':
@@ -238,8 +237,14 @@ function App (el) {
         var channel = words.join(' ')
         self.emit('addChannel', channel)
         break
+      case 'wc':
+        // Todo set current channel
+        var currentChan
+        if (!currentChan || currentChan.name === 'friends') return
+        self.send('leaveChannel', currentChan.name)
+        break
       default:
-        message = 'Unrecognized command'
+        console.log('Unrecognized command')
         break
     }
   })
