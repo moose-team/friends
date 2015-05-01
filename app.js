@@ -227,6 +227,23 @@ function App (el) {
     })
   })
 
+  self.on('executeCommand', function (commandStr) {
+    var words = commandStr.split(' ')
+    var command = words[0].substring(1, words[0].length).toLowerCase()
+    var message
+
+    switch (command) {
+      case 'join':
+        words.shift()
+        var channel = words.join(' ')
+        self.emit('addChannel', channel)
+        break
+      default:
+        message = 'Unrecognized command'
+        break
+    }
+  })
+
   self.on('addChannel', function (channelName) {
     if (channelName[0] === '#') channelName = channelName.substring(1)
     if (channelName.length === 0) return
