@@ -244,6 +244,7 @@ function App (el) {
         break
       default:
         console.log('Unrecognized command')
+        self.emit('sendMessage', commandStr)
         break
     }
   })
