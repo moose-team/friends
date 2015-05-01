@@ -238,7 +238,7 @@ function App (el, currentWindow) {
   })
 
   self.on('addChannel', function (channelName) {
-    if (channelName[0] === '#') channelName = channelName.substring(1)
+    if (channelName.charAt(0) === '#') channelName = channelName.substring(1)
     if (channelName.length === 0) return
 
     if (!channelsFound[channelName]) {
