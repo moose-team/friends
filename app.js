@@ -4,11 +4,6 @@ module.exports = window.App = App
 
 var EventEmitter = require('events').EventEmitter
 
-var shell = require('shell')
-var remote = require('remote')
-var app = remote.require('app')
-
-var BrowserWindow = remote.require('browser-window')
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
 var delegate = require('delegate-dom')
@@ -33,14 +28,13 @@ var Messages = require('./lib/elements/messages')
 var Status = require('./lib/elements/status')
 var Users = require('./lib/elements/users')
 
-var currentWindow = remote.getCurrentWindow()
-
 inherits(App, EventEmitter)
 
-function App (el) {
+function App (el, currentWindow) {
   var self = this
   if (!(self instanceof App)) return new App(el)
   self._notifications = 0
+  self.currentWindow = currentWindow
 
   var db = levelup('./friendsdb', {db: leveldown})
 
@@ -51,7 +45,7 @@ function App (el) {
     var href = e.target.getAttribute('href')
     if (/^https?:/.test(href)) {
       e.preventDefault()
-      shell.openExternal(href)
+      self.emit('openUrl', href)
     } else if (/^#/.test(href)) {
       self.emit('addChannel', href)
     }
@@ -76,7 +70,7 @@ function App (el) {
   swarm.addChannel('friends')
 
   githubCurrentUser.verify(function (err, verified, username) {
-    if (err || !verified) self.showGitHelp()
+    if (err || !verified) self.emit('showGitHelp')
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
@@ -90,11 +84,6 @@ function App (el) {
 
       render()
     }
-  })
-
-  // clear notifications on focus. TODO: only clear notifications in current channel when we have that
-  currentWindow.on('focus', function () {
-    self.setBadge(false)
   })
 
   swarm.process(function (basicMessage, cb) {
@@ -116,12 +105,12 @@ function App (el) {
 
     if (!changesOffsets[channel.name]) changesOffsets[channel.name] = swarm.changes(channel.name)
 
-    if (self.data.username && !currentWindow.isFocused()) {
+    if (self.data.username && !self.isFocused()) {
       if (message.text.indexOf(self.data.username) > -1) {
         new Notification('Mentioned in #' + channel.name, { // eslint-disable-line
           body: message.username + ': ' + message.text.slice(0, 20)
         })
-        self.setBadge()
+        self.emit('setBadge')
       }
     }
 
@@ -337,35 +326,9 @@ App.prototype.render = function () {
   ])
 }
 
-App.prototype.showGitHelp = function () {
-  var GIT_HELP = 'file://' + path.join(__dirname, 'lib', 'windows', 'git-help.html')
-
-  var gitHelp = new BrowserWindow({
-    width: 600,
-    height: 525,
-    show: false,
-    center: true,
-    resizable: false
-  })
-
-  gitHelp.on('closed', function () {
-    gitHelp = null
-  })
-
-  gitHelp.loadUrl(GIT_HELP)
-
-  gitHelp.show()
-}
-
-App.prototype.setBadge = function (num) {
-  if (!app.dock) return
-
-  if (num === false) {
-    return app.dock.setBadge('')
-  } else if (num == null) {
-    this._notifications++
-  } else {
-    this._notifications = num
+App.prototype.isFocused = function () {
+  if (this.currentWindow) {
+    return this.currentWindow.isFocused()
   }
-  app.dock.setBadge(this._notifications.toString())
+  return true
 }

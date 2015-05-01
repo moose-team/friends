@@ -8,16 +8,13 @@
   <audio src="static/startup.ogg" autoplay></audio>
   <script>
   if (typeof require !== 'function') {
-    // If we're not in the electron env
+    // If we are in a web env
     var script = document.createElement('script')
-    script.src = 'app.js'
-    script.onload = function() {
-      new window.App(document.body)
-    }
+    script.src = 'bundle.js'
     document.currentScript.parentNode.insertBefore(script, document.currentScript)
   } else {
     // If we are in the electron env
-    require('./app.js')(document.body)
+    require('./desktop.js')()
   }
   </script>
 </body>
