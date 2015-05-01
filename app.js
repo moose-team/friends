@@ -243,7 +243,7 @@ function App (el) {
         self.emit('leaveChannel', self.data.activeChannel.name)
         break
       default:
-        console.log('Unrecognized command: ' + commandStr)
+        console.log('Unrecognized command: ' + command + ' (in "' + commandStr + '")')
         self.emit('sendMessage', commandStr)
         break
     }
