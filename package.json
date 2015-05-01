@@ -44,6 +44,7 @@
     "webrtc-swarm": "^1.2.0"
   },
   "devDependencies": {
+    "beefy": "^2.1.5",
     "electron-packager": "^3.1.0",
     "electron-prebuilt": "^0.25.1",
     "mkdirp": "^0.5.0",
@@ -74,6 +75,9 @@
     "type": "git",
     "url": "https://github.com/moose-team/friends.git"
   },
+  "browserify": {
+    "transforms": ["brfs"]
+  },
   "scripts": {
     "build-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -c",
     "package": "npm run build-css && electron-packager . Friends --icon=static/Icon.icns",
@@ -81,6 +85,7 @@
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron index.js 2>&1 | silence-chromium)",
     "watch-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -w",
+    "web": "beefy web.js:bundle.js",
     "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
   }
 }
