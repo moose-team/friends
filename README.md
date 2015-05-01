@@ -1,5 +1,14 @@
 # Friends
 
+[![travis][travis-image]][travis-url]
+[![david][david-image]][david-url]
+
+[travis-image]: https://img.shields.io/travis/moose-team/friends.svg?style=flat-square
+[travis-url]: https://travis-ci.org/moose-team/friends
+[david-image]: https://img.shields.io/david/moose-team/friends.svg?style=flat-square
+[david-url]: https://david-dm.org/moose-team/friends
+
+
 ### P2P chat powered by the Web
 
 ![screenshot](static/screenshot.png)
