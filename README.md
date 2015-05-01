@@ -68,6 +68,10 @@ $ xvfb-run electron-spawn peerbot.js
 
 Also you [may need to `apt-get install libgconf-2-4`](https://github.com/atom/electron/issues/1518)
 
+## Contributing
+
+Contributions welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before getting started.
+
 ## License
 
 [MIT](LICENSE.md)
