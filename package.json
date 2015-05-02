@@ -51,7 +51,8 @@
     "nib": "^1.1.0",
     "node-gyp": "^1.0.3",
     "standard": "^3.2.1",
-    "stylus": "^0.51.0"
+    "stylus": "^0.51.0",
+    "watchify": "^3.2.1"
   },
   "homepage": "https://github.com/moose-team/friends",
   "keywords": [
@@ -76,7 +77,9 @@
     "url": "https://github.com/moose-team/friends.git"
   },
   "browserify": {
-    "transforms": ["brfs"]
+    "transforms": [
+      "brfs"
+    ]
   },
   "scripts": {
     "build-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -c",
