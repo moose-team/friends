@@ -35,7 +35,7 @@
     "protocol-buffers": "^3.0.0",
     "request": "^2.55.0",
     "rich-message": "^1.0.0",
-    "signalhub": "^3.3.0",
+    "signalhub": "^4.0.0",
     "silence-chromium": "^2.0.0",
     "single-line-log": "^0.4.1",
     "subleveldown": "^2.0.0",
