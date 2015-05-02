@@ -38,6 +38,7 @@ function App (el, currentWindow) {
   var db = levelup('./friendsdb', {db: leveldown})
 
   db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
+  db.aliases = subleveldown(db, 'aliases', {valueEncoding: 'json'})
 
   // Open links in user's default browser
   delegate.on(el, 'a', 'click', function (e) {
@@ -230,10 +231,28 @@ function App (el, currentWindow) {
       case 'leave':
         self.emit('leaveChannel', self.data.activeChannel.name)
         break
-      default:
-        console.log('Unrecognized command: ' + command + ' (in "' + commandStr + '")')
-        self.emit('sendMessage', commandStr)
+      case 'wcall':
+      case 'partall':
+      case 'leaveall':
+        self.data.channels.forEach(function (channel) {
+          self.emit('leaveChannel', channel.name)
+        })
         break
+      case 'alias':
+        var aliasName = words[1]
+        var aliasCommand = words.splice(2, words.length - 1).join(' ')
+        db.aliases.put(aliasName, aliasCommand)
+        break
+      default:
+        db.aliases.get(command, function (err, alias) {
+        if (err == null) {
+          self.emit('executeCommand', alias)
+        } else {
+          console.log('Unrecognized command: ' + command + ' (in "' + commandStr + '")')
+          self.emit('sendMessage', commandStr)
+        }
+      })
+      break
     }
   })
 
