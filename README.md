@@ -49,25 +49,6 @@ You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 * `npm start` to run in electron
 * `npm run package` to build distributable.
 
-## Running on a server
-
-We have included a message seeding utility (named "peerbot") that you can run yourself on a server to ensure that there will always be a peer available to connect to for a channel.
-
-- first, follow the build instructions above
-- `npm i electron-spawn electron-prebuilt -g`
-- `electron-spawn peerbot.js --channel=cats`
-
-it always seeds the `#friends` channel, pass `--channel=mychannel` to also seed another channel. you can specify as many channels as you want with multiple `--channel` flags
-
-If you running it on headless Ubuntu, you will need to use `xvfb-run` to create a virtual display so that Chromium can run:
-
-```
-$ sudo apt-get install xvfb
-$ xvfb-run electron-spawn peerbot.js
-```
-
-Also you [may need to `apt-get install libgconf-2-4`](https://github.com/atom/electron/issues/1518)
-
 ## Contributing
 
 Contributions welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before getting started.
