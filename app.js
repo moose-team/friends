@@ -20,6 +20,7 @@ var subleveldown = require('subleveldown')
 var richMessage = require('rich-message')
 var Swarm = require('./lib/swarm')
 var util = require('./lib/util')
+var command = require('./lib/command')
 
 var Channels = require('./lib/elements/channels')
 var Composer = require('./lib/elements/composer')
@@ -216,6 +217,7 @@ function App (el, currentWindow) {
     })
   })
 
+<<<<<<< HEAD
   self.on('executeCommand', function (commandStr) {
     var words = commandStr.split(' ')
     var command = words[0].substring(1, words[0].length).toLowerCase()
@@ -259,6 +261,9 @@ function App (el, currentWindow) {
       break
     }
   })
+=======
+  self.on('executeCommand', command(self))
+>>>>>>> upstream/master
 
   self.on('addChannel', function (channelName) {
     if (channelName.charAt(0) === '#') channelName = channelName.substring(1)

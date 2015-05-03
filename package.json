@@ -30,12 +30,11 @@
     "leveldown": "maxogden/leveldown#newnan",
     "levelup": "^0.19.0",
     "lodash.uniq": "^3.1.0",
-    "minimist": "^1.1.1",
     "moment": "^2.10.2",
     "protocol-buffers": "^3.0.0",
     "request": "^2.55.0",
     "rich-message": "^1.0.0",
-    "signalhub": "^3.3.0",
+    "signalhub": "^4.0.0",
     "silence-chromium": "^2.0.0",
     "single-line-log": "^0.4.1",
     "subleveldown": "^2.0.0",
@@ -51,7 +50,8 @@
     "nib": "^1.1.0",
     "node-gyp": "^1.0.3",
     "standard": "^3.2.1",
-    "stylus": "^0.51.0"
+    "stylus": "^0.51.0",
+    "watchify": "^3.2.1"
   },
   "homepage": "https://github.com/moose-team/friends",
   "keywords": [
@@ -76,7 +76,9 @@
     "url": "https://github.com/moose-team/friends.git"
   },
   "browserify": {
-    "transforms": ["brfs"]
+    "transforms": [
+      "brfs"
+    ]
   },
   "scripts": {
     "build-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -c",
