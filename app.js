@@ -243,6 +243,10 @@ function App (el, currentWindow) {
         var aliasCommand = words.splice(2, words.length - 1).join(' ')
         db.aliases.put(aliasName, aliasCommand)
         break
+      case 'rmalias':
+        var aliasN = words[1]
+        db.aliases.del(aliasN)
+        break
       default:
         db.aliases.get(command, function (err, alias) {
         if (err == null) {
