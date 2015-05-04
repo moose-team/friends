@@ -39,6 +39,7 @@ function App (el, currentWindow) {
   var db = levelup('./friendsdb', {db: leveldown})
 
   db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
+  db.aliases = subleveldown(db, 'aliases', {valueEncoding: 'json'})
 
   // Open links in user's default browser
   delegate.on(el, 'a', 'click', function (e) {
@@ -216,7 +217,7 @@ function App (el, currentWindow) {
     })
   })
 
-  self.on('executeCommand', command(self))
+  self.on('executeCommand', command(self, db))
 
   self.on('addChannel', function (channelName) {
     if (channelName.charAt(0) === '#') channelName = channelName.substring(1)
