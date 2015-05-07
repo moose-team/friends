@@ -123,14 +123,20 @@ function App (el, currentWindow) {
       channel.messages.push(message)
     }
 
-    if (!message.anon && message.valid && !usersFound[message.username]) {
-      usersFound[message.username] = true
-      self.data.users[message.username] = {
-        avatar: message.avatar,
-        blocked: false
+    if (!message.anon && message.valid) {
+      if (!usersFound[message.username]) {
+        usersFound[message.username] = true
+        self.data.users[message.username] = {
+          avatar: message.avatar,
+          blocked: false
+        }
+
+        // Add user names to available autocompletes
+        self.views.composer.autocompletes.push(message.username)
       }
-      // Add user names to available autocompletes
-      self.views.composer.autocompletes.push(message.username)
+
+      // update last active time for user
+      self.data.users[message.username].lastActive = message.timestamp
     }
     if (!message.anon && !message.valid) {
       message.username = 'Allegedly ' + message.username
