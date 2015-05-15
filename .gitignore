@@ -2,6 +2,7 @@
 dist/
 friendsdb/
 node_modules/
+pkg/
 public-keys/
 Friends.app
 *.log
