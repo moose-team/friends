@@ -21,6 +21,7 @@ var richMessage = require('rich-message')
 var Swarm = require('./lib/swarm')
 var util = require('./lib/util')
 var command = require('./lib/command')
+var Signature = require('./lib/signature')
 
 var Channels = require('./lib/elements/channels')
 var Composer = require('./lib/elements/composer')
@@ -75,7 +76,7 @@ function App (el, currentWindow) {
     if (err) return console.error(err.message || err)
     if (verified) {
       self.data.username = username
-      swarm.username = username
+      swarm.sign = Signature.signer(username)
 
       // Re-create rich messages after we know our username, since we can now do
       // highlights correctly.
@@ -86,6 +87,8 @@ function App (el, currentWindow) {
       render()
     }
   })
+
+  swarm.verify = Signature.verify
 
   swarm.process(function (basicMessage, cb) {
     var message = richMessage(basicMessage, self.data.username)
