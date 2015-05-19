@@ -45,7 +45,7 @@ If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 
 * `npm install`
-* `npm run rebuild-leveldb` to compile leveldown for electron. you will have to modify the command in package.json if you are not on a 64-bit architecture
+* `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
 * `npm start` to run in electron
 * `npm run package` to build distributable.
 
