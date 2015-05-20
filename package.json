@@ -43,6 +43,9 @@
     "virtual-dom": "^2.0.1",
     "webrtc-swarm": "^1.2.0"
   },
+  "optionalDependencies": {
+    "mdns-swarm": "^4.0.0"
+  },
   "devDependencies": {
     "beefy": "^2.1.5",
     "electron-packager": "^4.0.2",
@@ -92,6 +95,8 @@
     "watch": "npm run build-css && (npm run watch-css & electron index.js 2>&1 | silence-chromium)",
     "watch-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -w",
     "web": "beefy web.js:bundle.js",
-    "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+    "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell",
+    "rebuild-mdns": "cd node_modules/mdns-swarm/node_modules/mdns && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.25.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell",
+    "build-for-electron": "npm run rebuild-leveldb && npm run rebuild-mdns"
   }
 }
