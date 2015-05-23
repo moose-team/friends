@@ -18,7 +18,7 @@ var patch = require('virtual-dom/patch')
 var subleveldown = require('subleveldown')
 
 var richMessage = require('rich-message')
-var Swarm = require('./lib/swarm')
+var Swarm = require('friends-swarm')
 var util = require('./lib/util')
 var command = require('./lib/command')
 var Signature = require('./lib/signature')
