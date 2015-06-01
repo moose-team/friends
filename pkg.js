@@ -11,8 +11,6 @@ var electronPackager = './node_modules/.bin/electron-packager'
 var electronVersion = '0.26.0'
 var icon = 'static/Icon.icns'
 
-var ignorePaths = buildIgnorePaths()
-
 if (process.argv[2] === '--all') {
   // build for all platforms
   var archs = ['ia32', 'x64']
@@ -26,18 +24,6 @@ if (process.argv[2] === '--all') {
 } else {
   // build for current platform only
   pack(os.platform(), os.arch())
-}
-
-function buildIgnorePaths () {
-  var paths = ''
-  Object.keys(pkgjson.devDependencies).forEach(function (name) {
-    paths += ' --ignore=' + path.join('node_modules', name)
-  })
-
-  // ignore the pkg directory or hilarity will ensue
-  paths += ' --ignore=pkg'
-
-  return paths
 }
 
 function pack (plat, arch) {
@@ -56,7 +42,7 @@ function pack (plat, arch) {
     ' --icon=' + icon +
     ' --out=' + outputPath +
     ' --prune' +
-    ignorePaths
+    ' --ignore=pkg' // ignore the pkg directory or hilarity will ensue
   console.log(cmd)
   sh.exec(cmd)
 }
