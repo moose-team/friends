@@ -8,7 +8,7 @@ var sh = require('shelljs')
 var appVersion = pkgjson.version
 var appName = pkgjson.name
 var electronPackager = './node_modules/.bin/electron-packager'
-var electronVersion = '0.26.0'
+var electronVersion = pkgjson.dependencies['electron-prebuilt'].substr(1)
 var icon = 'static/Icon.icns'
 
 if (process.argv[2] === '--all') {
