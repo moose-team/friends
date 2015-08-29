@@ -29,12 +29,12 @@ if (process.argv[2] === '--all') {
 function pack (plat, arch) {
   var outputPath = path.join('.', 'pkg', appVersion, plat, arch)
 
-  sh.exec('./node_modules/.bin/rimraf ' + outputPath)
+  sh.exec('"./node_modules/.bin/rimraf" ' + outputPath)
 
   // there is no darwin ia32 electron
   if (plat === 'darwin' && arch === 'ia32') return
 
-  var cmd = electronPackager + ' . ' + appName +
+  var cmd = '"' + electronPackager + '" . ' + appName +
     ' --platform=' + plat +
     ' --arch=' + arch +
     ' --version=' + electronVersion +
