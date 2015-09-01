@@ -38,7 +38,7 @@
     "signalhub": "^4.0.0",
     "silence-chromium": "^2.0.0",
     "simple-get": "^1.4.3",
-    "single-line-log": "^0.4.1",
+    "single-line-log": "^1.0.0",
     "subleveldown": "^2.0.0",
     "through2": "^0.6.5",
     "virtual-dom": "^2.0.1",
