@@ -12,7 +12,7 @@ var eos = require('end-of-stream')
 var githubCurrentUser = require('github-current-user')
 var h = require('virtual-dom/h')
 var inherits = require('inherits')
-var leveldown = require('leveldown')
+var leveldown = require('leveldown') // browser: level-js
 var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
 var subleveldown = require('subleveldown')
@@ -71,7 +71,10 @@ function App (el, currentWindow) {
   // join default channel
   swarm.addChannel('friends')
 
-  githubCurrentUser.verify(function (err, verified, username) {
+  if (githubCurrentUser.verify) githubCurrentUser.verify(onCurrentUser)
+  else onCurrentUser(null, false)
+
+  function onCurrentUser (err, verified, username) {
     if (err || !verified) self.emit('showGitHelp')
     if (err) return console.error(err.message || err)
     if (verified) {
@@ -86,7 +89,7 @@ function App (el, currentWindow) {
 
       render()
     }
-  })
+  }
 
   swarm.verify(Signature.verify)
 
