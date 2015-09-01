@@ -54,7 +54,7 @@
     "rimraf": "^2.3.3",
     "shelljs": "^0.4.0",
     "standard": "^4.5.2",
-    "stylus": "^0.51.0",
+    "stylus": "^0.52.0",
     "watchify": "^3.2.1"
   },
   "homepage": "https://github.com/moose-team/friends",
