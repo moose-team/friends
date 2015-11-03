@@ -20,34 +20,74 @@ fixing things :)
 
 See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
-## Logging in
+## Install
 
-You need a working git + github configuration
+### Prerequisites
 
-- have a publicly listed github email (e.g. shows up on your github account)
-- if you dont wanna do that then do `git config --global user.username yourusername`
+You'll need the newest [io.js](https://iojs.org) and npm (`>= 1.8.1`, `>= 2.8.3`)
 
-When you launch the app it should "just work" now if you have git setup correctly :)
+### Build
 
-If it doesnt work, do this to get debug information:
+Clone the sources locally:
+
+```sh
+$ git clone https://github.com/moose-team/friends
+
+$ cd friends
+```
+
+Install project dependencies:
+
+```sh
+$ npm install
+```
+
+Compile leveldown for [electron](http://electron.atom.io/):
+
+```sh
+$ npm run rebuild-leveldb
+```
+
+If you are not on 64-bit architecture, you will have to modify the command in
+package.json:
+
+```
+"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.34.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+```
+
+to use `--arch=ia32`.
+
+
+## Usage
+
+### GitHub Login
+
+Friends currently uses your git + github configuration.
+
+If you don't already have a public key on GitHub and its private key on your
+machine, you'll need to [set that up
+first](https://help.github.com/articles/generating-ssh-keys/). Make sure your
+github username is also set, using `git config --global user.username
+yourusername`.
+
+If this doesn't work, do this to get debug information:
 
 ```
 $ npm i github-current-user -g
 $ DEBUG=* github-current-user
 ```
 
-Note: DSA keys are not supported. You should switch to RSA anyway for security reasons.
+and then report an [issue](https://github.com/moose-team/friends/issues).
+
+**Note**: DSA keys are not supported. You should switch to RSA anyway for security reasons.
 
 If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show up when you run `ssh-add -l`.
 
-## Building
+### Run
 
-You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
+To run from the command line, execute `npm start`.
 
-* `npm install`
-* `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
-* `npm start` to run in electron
-* `npm run package` to build distributable.
+To create a distributable app, run `npm run package`.
 
 ## Contributing
 
