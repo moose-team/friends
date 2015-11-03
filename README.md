@@ -39,7 +39,7 @@ $ npm i github-current-user -g
 $ DEBUG=* github-current-user
 ```
 
-and then report an [issue](https://github.com/noffle/friends/issues).
+and then report an [issue](https://github.com/moose-team/friends/issues).
 
 **Note**: DSA keys are not supported. You should switch to RSA anyway for security reasons.
 
