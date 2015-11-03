@@ -20,34 +20,40 @@ fixing things :)
 
 See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
+## Installation
+
 ## Logging in
 
-You need a working git + github configuration
+Friends currently uses your git + github configuration.
 
-- have a publicly listed github email (e.g. shows up on your github account)
-- if you dont wanna do that then do `git config --global user.username yourusername`
+If you don't already have a public key on GitHub and its private key on your
+machine, you'll need to [set that up
+first](https://help.github.com/articles/generating-ssh-keys/). Make sure your
+github username is also set, using `git config --global user.username
+yourusername`.
 
-When you launch the app it should "just work" now if you have git setup correctly :)
-
-If it doesnt work, do this to get debug information:
+If this doesn't work, do this to get debug information:
 
 ```
 $ npm i github-current-user -g
 $ DEBUG=* github-current-user
 ```
 
-Note: DSA keys are not supported. You should switch to RSA anyway for security reasons.
+and then report an [issue](https://github.com/noffle/friends/issues).
+
+**Note**: DSA keys are not supported. You should switch to RSA anyway for security reasons.
 
 If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show up when you run `ssh-add -l`.
 
-## Building
+## Building & Running
 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 
-* `npm install`
+* `git clone https://github.com/moose-team/friends` to get the sources
+* `npm install` to install dependencies
 * `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
-* `npm start` to run in electron
-* `npm run package` to build distributable.
+* `npm start` to run
+* `npm run package` to build a distributable app
 
 ## Contributing
 
