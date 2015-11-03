@@ -49,11 +49,11 @@ If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show 
 
 You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
 
-* `git clone https://github.com/moose-team/friends` to get the sources
-* `npm install` to install dependencies
-* `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
-* `npm start` to run
-* `npm run package` to build a distributable app
+1. `git clone https://github.com/moose-team/friends` to get the sources
+2. `npm install` to install dependencies
+3. `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
+4. `npm start` to run
+5. `npm run package` to build a distributable app, if you'd like
 
 ## Contributing
 
