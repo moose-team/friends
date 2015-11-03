@@ -20,9 +20,47 @@ fixing things :)
 
 See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
-## Installation
+## Install
 
-### Logging in
+### Prerequisites
+
+You'll need the newest [io.js](https://iojs.org) and npm (`>= 1.8.1`, `>= 2.8.3`)
+
+### Build
+
+Clone the sources locally:
+
+```sh
+$ git clone https://github.com/moose-team/friends
+
+$ cd friends
+```
+
+Install project dependencies:
+
+```sh
+$ npm install
+```
+
+Compile leveldown for [electron](http://electron.atom.io/):
+
+```sh
+$ npm run rebuild-leveldb
+```
+
+If you are not on 64-bit architecture, you will have to modify the command in
+package.json:
+
+```
+"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.34.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+```
+
+to use `--arch=ia32`.
+
+
+## Usage
+
+### GitHub Login
 
 Friends currently uses your git + github configuration.
 
@@ -45,15 +83,11 @@ and then report an [issue](https://github.com/moose-team/friends/issues).
 
 If it can't verify you, try doing `ssh-add ~/.ssh/id_rsa`. Your key should show up when you run `ssh-add -l`.
 
-### Building & Running
+### Run
 
-You'll need the newest io.js and npm (`>= 1.8.1`, `>= 2.8.3`)
+To run from the command line, execute `npm start`.
 
-1. `git clone https://github.com/moose-team/friends` to get the sources
-2. `npm install` to install dependencies
-3. `npm run rebuild-leveldb` to compile leveldown for [electron](http://electron.atom.io/). you will have to modify the command in package.json if you are not on a 64-bit architecture
-4. `npm start` to run
-5. `npm run package` to build a distributable app, if you'd like
+To create a distributable app, run `npm run package`.
 
 ## Contributing
 
