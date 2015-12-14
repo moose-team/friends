@@ -2,19 +2,12 @@
 @import './button'
 
 WHITE = rgb(255, 255, 255)
-
-GRAY_LIGHTEST = rgb(220, 220, 220)
 GRAY_LIGHT = rgb(200, 200, 200)
 GRAY = rgb(100, 100, 100)
-BLACK = rgb(30, 30, 30)
-
-BLUE_DARKEST = rgb(17, 74, 86)
-BLUE_DARK = rgb(1, 82, 99)
-BLUE = rgb(0, 158, 179)
-BLUE_LIGHT = rgb(208, 255, 255)
-
-RED_LIGHT = rgb(232, 74, 62)
-RED = rgb(180, 35, 8)
+BLACK = rgb(0, 0, 0)
+PURPLE = rgb(66, 69, 85)
+BLUE_LIGHT = rgb(116, 163, 215)
+RED = rgb(255, 0, 0)
 
 HIGHLIGHT = rgb(250, 250, 220)
 
@@ -22,20 +15,21 @@ SCROLLBAR_TRACK = transparent
 SCROLLBAR_THUMB_DARKEN  = rgba(0,0,0,0.175)
 SCROLLBAR_THUMB_LIGHTEN = rgba(255,255,255,0.175)
 
-SIDEBAR_WIDTH = 190px
-FRIENDS_LOGO_HEIGHT = 70px
+SIDEBAR_WIDTH = 250px
+FRIENDS_LOGO_HEIGHT = 90px
 SIDEBAR_BOTTOM_HEIGHT = 61px
 
-AVATAR_SIZE = 35px
-AVATAR_SIZE_SMALL = 18px
+AVATAR_SIZE = 50px
+AVATAR_SIZE_SMALL = 30px
 
-BORDER_RADIUS = 5px
+BORDER_RADIUS = 50px
 
-FONT_SIZE_BIG = 20px
-FONT_SIZE = 15px
-FONT_SIZE_SMALL = 12px
+FONT_SIZE_BIG = 26px
+FONT_SIZE = 16px
+FONT_SIZE_SMALL = 13px
+FONT_SIZE_EXTRA_SMALL = 11px
 
-TOP_BAR_HEIGHT = 45px
+TOP_BAR_HEIGHT = 90px
 
 SPACING_SIZE = 10px
 
@@ -55,39 +49,44 @@ ellipsis()
   box-sizing: border-box
 
 html, body
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: FONT_SIZE
   margin: 0
   padding: 0
   height: 100%
   overflow: hidden
+  letter-spacing: .7px
 
 h1, h2, h3, h4, h5, h6
   margin: 0.1em 0
 h1
-  font-size: 1.5em
-h2
   font-size: 1.3em
+h2
+  font-size: 1.2em
 h3
-  font-size: 1.1em
+  font-size: 1em
 h4
-  font-size: 0.9em
+  font-size: 0.8em
 h5
-  font-size: 0.7em
+  font-size: 0.6em
 h6
-  font-size: 0.5em
+  font-size: 0.4em
+
 ul
   -webkit-padding-start: 20px
 
-body
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-  font-size: FONT_SIZE
-
 textarea, input, button
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  padding: SPACING_SIZE
+  margin-top: 3px
+  font-size: FONT_SIZE_SMALL
   outline: none
+  border: 0px
 
 button
   background: transparent
   border: none
-  font-size: 1em
+  font-size: FONT_SIZE
 
 .sidebar
   position: absolute
@@ -96,14 +95,13 @@ button
   bottom: 0
   width: SIDEBAR_WIDTH
   height: 100%
-  color: GRAY_LIGHTEST
-  background: BLUE_DARK top left url('../static/logo.png') no-repeat
+  color: WHITE
+  background: PURPLE top left url('../static/logo.png') no-repeat
   background-size: SIDEBAR_WIDTH
   padding-top: FRIENDS_LOGO_HEIGHT
   padding-bottom: SIDEBAR_BOTTOM_HEIGHT
   user-select: none
   cursor: default
-  text-shadow: 0 1px 2px rgba(BLACK, 0.6)
 
   .sidebar-scroll
     overflow: auto
@@ -115,23 +113,23 @@ button
     margin-top: (SPACING_SIZE * 2)
     margin-bottom: SPACING_SIZE
     text-transform: uppercase
-    font-weight: bold
-    letter-spacing: 0.5px
 
   button
     ellipsis()
-    color: GRAY_LIGHTEST
+    color: WHITE
     text-decoration: none
-    padding: (SPACING_SIZE / 3) SPACING_SIZE
-    margin: 0
+    margin-top: 0px
     display: block
 
   .addChannel
+    font-size: FONT_SIZE
+    padding: 0px
+    margin-top: 5px
+
     input
-      padding: (SPACING_SIZE / 3) SPACING_SIZE
-      font-size: FONT_SIZE
       width: 100%
       z-index: 10000
+      border-radius: BORDER_RADIUS
 
   ul
     list-style: none
@@ -144,35 +142,37 @@ button
     padding: 0
 
     &.active
-      background-color: RED_LIGHT
+      background-color: BLUE_LIGHT
       margin: 0 (-1 * SPACING_SIZE)
-      padding: 0 SPACING_SIZE
+      padding: 0 0 0 SPACING_SIZE
       button
         color: WHITE
 
   .avatar
     float: left
-    border-radius: (BORDER_RADIUS / 2)
+    border-radius: BORDER_RADIUS
     width: AVATAR_SIZE_SMALL
     height: AVATAR_SIZE_SMALL
     margin-right: (SPACING_SIZE * (2 / 3))
     opacity: 0.8
 
   .status
-    background-color: BLUE_DARKEST
+    background-color: PURPLE
     text-align: center
     position: absolute
     padding: SPACING_SIZE 0
     bottom: 0
     left: 0
     right: 0
+    font-size: FONT_SIZE_SMALL
 
     .username, .peers
       ellipsis()
     .peers
       margin-top: SPACING_SIZE
-      font-style: italic
-      font-size: FONT_SIZE_SMALL
+      font-size: FONT_SIZE_EXTRA_SMALL
+    .username
+      font-weight: bold
 
   .users .blocked
     opacity: 0.5
@@ -185,19 +185,20 @@ button
   left: SIDEBAR_WIDTH
 
 .messages-container
-  height: 100%
+  height: 90%
 
 .top-bar
   background-color: WHITE
-  box-shadow: 0 0 7px 0 GRAY_LIGHT
+  box-shadow: 0 0 5px 0 GRAY_LIGHT
   padding: SPACING_SIZE
   height: TOP_BAR_HEIGHT
 
   .channelName
     display: inline-block
-    color: BLACK
+    color: BLUE_LIGHT
     font-size: FONT_SIZE_BIG
-    font-weight: bold
+    margin-top: SPACING_SIZE * 2
+    margin-left: SPACING_SIZE
 
   .button
     float: right
@@ -213,10 +214,25 @@ button
   li
     list-style: none
 
+  li.message
+    div.msg
+      border-radius: 10px
+      margin-left: 60px
+      padding: 8px
+
+  li.message:nth-child(odd)
+    div.msg
+      background-color: PURPLE
+
+  li.message:nth-child(even)
+    div.msg
+      background-color: BLUE_LIGHT
+
 .message
   margin: SPACING_SIZE
-  a
-    color: #0084B4
+  color: WHITE
+  font-size: FONT_SIZE_SMALL
+  line-height: 1.2em
   .avatar
     float: left
     border-radius: BORDER_RADIUS
@@ -226,6 +242,7 @@ button
     display: inline-block
     line-height: 1
   .username
+    font-size: FONT_SIZE_SMALL
     font-weight: bold
     margin-left: SPACING_SIZE
   .verified
@@ -236,11 +253,11 @@ button
     margin-left: (SPACING_SIZE / 2)
     opacity: 0.8
   .timestamp
-    color: GRAY_LIGHT
-    font-size: FONT_SIZE_SMALL
-    margin-left: (SPACING_SIZE * (2 / 3))
+    margin-left: SPACING_SIZE
+    font-size: FONT_SIZE_EXTRA_SMALL
   .text
-    margin-left: AVATAR_SIZE + SPACING_SIZE
+    font-size: FONT_SIZE_SMALL
+    margin-left: SPACING_SIZE
     overflow-wrap: break-word
   .highlight
     background-color: HIGHLIGHT
@@ -257,21 +274,17 @@ button
 .starterMessage
   color: GRAY
   font-style: italic
-  font-size: FONT_SIZE_BIG
+  font-size: FONT_SIZE
   text-align: center
   margin: (SPACING_SIZE * 3) SPACING_SIZE SPACING_SIZE SPACING_SIZE
-
-input, textarea
-  outline: 0
 
 textarea.composer
   border-radius: BORDER_RADIUS
   border: solid 3px GRAY_LIGHT
   bottom: 0
-  box-shadow: 0 0 0 2px WHITE
   box-sizing: padding-box
   display: block
-  font-size: FONT_SIZE
+  font-size: FONT_SIZE_SMALL
   margin: SPACING_SIZE
   overflow: hidden
   padding: SPACING_SIZE
@@ -284,6 +297,9 @@ img.emoji
   width: 1.2em
   margin: 0 .05em 0 .1em
   vertical-align: -0.1em
+
+.leaveButton
+  border-radius: BORDER_RADIUS
 
 .modal-overlay
   background-color: rgba(0,0,0,.001)
@@ -299,10 +315,8 @@ img.emoji
     left: 50%
     z-index: 9998
     background-color: WHITE
-    border-radius: 3px
     padding: .5em
     color: BLACK
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12)
     margin-top: 10px
     ul
       margin: 0
@@ -319,8 +333,6 @@ img.emoji
         text-align: left
         padding: .3em
         cursor: pointer
-        &:hover
-          background-color: GRAY_LIGHTEST
 
 ::-webkit-scrollbar
   width: 10px
