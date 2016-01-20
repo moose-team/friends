@@ -24,7 +24,7 @@ See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
 ### Prerequisites
 
-You'll need the newest [io.js](https://iojs.org) and npm (`>= 1.8.1`, `>= 2.8.3`)
+You'll need the newest [node.js](https://nodejs.org) (`>= 4`) and npm (`>= 2.8.3`).
 
 ### Build
 
