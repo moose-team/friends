@@ -15,7 +15,7 @@ function appReady () {
     height: 600,
     title: APP_NAME
   })
-  mainWindow.loadUrl(INDEX)
+  mainWindow.loadURL(INDEX)
 
   mainWindow.on('closed', function () {
     mainWindow = null
