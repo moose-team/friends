@@ -52,7 +52,7 @@ If you are not on 64-bit architecture, you will have to modify the command in
 package.json:
 
 ```
-"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.34.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=$(../../version.js) --arch=x64 --dist-url=https://atom.io/download/atom-shell"
 ```
 
 to use `--arch=ia32`.
