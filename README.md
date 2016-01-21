@@ -24,7 +24,7 @@ See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
 ### Prerequisites
 
-You'll need the newest [io.js](https://iojs.org) and npm (`>= 1.8.1`, `>= 2.8.3`)
+You'll need the newest [node.js](https://nodejs.org) (`>= 4`) and npm (`>= 2.8.3`).
 
 ### Build
 
@@ -52,7 +52,7 @@ If you are not on 64-bit architecture, you will have to modify the command in
 package.json:
 
 ```
-"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.34.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+"rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=$(../../version.js) --arch=x64 --dist-url=https://atom.io/download/atom-shell"
 ```
 
 to use `--arch=ia32`.

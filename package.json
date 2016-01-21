@@ -16,6 +16,11 @@
     "github-current-user": false,
     "leveldown": "level-js"
   },
+  "browserify": {
+    "transforms": [
+      "brfs"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/moose-team/friends/issues"
   },
@@ -49,7 +54,7 @@
     "beefy": "^2.1.5",
     "brfs": "^1.4.1",
     "electron-packager": "^5.0.2",
-    "electron-prebuilt": "^0.34.2",
+    "electron-prebuilt": "^0.36.4",
     "mkdirp": "^0.5.0",
     "nib": "^1.1.0",
     "node-gyp": "^2.0.2",
@@ -59,21 +64,25 @@
     "stylus": "^0.52.0",
     "watchify": "^3.2.1"
   },
+  "engines": {
+    "node": ">=4",
+    "npm": ">=2.8.3"
+  },
   "homepage": "https://github.com/moose-team/friends",
   "keywords": [
-    "peer-to-peer",
-    "mad science",
     "chat",
-    "friends",
-    "p2p",
-    "discussion",
     "communication",
-    "team chat",
-    "replication",
     "crypto",
-    "webrtc",
+    "discussion",
+    "friends",
     "irc",
-    "slack"
+    "mad science",
+    "p2p",
+    "peer-to-peer",
+    "replication",
+    "slack",
+    "team chat",
+    "webrtc"
   ],
   "license": "MIT",
   "main": "index.js",
@@ -81,20 +90,15 @@
     "type": "git",
     "url": "https://github.com/moose-team/friends.git"
   },
-  "browserify": {
-    "transforms": [
-      "brfs"
-    ]
-  },
   "scripts": {
     "build-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -c",
     "package": "node pkg.js",
     "package-all": "node pkg.js --all",
+    "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=$(../../version.js) --arch=x64 --dist-url=https://atom.io/download/atom-shell",
     "start": "npm run build-css && electron index.js 2>&1 | silence-chromium",
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron index.js 2>&1 | silence-chromium)",
     "watch-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -w",
-    "web": "beefy web.js:bundle.js",
-    "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=0.34.2 --arch=x64 --dist-url=https://atom.io/download/atom-shell"
+    "web": "beefy web.js:bundle.js"
   }
 }
