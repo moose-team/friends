@@ -13,16 +13,6 @@ In addition to improving the project by refactoring code and implementing releva
 - **Copy editing**: fix typos, clarify language, and generally improve the quality of the content.
 - **Formatting**: help keep content easy to read with consistent formatting.
 
-## Installing
-
-Fork and clone the repo, then `npm install` to install all dependencies.
-
-The `app` folder has the actual app, and it has its own `package.json`. If you are adding a dependency to the app, add it to `app/package.json`. The top level `package.json` has the build `devDependencies` (like electron).
-
-## Testing
-
-Tests are run with `npm test`. Please ensure all tests are passing before submitting a pull request (unless you're creating a failing test to increase test coverage or show a problem).
-
 ## Code Style
 
 [![standard][standard-image]][standard-url]
@@ -36,7 +26,7 @@ This repository uses [`standard`][standard-url] to maintain code style and consi
 
 # Collaborating Guidelines
 
-**This is an OPEN Open Source Project.**
+**This is an [OPEN Open Source Project](http://openopensource.org).**
 
 ## What?
 
