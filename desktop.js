@@ -18,6 +18,10 @@ function Desktop () {
   App.call(this, document.body, currentWindow)
   var self = this
 
+  // defensively remove all listeners as errors will occur on reload
+  // see https://github.com/atom/electron/issues/3778
+  remote.getCurrentWindow().removeAllListeners()
+
   // clear notifications on focus. TODO: only clear notifications in current channel when we have that
   currentWindow.on('focus', function () {
     self.setBadge(false)
