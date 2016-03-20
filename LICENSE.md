@@ -1,4 +1,4 @@
-The MIT License (MIT)
+# [The MIT License](https://spdx.org/licenses/MIT)
 
 Copyright (c) MOOSE Team
 
