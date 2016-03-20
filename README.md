@@ -1,5 +1,7 @@
 # Friends
 
+> P2P chat powered by the Web.
+
 [![travis][travis-image]][travis-url]
 [![david][david-image]][david-url]
 
@@ -8,13 +10,9 @@
 [david-image]: https://img.shields.io/david/moose-team/friends.svg?style=flat-square
 [david-url]: https://david-dm.org/moose-team/friends
 
-
-### P2P chat powered by the Web
-
 ![screenshot](static/screenshot.png)
 
-**Alpha quality** you probably only want to use this if you like to send pull requests
-fixing things :)
+**This project is alpha quality.** You probably only want to use this if you like to send pull requests fixing things :)
 
 ## How it works
 
@@ -24,15 +22,14 @@ See [our site](http://moose-team.github.io/friends/) or the `gh-pages` branch.
 
 ### Prerequisites
 
-You'll need the newest [node.js](https://nodejs.org) (`>= 4`) and npm (`>= 2.8.3`).
+You'll need [Node.js](https://nodejs.org) (`>= 4`) and [npm](https://www.npmjs.com/package/npm) (`>= 2.8.3`).
 
 ### Build
 
-Clone the sources locally:
+Clone the source locally:
 
 ```sh
 $ git clone https://github.com/moose-team/friends
-
 $ cd friends
 ```
 
@@ -48,8 +45,7 @@ Compile leveldown for [electron](http://electron.atom.io/):
 $ npm run rebuild-leveldb
 ```
 
-If you are not on 64-bit architecture, you will have to modify the command in
-package.json:
+If you are not on 64-bit architecture, you will have to modify the command in package.json:
 
 ```
 "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=$(../../version.js) --arch=x64 --dist-url=https://atom.io/download/atom-shell"
@@ -57,20 +53,15 @@ package.json:
 
 to use `--arch=ia32`.
 
-
 ## Usage
 
 ### GitHub Login
 
-Friends currently uses your git + github configuration.
+Friends currently uses your git and github configuration for authentication.
 
-If you don't already have a public key on GitHub and its private key on your
-machine, you'll need to [set that up
-first](https://help.github.com/articles/generating-ssh-keys/). Make sure your
-github username is also set, using `git config --global user.username
-yourusername`.
+If you don't already have a public key on GitHub and corresponding private key on your machine, you'll need to [set that up first](https://help.github.com/articles/generating-ssh-keys/). Make sure your github username is also set, using `git config --global github.user yourusername`.
 
-If this doesn't work, do this to get debug information:
+If you're having trouble getting this part to work, do this to get debug information:
 
 ```
 $ npm i github-current-user -g
