@@ -16,13 +16,13 @@ var leveldown = require('leveldown') // browser: level-js
 var levelup = require('levelup')
 var patch = require('virtual-dom/patch')
 var subleveldown = require('subleveldown')
-
 var richMessage = require('rich-message')
 var Swarm = require('friends-swarm')
+
+var config = require('../config')
 var util = require('./lib/util')
 var command = require('./lib/command')
 var Signature = require('./lib/signature')
-
 var Channels = require('./lib/elements/channels')
 var Composer = require('./lib/elements/composer')
 var Messages = require('./lib/elements/messages')
@@ -37,7 +37,7 @@ function App (el, currentWindow) {
   self._notifications = 0
   self.currentWindow = currentWindow
 
-  var db = levelup('./friendsdb', {db: leveldown})
+  var db = levelup(config.DB_PATH, {db: leveldown})
 
   db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
   db.aliases = subleveldown(db, 'aliases', {valueEncoding: 'json'})

@@ -25,6 +25,7 @@
     "url": "https://github.com/moose-team/friends/issues"
   },
   "dependencies": {
+    "application-config-path": "^0.1.0",
     "cat-names": "^1.0.2",
     "ctype": "^0.5.4",
     "delegate-dom": "0.0.1",
@@ -41,6 +42,7 @@
     "leveldown": "^1.4.1",
     "levelup": "^1.2.1",
     "lodash.uniq": "^4.2.0",
+    "mkdirp": "^0.5.1",
     "modal-element": "^1.0.0",
     "moment": "^2.12.0",
     "rich-message": "^1.0.0",
@@ -55,7 +57,6 @@
     "brfs": "^1.4.1",
     "electron-packager": "^5.0.2",
     "electron-prebuilt": "0.36.10",
-    "mkdirp": "^0.5.0",
     "nib": "^1.1.0",
     "node-gyp": "^2.0.2",
     "rimraf": "^2.3.3",
