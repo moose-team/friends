@@ -1,5 +1,5 @@
 var BrowserWindow = require('browser-window')
-var config = require('../config')
+var config = require('./config')
 var app = require('app')
 
 app.on('ready', appReady)

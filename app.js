@@ -19,7 +19,7 @@ var subleveldown = require('subleveldown')
 var richMessage = require('rich-message')
 var Swarm = require('friends-swarm')
 
-var config = require('../config')
+var config = require('./config')
 var util = require('./lib/util')
 var command = require('./lib/command')
 var Signature = require('./lib/signature')
