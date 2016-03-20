@@ -1,6 +1,6 @@
 {
   "name": "friends",
-  "description": "p2p chat",
+  "description": "P2P chat powered by the Web.",
   "version": "1.0.0",
   "author": [
     "feross",
@@ -32,7 +32,7 @@
     "friends-swarm": "^2.0.0",
     "ghlink": "^0.1.2",
     "ghsign": "^3.0.1",
-    "github-current-user": "^2.4.1",
+    "github-current-user": "^2.5.0",
     "highlight.js": "^9.2.0",
     "html-parser": "^0.8.0",
     "html-to-vdom": "^0.7.0",
