@@ -42,8 +42,8 @@ function pack (plat, arch) {
     `--app-version=${appVersion} ` +
     `--icon=${icon} ` +
     `--out=${outputPath} ` +
-    `--prune ` +
-    `--ignore=pkg` // ignore the pkg directory or hilarity will ensue
+    '--prune ' +
+    '--ignore=pkg' // ignore the pkg directory or hilarity will ensue
 
   console.log(`${cmd1}\n${cmd2}`)
 

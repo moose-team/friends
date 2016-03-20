@@ -1,6 +1,5 @@
 var applicationConfigPath = require('application-config-path')
 var path = require('path')
-var fs = require('fs')
 
 var CONFIG_PATH = applicationConfigPath('Friends')
 
