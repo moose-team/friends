@@ -14,7 +14,7 @@
     document.currentScript.parentNode.insertBefore(script, document.currentScript)
   } else {
     // If we are in the electron env
-    require('./desktop.js')()
+    var friends = require('./desktop.js')()
   }
   </script>
 </body>
