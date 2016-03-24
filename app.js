@@ -6,7 +6,7 @@ var EventEmitter = require('events').EventEmitter
 
 var catNames = require('cat-names')
 var createElement = require('virtual-dom/create-element')
-var delegate = require('delegate-dom')
+var delegate = require('dom-delegate')
 var diff = require('virtual-dom/diff')
 var eos = require('end-of-stream')
 var githubCurrentUser = require('github-current-user')
@@ -43,7 +43,7 @@ function App (el, currentWindow) {
   db.aliases = subleveldown(db, 'aliases', {valueEncoding: 'json'})
 
   // Open links in user's default browser
-  delegate.on(el, 'a', 'click', function (e) {
+  delegate(el).on('click', 'a', function (e) {
     var href = e.target.getAttribute('href')
     if (/^https?:/.test(href)) {
       e.preventDefault()

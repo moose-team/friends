@@ -28,7 +28,7 @@
     "application-config-path": "^0.1.0",
     "cat-names": "^1.0.2",
     "ctype": "^0.5.4",
-    "delegate-dom": "0.0.1",
+    "dom-delegate": "^2.0.3",
     "end-of-stream": "^1.1.0",
     "friends-swarm": "^2.0.0",
     "ghlink": "^0.1.2",
