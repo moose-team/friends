@@ -17,7 +17,7 @@
       display: none;
     }
 
-    button {
+    .button {
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -41,7 +41,7 @@
   }
   </script>
 
-  <p>We couldn't automatically authenticate you with GitHub credentials!</p>
+  <h1>We couldn't automatically authenticate you with GitHub credentials!</h1>
 
   <p>Other authentication methods will be available but right now GitHub is
     your only option for signed messages and verifying your username.</p>
@@ -49,8 +49,8 @@
   <p>Here's what we were able to figure out about who you are:</p>
 
   <ul>
-    <li>Username: <span id="username">loading...</span></li>
-    <li>Valid SSH key: <span id="valid-key">loading...</span></li>
+    <li><strong>Username:</strong> <span id="username">loading...</span></li>
+    <li><strong>Valid SSH key:</strong> <span id="valid-key">loading...</span></li>
   </ul>
 
   <div id="error-wrapper">
@@ -59,10 +59,10 @@
     <p><code id="error"></code></p>
   </div>
 
-  <p>Reasons this process can fail:</p>
+  <h2>Reasons authentication can fail</h2>
 
   <ul>
-    <li>No <code>user.username</code> or <code>user.email</code> specified in
+    <li>No <code>github.user</code> or <code>user.email</code> specified in
       <code>~/.gitconfig</code></li>
 
     <li>You only have <code>user.email</code> in <code>~/.gitconfig</code> and
@@ -83,6 +83,6 @@
     <li>You found a new bug!</li>
   </ul>
 
-  <button>Close</button>
+  <button class="button">Close</button>
 </body>
 </html>
