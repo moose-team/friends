@@ -49,7 +49,7 @@ Desktop.prototype.showGitHelp = function () {
     gitHelp = null
   })
 
-  gitHelp.loadUrl(GIT_HELP)
+  gitHelp.loadURL(GIT_HELP)
 
   gitHelp.show()
 }
