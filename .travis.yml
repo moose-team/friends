@@ -1,9 +1,5 @@
 language: node_js
 node_js:
-  - 'iojs'
-sudo: false
-cache:
-  directories:
-    - node_modules
-script:
-  - npm test
+  - '4'
+  - '5'
+install: npm install standard
