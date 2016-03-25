@@ -15,4 +15,4 @@ function Web () {
 }
 
 // Start onload
-Web()
+window.friends = Web()
