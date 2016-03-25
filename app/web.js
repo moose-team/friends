@@ -1,7 +1,7 @@
 module.exports = Web
 
 var inherits = require('util').inherits
-var App = require('./app.js')
+var App = require('./')
 
 inherits(Web, App)
 
@@ -15,4 +15,4 @@ function Web () {
 }
 
 // Start onload
-Web()
+window.friends = Web()

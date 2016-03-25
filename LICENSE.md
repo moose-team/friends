@@ -1,6 +1,6 @@
-# [The MIT License](https://spdx.org/licenses/MIT)
+# [MIT License](https://spdx.org/licenses/MIT)
 
-Copyright (c) MOOSE Team
+Copyright (c) 2015-2016 [MOOSE Team](http://moose-team.github.io)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
