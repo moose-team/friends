@@ -1,5 +1,5 @@
 .DS_Store
-dist/
+app/style/*.css
 friendsdb/
 node_modules/
 pkg/

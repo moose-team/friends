@@ -2,7 +2,7 @@
 <head>
   <title>Friends</title>
   <link rel="stylesheet" href="node_modules/highlight.js/styles/solarized-light.css" charset="utf-8">
-  <link rel="stylesheet" href="dist/app.css" charset="utf-8">
+  <link rel="stylesheet" href="app/style/bundle.css" charset="utf-8">
 </head>
 <body>
   <audio src="static/startup.ogg" autoplay></audio>
@@ -14,7 +14,7 @@
     document.currentScript.parentNode.insertBefore(script, document.currentScript)
   } else {
     // If we are in the electron env
-    var friends = require('./desktop.js')()
+    var friends = require('./app/desktop.js')()
   }
   </script>
 </body>

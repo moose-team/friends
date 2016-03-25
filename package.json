@@ -87,14 +87,15 @@
     "url": "https://github.com/moose-team/friends.git"
   },
   "scripts": {
-    "build-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -c",
+    "build-css": "stylus -u nib app/style/index.styl -o app/style/bundle.css -c",
+    "prepackage": "npm run build-css",
     "package": "node pkg.js",
-    "package-all": "node pkg.js --all",
+    "package-all": "npm run package -- --all",
     "rebuild-leveldb": "cd node_modules/leveldown && set HOME=~/.electron-gyp && node-gyp rebuild --target=$npm_package_devDependencies_electron_prebuilt --arch=x64 --dist-url=https://atom.io/download/atom-shell",
     "start": "npm run build-css && electron index.js 2>&1 | silence-chromium",
     "test": "standard",
     "watch": "npm run build-css && (npm run watch-css & electron index.js 2>&1 | silence-chromium)",
-    "watch-css": "mkdirp dist && stylus -u nib css/app.styl -o dist/ -w",
-    "web": "beefy web.js:bundle.js"
+    "watch-css": "stylus -u nib app/style/index.styl -o app/style/bundle.css -w",
+    "web": "beefy app/web.js:bundle.js"
   }
 }

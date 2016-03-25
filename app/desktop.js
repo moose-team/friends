@@ -1,7 +1,8 @@
 module.exports = Desktop
 
 var inherits = require('util').inherits
-var App = require('./app.js')
+var App = require('./')
+var config = require('../config')
 
 var path = require('path')
 
@@ -35,8 +36,6 @@ function Desktop () {
 }
 
 Desktop.prototype.showGitHelp = function () {
-  var GIT_HELP = 'file://' + path.join(__dirname, 'lib', 'windows', 'git-help.html')
-
   var gitHelp = new BrowserWindow({
     width: 600,
     height: 525,
@@ -49,7 +48,7 @@ Desktop.prototype.showGitHelp = function () {
     gitHelp = null
   })
 
-  gitHelp.loadURL(GIT_HELP)
+  gitHelp.loadURL(config.GIT_HELP)
 
   gitHelp.show()
 }
