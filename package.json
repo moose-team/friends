@@ -27,16 +27,12 @@
   "dependencies": {
     "application-config-path": "^0.1.0",
     "cat-names": "^1.0.2",
-    "ctype": "^0.5.4",
     "dom-delegate": "^2.0.3",
     "end-of-stream": "^1.1.0",
     "friends-swarm": "^2.0.0",
-    "ghlink": "^0.1.2",
     "ghsign": "^3.0.1",
     "github-current-user": "^2.5.0",
     "highlight.js": "^9.2.0",
-    "html-parser": "^0.8.0",
-    "html-to-vdom": "^0.7.0",
     "inherits": "^2.0.1",
     "level-js": "^2.2.1",
     "leveldown": "^1.4.1",
@@ -48,9 +44,8 @@
     "rich-message": "^1.0.0",
     "silence-chromium": "^2.0.0",
     "simple-get": "^2.0.0",
-    "single-line-log": "^1.0.0",
     "subleveldown": "^2.0.0",
-    "virtual-dom": "^2.0.1"
+    "yo-yo": "^1.1.1"
   },
   "devDependencies": {
     "beefy": "^2.1.5",

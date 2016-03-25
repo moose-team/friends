@@ -5,19 +5,16 @@ module.exports = window.App = App
 var EventEmitter = require('events').EventEmitter
 
 var catNames = require('cat-names')
-var createElement = require('virtual-dom/create-element')
 var delegate = require('dom-delegate')
-var diff = require('virtual-dom/diff')
 var eos = require('end-of-stream')
 var githubCurrentUser = require('github-current-user')
-var h = require('virtual-dom/h')
 var inherits = require('inherits')
 var leveldown = require('leveldown') // browser: level-js
 var levelup = require('levelup')
-var patch = require('virtual-dom/patch')
 var subleveldown = require('subleveldown')
 var richMessage = require('rich-message')
 var Swarm = require('friends-swarm')
+var yo = require('yo-yo')
 
 var config = require('./config')
 var util = require('./lib/util')
@@ -191,14 +188,11 @@ function App (el, currentWindow) {
 
   // Initial DOM tree render
   var tree = self.render()
-  var rootNode = createElement(tree)
-  el.appendChild(rootNode)
+  el.appendChild(tree)
 
   function render () {
     var newTree = self.render()
-    var patches = diff(tree, newTree)
-    rootNode = patch(rootNode, patches)
-    tree = newTree
+    yo.update(tree, newTree)
   }
 
   self.on('render', render)
@@ -304,24 +298,24 @@ App.prototype.render = function () {
   var views = self.views
   var data = self.data
 
-  return h('div.layout', [
-    h('.sidebar', [
-      h('.sidebar-scroll', [
-        views.channels.render(data.channels),
-        views.users.render(data.users)
-      ]),
-      views.status.render(data.username, data.peers)
-    ]),
-    h('.content', [
-      views.messages.render(data.activeChannel, data.users),
-      views.composer.render(data)
-    ])
-  ])
+  return yo`
+    <div class="layout">
+      <div class="sidebar">
+        <div class="sidebar-scroll">
+          ${views.channels.render(data.channels)}
+          ${views.users.render(data.users)}
+        </div>
+        ${views.status.render(data.username, data.peers)}
+      </div>
+      <div class="content">
+        ${views.messages.render(data.activeChannel, data.users)}
+        ${views.composer.render(data)}
+      </div>
+    </div>
+  `
 }
 
 App.prototype.isFocused = function () {
-  if (this.currentWindow) {
-    return this.currentWindow.isFocused()
-  }
+  if (this.currentWindow) return this.currentWindow.isFocused()
   return true
 }

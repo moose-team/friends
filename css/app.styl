@@ -3,6 +3,7 @@
 
 WHITE = rgb(255, 255, 255)
 
+GRAY_HIGHLIGHT = rgb(240, 240, 240)
 GRAY_LIGHTEST = rgb(220, 220, 220)
 GRAY_LIGHT = rgb(200, 200, 200)
 GRAY = rgb(100, 100, 100)
@@ -122,16 +123,26 @@ button
     ellipsis()
     color: GRAY_LIGHTEST
     text-decoration: none
-    padding: (SPACING_SIZE / 3) SPACING_SIZE
+    padding: (SPACING_SIZE / 3) (SPACING_SIZE * 2)
     margin: 0
     display: block
+    width: 100%
+    text-align: left
 
-  .addChannel
-    input
-      padding: (SPACING_SIZE / 3) SPACING_SIZE
-      font-size: FONT_SIZE
-      width: 100%
-      z-index: 10000
+    &:hover
+      color: GRAY_HIGHLIGHT
+
+  .add-channel
+    margin: 0 (-1 * SPACING_SIZE)
+    button
+      padding: (SPACING_SIZE / 2) (SPACING_SIZE * 2)
+    .inputprompt
+      margin: 0 (SPACING_SIZE * 2)
+      input
+        padding: (SPACING_SIZE / 3) SPACING_SIZE
+        font-size: FONT_SIZE
+        width: 100%
+        z-index: 10000
 
   ul
     list-style: none
@@ -142,11 +153,10 @@ button
     ellipsis()
     margin: 0
     padding: 0
+    margin: 0 (-1 * SPACING_SIZE)
 
     &.active
       background-color: RED_LIGHT
-      margin: 0 (-1 * SPACING_SIZE)
-      padding: 0 SPACING_SIZE
       button
         color: WHITE
 
@@ -193,11 +203,16 @@ button
   padding: SPACING_SIZE
   height: TOP_BAR_HEIGHT
 
-  .channelName
+  .channel-name
     display: inline-block
     color: BLACK
     font-size: FONT_SIZE_BIG
     font-weight: bold
+
+    .num-peers
+      font-size: FONT_SIZE_SMALL
+      font-weight: normal
+      color: GRAY_LIGHT
 
   .button
     float: right
@@ -222,23 +237,24 @@ button
     border-radius: BORDER_RADIUS
     width: AVATAR_SIZE
     height: AVATAR_SIZE
+    cursor: pointer
   .username, .verified, .timestamp
-    display: inline-block
     line-height: 1
   .username
     font-weight: bold
     margin-left: SPACING_SIZE
+    text-decoration: none
+    color: inherit
   .verified
+    display: inline-block
     background-image: url('../static/verified.svg')
     background-size: 10px
     width: 10px
     height: 10px
-    margin-left: (SPACING_SIZE / 2)
     opacity: 0.8
   .timestamp
     color: GRAY_LIGHT
     font-size: FONT_SIZE_SMALL
-    margin-left: (SPACING_SIZE * (2 / 3))
   .text
     margin-left: AVATAR_SIZE + SPACING_SIZE
     overflow-wrap: break-word
