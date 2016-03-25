@@ -41,7 +41,7 @@
     "mkdirp": "^0.5.1",
     "modal-element": "^1.0.0",
     "moment": "^2.12.0",
-    "rich-message": "^1.0.0",
+    "rich-message": "^1.0.2",
     "silence-chromium": "^2.0.0",
     "simple-get": "^2.0.0",
     "subleveldown": "^2.0.0",
