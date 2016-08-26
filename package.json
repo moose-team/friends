@@ -56,7 +56,7 @@
     "node-gyp": "^2.0.2",
     "rimraf": "^2.3.3",
     "shelljs": "^0.4.0",
-    "standard": "^6.0.8",
+    "standard": "*",
     "stylus": "^0.52.0",
     "watchify": "^3.2.1"
   },
