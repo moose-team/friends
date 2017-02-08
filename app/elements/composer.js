@@ -130,6 +130,6 @@ Composer.prototype.resize = function () {
 
   // only dispatch an event if the rows count actually changed
   if (oldrows !== this.node.rows) {
-    this.send('resizeComposer', rows * 17 + this.minimumHeight)
+    this.send('resizeComposer', (rows * 17) + this.minimumHeight)
   }
 }
