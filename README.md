@@ -4,11 +4,14 @@
 
 [![travis][travis-image]][travis-url]
 [![david][david-image]][david-url]
+[![javascript style guide][standard-image]][standard-url]
 
-[travis-image]: https://img.shields.io/travis/moose-team/friends.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/moose-team/friends/master.svg
 [travis-url]: https://travis-ci.org/moose-team/friends
-[david-image]: https://img.shields.io/david/moose-team/friends.svg?style=flat-square
+[david-image]: https://img.shields.io/david/moose-team/friends.svg
 [david-url]: https://david-dm.org/moose-team/friends
+[standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+[standard-url]: https://standardjs.com
 
 ![screenshot](static/screenshot.png)
 
