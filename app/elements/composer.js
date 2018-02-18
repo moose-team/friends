@@ -20,7 +20,7 @@ var TAB_KEY = 9
 var ENTER_KEY = 13
 
 // the height taken up by padding, margin, border combined
-Composer.prototype.minimumHeight = 48  // the default height of the composer element in pixels is one row + mimimum
+Composer.prototype.minimumHeight = 48 // the default height of the composer element in pixels is one row + mimimum
 Composer.prototype.defaultHeight = 17 + this.minimumHeight
 
 Composer.prototype.render = function (data) {
