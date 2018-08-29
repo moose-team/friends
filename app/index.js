@@ -34,10 +34,10 @@ function App (el, currentWindow) {
   self._notifications = 0
   self.currentWindow = currentWindow
 
-  var db = levelup(config.DB_PATH, {db: leveldown})
+  var db = levelup(config.DB_PATH, { db: leveldown })
 
-  db.channels = subleveldown(db, 'channels', {valueEncoding: 'json'})
-  db.aliases = subleveldown(db, 'aliases', {valueEncoding: 'json'})
+  db.channels = subleveldown(db, 'channels', { valueEncoding: 'json' })
+  db.aliases = subleveldown(db, 'aliases', { valueEncoding: 'json' })
 
   // Open links in user's default browser
   delegate(el).on('click', 'a', function (e) {
@@ -60,7 +60,7 @@ function App (el, currentWindow) {
     activeChannel: null
   }
 
-  var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'), {maxPeers: 20})
+  var swarm = window.swarm = Swarm(subleveldown(db, 'swarm'), { maxPeers: 20 })
   var channelsFound = {}
   var usersFound = {}
   var changesOffsets = {}
@@ -203,7 +203,7 @@ function App (el, currentWindow) {
       if (channel.active) {
         self.data.messages = channel.messages
         self.data.activeChannel = channel
-        if (channel.name !== 'friends') db.channels.put(channel.name, {name: channel.name, id: channel.id})
+        if (channel.name !== 'friends') db.channels.put(channel.name, { name: channel.name, id: channel.id })
       }
     })
     render()
